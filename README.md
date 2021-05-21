@@ -1,6 +1,6 @@
 # Giga Chad 
 Da Giga Chad discord bot.
-Uses discord.py & discord-py-slash-command
+Uses [discord.py](https://github.com/Rapptz/discord.py) & [discord-py-slash-command](https://github.com/eunwoo1104/discord-py-slash-command)
 
 ## How to run
 Install the requirements using
