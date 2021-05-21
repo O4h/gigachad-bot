@@ -184,7 +184,7 @@ class Fun(commands.Cog):
         file = discord.File("test.jpg")
         attachment = "attachment://test.jpg"
         if user is not True:
-            if user.id == self.user.id:
+            if user.id == self.bot.user.id:
                 prefix = "I am Giga Chad. I gigachadify, I can't be gigachidified."
                 footer = "Yep. That's me"
                 file = discord.File("gigachad.png")
