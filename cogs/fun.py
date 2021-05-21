@@ -8,15 +8,13 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
 
-guild_ids = [844911117881180190]
-
 
 class Fun(commands.Cog):
     def __init__(self, gigachad):
         self.bot = gigachad
 
     @cog_ext.cog_slash(name="caption",
-                       description="🎭 Caption a meme, 25 meme templates available!", guild_ids=guild_ids,
+                       description="🎭 Caption a meme, 25 meme templates available!",
                        options=[
                            create_option(
                                name="template",
@@ -101,7 +99,7 @@ class Fun(commands.Cog):
         embed.set_footer(text="Made with the imgflip.com API")
         await ctx.send(embed=embed, hidden=False)
 
-    @cog_ext.cog_slash(name="Meme", description='🎲 Get a random meme!', guild_ids=guild_ids,
+    @cog_ext.cog_slash(name="Meme", description='🎲 Get a random meme!',
                        options=[
                            create_option(
                                name="subreddit",
@@ -129,7 +127,7 @@ class Fun(commands.Cog):
         embed.set_image(url=image)
         await ctx.send(embed=embed, hidden=False)
 
-    @cog_ext.cog_slash(name="chadmeter", description="📏 Scientifically measure your Chad level", guild_ids=guild_ids,
+    @cog_ext.cog_slash(name="chadmeter", description="📏 Scientifically measure your Chad level",
                        options=[
                            create_option(
                                name="user",
@@ -155,7 +153,7 @@ class Fun(commands.Cog):
             url="https://preview.redd.it/23td86ox29j51.png?auto=webp&s=c617e39e98b1e601cc91168369bd6ea38cd55f89")
         await ctx.send(embed=embed, hidden=False)
 
-    @cog_ext.cog_slash(name="gigachadify", description="💫 Gigadify yourself or another user!", guild_ids=guild_ids,
+    @cog_ext.cog_slash(name="gigachadify", description="💫 Gigadify yourself or another user!",
                        options=[
                            create_option(
                                name="user",
