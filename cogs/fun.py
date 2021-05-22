@@ -12,6 +12,9 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 
 load_dotenv()
 
+IMGFLIP_USERNAME = os.getenv("IMGLIP_USERNAME")
+IMGFLIP_PASSWORD = os.getenv("IMGFLIP_PASSWORD")
+
 
 class Fun(commands.Cog):
     def __init__(self, gigachad):
@@ -90,7 +93,7 @@ class Fun(commands.Cog):
                            ),
                        ])
     async def caption(self, ctx: SlashContext, template: int, top_caption: str, bottom_caption: str):
-        pload = {'font': 'impact', 'username': os.getenv("IMGFLIP_USERNAME"), 'password': os.getenv("IMGFLIP_PASSWORD"),
+        pload = {'font': 'impact', 'username': IMGFLIP_USERNAME, 'password': IMGFLIP_PASSWORD,
                  'template_id': template, 'text1': bottom_caption, 'text0': top_caption}
         r = requests.post('https://api.imgflip.com/caption_image', data=pload)
         r_dictionary = r.json()
