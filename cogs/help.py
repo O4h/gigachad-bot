@@ -42,7 +42,7 @@ class Help(commands.Cog):
     @commands.command()
     async def help(self, ctx):
         embed = discord.Embed(title="<:gigachad:845633149923753984> Giga Chad Help", color=0x2f3136)
-        embed.add_field(name="<:slash:845638736662626324> Slash Commands",
+        embed.add_field(name="<:slash:845659423569477632> Slash Commands",
                         value="Most of the Giga Chad's commands are [slash commands]("
                               "https://support.discord.com/hc/fr/articles/1500000368501-Slash-Commands-FAQ). Click "
                               "the blue link if you don't know what those are and how to use them. If the slash "
@@ -50,7 +50,7 @@ class Help(commands.Cog):
                               "re-invite the bot using [this](link). The list of the available slash commands and "
                               "their description can be found [here](https://discordbotlist.com/bots/giga-chad).",
                         inline=False)
-        embed.add_field(name="<:settings:845638736355917905> Other Commands",
+        embed.add_field(name="<:settings:845659423561089034> Other Commands",
                         value="`•` `gc!help` **-** That's the command you're using right now \n `•` `gc!info` **-** "
                               "Get info about the vote \n `•` `gc!invite` **-** Invite the bot to another server \n "
                               "`•` `gc!support` **-** Get an invite to the support server", inline=False)

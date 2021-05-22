@@ -12,7 +12,7 @@ class Admin(commands.Cog):
     @commands.is_owner()
     async def reload(self, ctx, cog=None):
         if cog is None:
-            embed = discord.Embed(title="<:settings:845638736355917905> Reloading all cogs.", color=0x2f3136,)
+            embed = discord.Embed(title="<:settings:845659423561089034> Reloading all cogs.", color=0x2f3136,)
             for ext in os.listdir("./cogs/"):
                 if ext.endswith(".py") and not ext.startswith("_"):
                     try:
@@ -24,7 +24,7 @@ class Admin(commands.Cog):
                     await asyncio.sleep(0.5)
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title=f"<:settings:845638736355917905> Reloading cog `{cog}.py`", color=0x2f3136)
+            embed = discord.Embed(title=f"<:settings:845659423561089034> Reloading cog `{cog}.py`", color=0x2f3136)
             ext = f"{cog.lower()}.py"
             if not os.path.exists(f"./cogs/{ext}"):
                 embed.add_field(name=f"Failed to reload: `{ext}`", value="This cog does not exist.", inline=False)
