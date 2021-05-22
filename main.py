@@ -11,7 +11,7 @@ intents = discord.Intents(messages=True)
 
 class GigaChad(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix="gc!", intents=intents)
+        super().__init__(command_prefix=commands.when_mentioned_or("gc!"), intents=intents)
 
     async def on_ready(self):
         print('------')
