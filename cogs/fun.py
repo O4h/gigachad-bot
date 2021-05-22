@@ -2,16 +2,20 @@ import random
 import discord
 import requests
 import urllib.request
+import os
+from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 from io import BytesIO
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
 
+load_dotenv()
+
 
 class Fun(commands.Cog):
     def __init__(self, gigachad):
-        self.bot = gigachad
+        self.gigachad = gigachad
 
     @cog_ext.cog_slash(name="caption",
                        description="🎭 Caption a meme, 25 meme templates available!",
@@ -86,8 +90,8 @@ class Fun(commands.Cog):
                            ),
                        ])
     async def caption(self, ctx: SlashContext, template: int, top_caption: str, bottom_caption: str):
-        pload = {'font': 'impact', 'username': 'Thorgal108', 'password': 'zrRyU&D!FxpK3T3', 'template_id': template,
-                 'text1': bottom_caption, 'text0': top_caption}
+        pload = {'font': 'impact', 'username': os.getenv("IMGFLIP_USERNAME"), 'password': os.getenv("IMGFLIP_PASSWORD"),
+                 'template_id': template, 'text1': bottom_caption, 'text0': top_caption}
         r = requests.post('https://api.imgflip.com/caption_image', data=pload)
         r_dictionary = r.json()
         data = r_dictionary['data']
@@ -144,11 +148,12 @@ class Fun(commands.Cog):
         if user:
             message = f'Your Chad level is {chadlevel}%!'
         else:
-            if user.id == 541940250428047370 or 843550872293867570:
+            appinfo = await self.gigachad.application_info()
+            if user.id == appinfo.owner.id or self.gigachad.user.id:
                 chadlevel = 100
             message = f"{user.mention}'s Chad level is `{chadlevel}%`!"
         embed = discord.Embed(title="📏 Chadmeter", description=message, color=0x2f3136)
-        embed.set_footer(icon_url=self.bot.user.avatar_url, text="Chadmeter never lies, Copyrighted © method")
+        embed.set_footer(icon_url=self.gigachad.user.avatar_url, text="Chadmeter never lies, Copyrighted © method")
         embed.set_thumbnail(
             url="https://preview.redd.it/23td86ox29j51.png?auto=webp&s=c617e39e98b1e601cc91168369bd6ea38cd55f89")
         await ctx.send(embed=embed, hidden=False)
@@ -184,13 +189,13 @@ class Fun(commands.Cog):
         file = discord.File("test.jpg")
         attachment = "attachment://test.jpg"
         if user is not True:
-            if user.id == self.bot.user.id:
+            if user.id == self.gigachad.user.id:
                 prefix = "I am Giga Chad. I gigachadify, I can't be gigachidified."
                 footer = "Yep. That's me"
                 file = discord.File("gigachad.png")
                 attachment = "attachment://gigachad.png"
         embed = discord.Embed(title=prefix, color=0x2f3136)
-        embed.set_footer(icon_url=self.bot.user.avatar_url, text=footer)
+        embed.set_footer(icon_url=self.gigachad.user.avatar_url, text=footer)
         embed.set_image(url=attachment)
         await ctx.send(file=file, embed=embed)
 

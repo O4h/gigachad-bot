@@ -1,11 +1,13 @@
 import discord
 import os
+import asyncio
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord_slash import SlashCommand
 
 default_intents = discord.Intents.default()
 intents = discord.Intents(messages=True)
+
 
 class GigaChad(commands.Bot):
     def __init__(self):
@@ -24,7 +26,6 @@ class GigaChad(commands.Bot):
 gigachad = GigaChad()
 
 gigachad.remove_command('help')
-
 
 slash = SlashCommand(gigachad, sync_commands=True, sync_on_cog_reload=True)
 
