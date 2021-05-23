@@ -208,13 +208,24 @@ class Fun(commands.Cog):
         r_dictionnary = r.json()
         quote = r_dictionnary['text']
         author = r_dictionnary['author']
-        embed = discord.Embed(title="Inspiring quote", color=0x2f3136,
+        embed = discord.Embed(title="💬 Inspiring quote", color=0x2f3136,
                               description=f"<:quote1:845745030912278598> \n**{quote}** \n <:blank:845752143226077245>"
                                           "<:blank:845752143226077245><:blank:845752143226077245> "
                                           "<:blank:845752143226077245> "
                                           "<:blank:845752143226077245><:blank:845752143226077245> "
                                           f"<:blank:845752143226077245><:quote2:845745030978994216> \n - {author}")
         embed.set_footer(text="I hope this quote inspired you to become a Giga Chad")
+        await ctx.send(embed=embed, hidden=False)
+
+    @cog_ext.cog_slash(name="advice", description="💡 Get some advice from Giga Chad")
+    async def quote(self, ctx: SlashContext):
+        r = requests.get('https://api.adviceslip.com/advice')
+        r_dictionnary = r.json()
+        advice_id = r_dictionnary['id']
+        advice = advice_id['advice']
+        embed = discord.Embed(title="💡 Helpful Advice", color=0x2f3136,
+                              description=f"🗣 {advice}")
+        embed.set_footer(text="Follow or not this advice, up to you")
         await ctx.send(embed=embed, hidden=False)
 
 
