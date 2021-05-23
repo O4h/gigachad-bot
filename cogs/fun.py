@@ -202,6 +202,21 @@ class Fun(commands.Cog):
         embed.set_image(url=attachment)
         await ctx.send(file=file, embed=embed)
 
+    @cog_ext.cog_slash(name="quote", description="💬 Get an inspiring quote to get closer to being a Giga Chad")
+    async def quote(self, ctx: SlashContext):
+        r = requests.get('https://api.fisenko.net/quotes')
+        r_dictionnary = r.json()
+        quote = r_dictionnary['text']
+        author = r_dictionnary['author']
+        embed = discord.Embed(title="Inspiring quote", color=0x2f3136,
+                              description=f"<:quote1:845745030912278598> \n**{quote}** \n <:blank:845752143226077245>"
+                                          "<:blank:845752143226077245><:blank:845752143226077245> "
+                                          "<:blank:845752143226077245> "
+                                          "<:blank:845752143226077245><:blank:845752143226077245> "
+                                          f"<:blank:845752143226077245><:quote2:845745030978994216> \n - {author}")
+        embed.set_footer(text="I hope this quote inspired you to become a Giga Chad")
+        await ctx.send(embed=embed, hidden=False)
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
