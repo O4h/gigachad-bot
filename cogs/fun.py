@@ -218,7 +218,7 @@ class Fun(commands.Cog):
         await ctx.send(embed=embed, hidden=False)
 
     @cog_ext.cog_slash(name="advice", description="💡 Get some advice from Giga Chad")
-    async def quote(self, ctx: SlashContext):
+    async def advice(self, ctx: SlashContext):
         r = requests.get('https://api.adviceslip.com/advice')
         r_dictionnary = r.json()
         advice_id = r_dictionnary['id']
