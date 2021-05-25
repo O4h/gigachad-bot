@@ -4,14 +4,15 @@ import asyncio
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord_slash import SlashCommand
+from cogs.prefix import get_prefix
 
 default_intents = discord.Intents.default()
-intents = discord.Intents(messages=True)
+intents = discord.Intents(messages=True, guilds=True)
 
 
 class GigaChad(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=commands.when_mentioned_or("gc!"), intents=intents)
+        super().__init__(command_prefix=get_prefix, intents=intents)
 
     async def on_ready(self):
         print('------')
@@ -30,7 +31,7 @@ gigachad.remove_command('help')
 slash = SlashCommand(gigachad, sync_commands=True, sync_on_cog_reload=True)
 
 for filename in os.listdir('./cogs'):
-    if filename.endswith(".py"):
+    if filename.endswith(".py") and not filename.startswith("_"):
         gigachad.load_extension(f"cogs.{filename[:-3]}")
 
 load_dotenv()
