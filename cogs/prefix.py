@@ -34,6 +34,7 @@ class Prefix(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_guild=True)
+    @commands.guild_only()
     async def prefix(self, ctx, prefix=None):
         if prefix is None:
             current_prefix = get_prefix(self, ctx, True)
@@ -52,6 +53,7 @@ class Prefix(commands.Cog):
 
             embed = discord.Embed(color=0x57f287, title="Prefix succesfully changed",
                                   description=f"My prefix for this server has succefully been changed to `{prefix}`.")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/847027842637103134.png?size=32")
 
         await ctx.send(embed=embed)
 

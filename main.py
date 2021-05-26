@@ -21,7 +21,8 @@ class GigaChad(commands.Bot):
         print(self.user.id)
         print(discord.__version__)
         print('------')
-        await gigachad.change_presence(activity=discord.Game(name="Type gc!help for help"))
+        await gigachad.change_presence(activity=discord.Activity(type=discord.ActivityType.listening,
+                                                                 name="@Giga Chad help"))
 
 
 gigachad = GigaChad()
