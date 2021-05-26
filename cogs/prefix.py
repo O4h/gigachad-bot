@@ -38,8 +38,8 @@ class Prefix(commands.Cog):
         if prefix is None:
             current_prefix = get_prefix(self, ctx, True)
             embed = discord.Embed(color=0x2f3136, title="Current Prefix",
-                                  description=f"My current prefix is `{current_prefix}`. \n Execute `{current_prefix}pre"
-                                              "fix newprefix` to set a new prefix!")
+                                  description=f"My current prefix is `{current_prefix}`. \n Execute `{current_prefix}pr"
+                                              "efix [newprefix]` to set a new prefix!")
 
         else:
             with open('prefixes.json', 'r') as f:
@@ -54,6 +54,17 @@ class Prefix(commands.Cog):
                                   description=f"My prefix for this server has succefully been changed to `{prefix}`.")
 
         await ctx.send(embed=embed)
+
+    @commands.Cog.listener()
+    async def on_guild_remove(self, guild):
+        with open('prefixes.json', 'r') as f:
+            prefixes = json.load(f)
+
+        if str(guild.id) in prefixes:
+            prefixes.pop(str(guild.id))
+
+            with open('prefixes.json', 'w') as f:
+                json.dump(prefixes, f, indent=4)
 
 
 def setup(gigachad):
