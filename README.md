@@ -15,7 +15,7 @@ Join the discord suport server **[here](https://discord.gg/atPkjGgDBD)**.
 * A [watchbot.app](https://watchbot.app) certified bot (For detailed uptime)
 * All the emotes in emotes.env
 
-###Step-by-step guide
+### Step-by-step guide
 1. Install the requirements using
 `pip3 install -r requirements.txt`
 
