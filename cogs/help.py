@@ -23,7 +23,7 @@ class Help(commands.Cog):
     async def invite(self, ctx):
         embed = discord.Embed(title="Invite Giga Chad!", color=0x2f3136,
                               description="Click [here](https://discord.com/api/oauth2/authorize?client_id"
-                                          f"={str(self.gigachad.user.id)}&permissions=2147551232&scope=bot"
+                                          f"={str(self.gigachad.user.id)}&permissions=346112&scope=bot"
                                           f"%20applications.commands) to invite Giga Chad!")
         await ctx.send(embed=embed)
 
@@ -42,7 +42,7 @@ class Help(commands.Cog):
                         value="`•` Click [here](https://discord.gg/atPkjGgDBD) to join", inline=True)
         embed.add_field(name="<:gc_invite:847035767519707136> Invite",
                         value="`•` Click [here](https://discord.com/api/oauth2/authorize?client_id"
-                              f"{str(self.gigachad.user.id)}&permissions=2147551232&scope=bot%20applications.commands"
+                              f"{str(self.gigachad.user.id)}&permissions=346112&scope=bot%20applications.commands"
                               ") to invite", inline=True)
         embed.add_field(name="<:gc_copyright:847029255254310933> Credits",
                         value="`•` [@berlin.1969](https://www.instagram.com/berlin.1969/) \n `•` ["
@@ -79,7 +79,7 @@ class Help(commands.Cog):
                               "the blue link if you don't know what those are and how to use them. If the slash "
                               "commands don't show up, check if users have the permission to use them, or kick then "
                               "re-invite the bot using [this](https://discord.com/api/oauth2/authorize?client_id"
-                              f"={str(self.gigachad.user.id)}&permissions=2147551232&scope=bot%20applications"
+                              f"={str(self.gigachad.user.id)}&permissions=346112&scope=bot%20applications"
                               ".commands) link. The list of the available slash commands and "
                               "their description can be found [here](https://discordbotlist.com/bots/giga-chad).",
                         inline=False)
