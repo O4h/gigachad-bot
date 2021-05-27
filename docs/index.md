@@ -1,37 +1,56 @@
-## Welcome to GitHub Pages
+# Giga Chad Docs
 
-You can use the [editor on GitHub](https://github.com/Thorgal108/gigachad-bot/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+You can find here all of Giga Chad's commands!
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Links
 
-### Markdown
+* [Invite the Bot](https://gigachad-bot.xyz)
+* [Join the support server](https://gigachad-bot.xyz)
+* [Source Code](https://github.com/gigachad-bot)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+## Index
 
-# Header 1
-## Header 2
-### Header 3
+* [Slash Commands]()
+* [Other Commands]()
 
-- Bulleted
-- List
+# Slash Commands
+Arguments with {}  are mandatory, argmuments with [] are optional
 
-1. Numbered
-2. List
+###**/Caption {template} {top_text} {bottom_text}**
+This command allow  you to caption a meme using the given templates, that are auto-suggested. Then input a top  and bottom
+caption, and you will be done, your meme is going to get generated! This command uses imgflip.com's api.
 
-**Bold** and _Italic_ and `Code` text
+###**/Meme [subreddit]**
+With this command, you can either get a random meme from reddit.com,  or a post from a specific subreddit, by just 
+entering the subreddit's name (e.g. for r/funny, just input "funny"). 
+*Please note that no NSFW posts will be available, even in NSFW Channels*
 
-[Link](url) and ![Image](src)
-```
+###**/Gigachadify [user]**
+Gigachadify yourself, a user (turn you/them into a Giga Chad) with this command!
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+###**/Chadmeter [user]**
+Have you ever wondered what your Chad level was? Well it's the opportunity to know! You can even measure the level of another user!
 
-### Jekyll Themes
+# Other commands
+Arguments with {}  are mandatory, argmuments with [] are optional
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Thorgal108/gigachad-bot/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+The prefix (`gc!`) has to be replaced with your server's custom prefix if it has been changed. The bot's mention can 
+also be used as a prefux
 
-### Support or Contact
+###**gc!help** 
+Get help!
+###**gc!info** 
+Get useful info about the bot
+###**gc!invite** 
+Get the link to invite the bot</br>
+###**gc!support** 
+Get an invite to the support server</br>
+###**gc!prefix [new prefix]** 
+**Requires you to have the `MANGE_SERVER` permission!**<br>
+Get or set the server's prefix
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+###  [Invite the bot!](https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=67584&scope=bot%20applications.commands)
+
+If you have suggestions/features that could be nice to add, join the support server to suggest them!
+
