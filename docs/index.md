@@ -18,25 +18,25 @@ You can find here all of Giga Chad's commands!
 # Slash Commands
 Arguments with {}  are mandatory, argmuments with [] are optional
 
-### **/Caption {template} {top_text} {bottom_text}**
+<h3 id="caption"><strong> /Caption {template} {top_text} {bottom_text} </strong></h3> </br>
 This command allow  you to caption a meme using the given templates, that are auto-suggested. Then input a top  and bottom
 caption, and you will be done, your meme is going to get generated! This command uses imgflip.com's api.
 
-<h3 id="meme">**/Meme [subreddit]** </h3>
+<h3 id="meme"><strong> /Meme [subreddit] </strong></h3> </br>
 With this command, you can either get a random meme from reddit.com,  or a post from a specific subreddit, by just 
 entering the subreddit's name (e.g. for r/funny, just input "funny"). </br>
 *Please note that no NSFW posts will be available, even in NSFW Channels*
 
-### **/Gigachadify [user]**
+<h3 id="gigachadify"><strong> /Gigachadify [user] </strong></h3> </br>
 Gigachadify yourself, a user (turn you/them into a Giga Chad) with this command!
 
-### **/Chadmeter [user]**
+<h3 id="chadmeter"><strong> /Chadmeter [user] </strong></h3> </br>
 Have you ever wondered what your Chad level was? Well it's the opportunity to know! You can even measure the level of another user!
 
-### **/Advice**
+<h3 id="advice"><strong> /Advice </strong></h3> </br>
 Get some advice from Giga Chad
 
-### **/Quote**
+<h3 id="quote"><strong> /Quote </strong></h3> </br>
 Get an inspiring quote to help you become a Giga Chad
 
 # Other commands
