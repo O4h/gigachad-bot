@@ -221,8 +221,8 @@ class Fun(commands.Cog):
     async def advice(self, ctx: SlashContext):
         r = requests.get('https://api.adviceslip.com/advice')
         r_dictionnary = r.json()
-        advice_id = r_dictionnary['id']
-        advice = advice_id['advice']
+        advice_slip = r_dictionnary['slip']
+        advice = advice_slip['advice']
         embed = discord.Embed(title="💡 Helpful Advice", color=0x2f3136,
                               description=f"🗣 {advice}")
         embed.set_footer(text="Follow or not this advice, up to you")
