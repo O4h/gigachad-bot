@@ -24,7 +24,7 @@ caption, and you will be done, your meme is going to get generated! This command
 
 <h3 id="meme"><strong> /Meme [subreddit] </strong></h3>
 With this command, you can either get a random meme from reddit.com,  or a post from a specific subreddit, by just 
-entering the subreddit's name (e.g. for r/funny, just input "funny"). </br> 
+entering the subreddit's name (e.g. for r/funny, just input "funny").\
 *Please note that no NSFW posts will be available, even in NSFW Channels*
 
 <h3 id="gigachadify"><strong> /Gigachadify [user] </strong></h3>
@@ -54,7 +54,7 @@ Get the link to invite the bot
 ### **gc!support** 
 Get an invite to the support server
 ### **gc!prefix [new prefix]** 
-**Requires you to have the `MANGE_SERVER` permission!** <br>
+**Requires you to have the `MANGE_SERVER` permission!** </br>
 Get or set the server's prefix
 
 ###  [Invite the bot!](https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=67584&scope=bot%20applications.commands)
