@@ -1,18 +1,19 @@
-# Giga Chad Docs
+# Giga Chad Bot
 
 You can find here all of Giga Chad's commands!
 
 ## Links
 
-* [Invite the Bot](https://gigachad-bot.xyz)
-* [Join the support server](https://gigachad-bot.xyz)
-* [Source Code](https://github.com/gigachad-bot)
+* [Invite the Bot](https://invite.gigachad-bot.xyz)
+* [Join the support server](https://links.gigachad-bot.xyz/support)
+* [Source Code](https://github.com/thorgal108/gigachad-bot)
+* [Giga Chad's Status](https://status.gigachad-bot.xyz)
 
 
 ## Index
 
-* [Slash Commands]()
-* [Other Commands]()
+* [Slash Commands](#slash-commands)
+* [Other Commands](#other-commands)
 
 # Slash Commands
 Arguments with {}  are mandatory, argmuments with [] are optional
@@ -21,9 +22,9 @@ Arguments with {}  are mandatory, argmuments with [] are optional
 This command allow  you to caption a meme using the given templates, that are auto-suggested. Then input a top  and bottom
 caption, and you will be done, your meme is going to get generated! This command uses imgflip.com's api.
 
-### **/Meme [subreddit]**
+<h3 id="meme">**/Meme [subreddit]** </h3>
 With this command, you can either get a random meme from reddit.com,  or a post from a specific subreddit, by just 
-entering the subreddit's name (e.g. for r/funny, just input "funny"). 
+entering the subreddit's name (e.g. for r/funny, just input "funny"). </br>
 *Please note that no NSFW posts will be available, even in NSFW Channels*
 
 ### **/Gigachadify [user]**
@@ -31,6 +32,12 @@ Gigachadify yourself, a user (turn you/them into a Giga Chad) with this command!
 
 ### **/Chadmeter [user]**
 Have you ever wondered what your Chad level was? Well it's the opportunity to know! You can even measure the level of another user!
+
+### **/Advice**
+Get some advice from Giga Chad
+
+### **/Quote**
+Get an inspiring quote to help you become a Giga Chad
 
 # Other commands
 Arguments with {}  are mandatory, argmuments with [] are optional
@@ -52,5 +59,5 @@ Get or set the server's prefix
 
 ###  [Invite the bot!](https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=67584&scope=bot%20applications.commands)
 
-If you have suggestions/features that could be nice to add, join the support server to suggest them!
+If you have suggestions/features that could be nice to add, join the support server to suggest them, or create an issue!
 
