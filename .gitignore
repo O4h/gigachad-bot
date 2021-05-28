@@ -131,6 +131,5 @@ dmypy.json
 .pyre/
 *.iml
 *.xml
-*.png
 *.jpg
 *.json
