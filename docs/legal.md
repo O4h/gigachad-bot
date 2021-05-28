@@ -11,3 +11,5 @@
 ## How can I get my data removed?
 
 * [Join the support server](https://links.gigachad-bot.xyz/support) and ask `Thorgal#0982` to get your data removed!
+
+### Click [here](https://docs.gigachad-bot.xyz) to get back to the main page

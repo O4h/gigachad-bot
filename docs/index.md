@@ -61,3 +61,5 @@ Get or set the server's prefix
 
 If you have suggestions/features that could be nice to add, join the support server to suggest them, or create an issue!
 
+#### [Legal Policy](https://docs.gigachad-bot.xyz/legal)
+
