@@ -1,7 +1,8 @@
 import discord
 import asyncio
 import os
-import requests
+import aiohttp
+import json
 from dotenv import load_dotenv
 from discord.ext import commands
 from cogs.prefix import get_prefix
@@ -48,24 +49,27 @@ class Help(commands.Cog):
                         value="`•` [@berlin.1969](https://www.instagram.com/berlin.1969/) \n `•` ["
                               "flaticon.com](https://www.flaticon.com/)",
                         inline=True)
+
         try:
             headers = {"AUTH-TOKEN": WATCHBOT_API_KEY}
-            r = requests.get(f"https://api.watchbot.app/bot/{str(self.gigachad.user.id)}", headers=headers)
-            r_dictionnary = r.json()
-            _7d = r_dictionnary['7d']
-            _30d = r_dictionnary['30d']
-            _90d = r_dictionnary['90d']
+            url = f"https://api.watchbot.app/bot/{str(self.gigachad.user.id)}"
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, headers=headers) as r:
+                    data = await r.read()
+            json_data = json.loads(data)
             embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
                             value=f"`•` Click [here](https://status.watchbot.app/bot/"
                                   f"{str(self.gigachad.user.id)}) to access the bot's uptime history\n - "
-                                  f"Over the last week: `{_7d}%` uptime \n - Over the last month: `"
-                                  f"{_30d}%` uptime \n - Over the last 90 days: `{_90d}% uptime`",
+                                  f"Over the last week: `{json_data['7d']}%` uptime \n - Over the last month: `"
+                                  f"{json_data['30d']}%` uptime \n - Over the last 90 days: `{json_data['90d']}% uptime`",
                             inline=False)
+
         except:
             embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
                             value=f"`•` <:gc_no:847027842365915167> Something went wrong, the bot wasn't able to "
                                   f"retrieve its uptime.",
                             inline=False)
+
         embed.set_footer(text="Join the suppport server for further information")
         await ctx.send(embed=embed)
 

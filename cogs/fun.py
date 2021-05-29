@@ -1,8 +1,10 @@
 import random
 import discord
-import requests
 import urllib.request
+import aiohttp
 import os
+import json
+import asyncio
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 from io import BytesIO
@@ -12,8 +14,20 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 
 load_dotenv()
 
-IMGFLIP_USERNAME = os.getenv("IMGLIP_USERNAME")
+IMGFLIP_USERNAME = os.getenv("IMGFLIP_USERNAME")
 IMGFLIP_PASSWORD = os.getenv("IMGFLIP_PASSWORD")
+
+async def fetch(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as r:
+            data = await r.read()
+    return json.loads(data)
+
+
+async def error_api(ctx):
+    embed = discord.Embed(color=0xed4245, title="Something went wrong",
+                          description="Wait a bit and retry, and contact the bot support if it happens again")
+    await ctx.send(embed=embed, hidden=True)
 
 
 class Fun(commands.Cog):
@@ -29,54 +43,18 @@ class Fun(commands.Cog):
                                option_type=3,
                                required=True,
                                choices=[
-                                   create_choice(
-                                       name="Two Buttons",
-                                       value="87743020"
-                                   ),
-                                   create_choice(
-                                       name="Distracted Boyfriend",
-                                       value="112126428"
-                                   ),
-                                   create_choice(
-                                       name="Drake Yikes",
-                                       value="181913649"
-                                   ),
-                                   create_choice(
-                                       name="Batman Slaps Robin",
-                                       value="438680"
-                                   ),
-                                   create_choice(
-                                       name="Trade Offer",
-                                       value="309868304"
-                                   ),
-                                   create_choice(
-                                       name="Change my Mind",
-                                       value="129242436"
-                                   ),
-                                   create_choice(
-                                       name="UNO Draw 25",
-                                       value="217743513"
-                                   ),
-                                   create_choice(
-                                       name="Woman Yelling at Cat",
-                                       value="188390779"
-                                   ),
-                                   create_choice(
-                                       name="Inhaling Seagull",
-                                       value="114585149"
-                                   ),
-                                   create_choice(
-                                       name="Giga Chad",
-                                       value="190327839"
-                                   ),
-                                   create_choice(
-                                       name="Another Woman",
-                                       value="110163934"
-                                   ),
-                                   create_choice(
-                                       name="Same Pictures",
-                                       value="180190441"
-                                   ),
+                                   create_choice(name="Two Buttons", value="87743020"),
+                                   create_choice(name="Distracted Boyfriend", value="112126428"),
+                                   create_choice(name="Drake Yikes", value="181913649"),
+                                   create_choice(name="Batman Slaps Robin", value="438680"),
+                                   create_choice(name="Trade Offer", value="309868304"),
+                                   create_choice(name="Change my Mind", value="129242436"),
+                                   create_choice(name="UNO Draw 25", value="217743513"),
+                                   create_choice(name="Woman Yelling at Cat", value="188390779"),
+                                   create_choice(name="Inhaling Seagull", value="114585149"),
+                                   create_choice(name="Giga Chad", value="190327839"),
+                                   create_choice(name="Another Woman", value="110163934"),
+                                   create_choice(name="Same Pictures", value="180190441"),
                                ]
                            ),
                            create_option(
@@ -93,18 +71,21 @@ class Fun(commands.Cog):
                            ),
                        ])
     async def caption(self, ctx: SlashContext, template: int, top_caption: str, bottom_caption: str):
-        pload = {'font': 'impact', 'username': IMGFLIP_USERNAME, 'password': IMGFLIP_PASSWORD,
-                 'template_id': template, 'text1': bottom_caption, 'text0': top_caption}
-        r = requests.post('https://api.imgflip.com/caption_image', data=pload)
-        r_dictionary = r.json()
-        data = r_dictionary['data']
-        url = data['url']
-        page_url = data['page_url']
-        embed = discord.Embed(color=0x2f3136)
-        embed.set_image(url=url)
-        embed.set_author(name='Click to access the post', url=page_url)
-        embed.set_footer(text="Made with the imgflip.com API")
-        await ctx.send(embed=embed, hidden=False)
+        try:
+            pload = {'font': 'impact', 'username': 'Thorgal108', 'password': 'zrRyU&D!FxpK3T3',
+                     'template_id': template, 'text1': bottom_caption, 'text0': top_caption}
+            async with aiohttp.ClientSession() as session:
+                async with session.post('https://api.imgflip.com/caption_image', data=pload) as r:
+                    data = await r.read()
+            json_data = json.loads(data)
+            embed = discord.Embed(color=0x2f3136)
+            embed.set_image(url=json_data['data']['url'])
+            embed.set_author(name='Click to access the post', url=json_data['data']['page_url'])
+            embed.set_footer(text="Made with the imgflip.com API")
+            await ctx.send(embed=embed, hidden=False)
+
+        except:
+            await error_api(ctx)
 
     @cog_ext.cog_slash(name="Meme", description='🎲 Get a random meme!',
                        options=[
@@ -114,25 +95,23 @@ class Fun(commands.Cog):
                                option_type=3,
                                required=False,
                            )])
-    async def meme(self, ctx: SlashContext, subreddit='default'):
-        if subreddit == 'default':
-            r = requests.get('https://meme-api.herokuapp.com/gimme')
-        else:
-            r = requests.get(f'https://meme-api.herokuapp.com/gimme/{subreddit}')
-        r_dictionnary = r.json()
-        nsfw = r_dictionnary['nsfw']
-        if nsfw:
-            await ctx.send(content="Sorry, the meme was NSFW. Try another one!", hidden=True)
-            return
-        link = r_dictionnary['postLink']
-        title = r_dictionnary['title']
-        subreddit = r_dictionnary['subreddit']
-        author = r_dictionnary['author']
-        image = r_dictionnary['url']
-        embed = discord.Embed(color=0x2f3136, url=link, title=title)
-        embed.set_footer(text=f'r/{subreddit} | u/{author}')
-        embed.set_image(url=image)
-        await ctx.send(embed=embed, hidden=False)
+    async def meme(self, ctx: SlashContext, subreddit=None):
+        try:
+            if subreddit is None:
+                json_data = await fetch('https://meme-api.herokuapp.com/gimme')
+            else:
+                json_data = await fetch(f'https://meme-api.herokuapp.com/gimme/{subreddit}')
+            nsfw = json_data['nsfw']
+            if nsfw:
+                await ctx.send(content="Sorry, the meme was NSFW. Try another one!", hidden=True)
+                return
+            embed = discord.Embed(color=0x2f3136, url=json_data['postLink'], title=json_data['title'])
+            embed.set_footer(text=f"r/{json_data['subreddit']} | u/{json_data['author']}")
+            embed.set_image(url=json_data['url'])
+            await ctx.send(embed=embed, hidden=False)
+
+        except:
+            await error_api(ctx)
 
     @cog_ext.cog_slash(name="chadmeter", description="📏 Scientifically measure your Chad level",
                        options=[
@@ -204,29 +183,33 @@ class Fun(commands.Cog):
 
     @cog_ext.cog_slash(name="quote", description="💬 Get an inspiring quote to get closer to being a Giga Chad")
     async def quote(self, ctx: SlashContext):
-        r = requests.get('https://api.fisenko.net/quotes')
-        r_dictionnary = r.json()
-        quote = r_dictionnary['text']
-        author = r_dictionnary['author']
-        embed = discord.Embed(title="💬 Inspiring quote", color=0x2f3136,
-                              description=f"<:quote1:845745030912278598> \n**{quote}** \n <:blank:845752143226077245>"
-                                          "<:blank:845752143226077245><:blank:845752143226077245> "
-                                          "<:blank:845752143226077245> "
-                                          "<:blank:845752143226077245><:blank:845752143226077245> "
-                                          f"<:blank:845752143226077245><:quote2:845745030978994216> \n - {author}")
-        embed.set_footer(text="I hope this quote inspired you to become a Giga Chad")
-        await ctx.send(embed=embed, hidden=False)
+        try:
+            json_data = await fetch("https://api.fisenko.net/quotes")
+            quote = json_data['text']
+            author = json_data['author']
+            embed = discord.Embed(title="💬 Inspiring quote", color=0x2f3136,
+                                  description=f"<:quote1:845745030912278598> \n**{quote}** \n <:blank:845752143226077245>"
+                                              "<:blank:845752143226077245><:blank:845752143226077245> "
+                                              "<:blank:845752143226077245> "
+                                              "<:blank:845752143226077245><:blank:845752143226077245> "
+                                              f"<:blank:845752143226077245><:quote2:845745030978994216> \n - {author}")
+            embed.set_footer(text="I hope this quote inspired you to become a Giga Chad")
+            await ctx.send(embed=embed, hidden=False)
+
+        except:
+            await error_api(ctx)
 
     @cog_ext.cog_slash(name="advice", description="💡 Get some advice from Giga Chad")
     async def advice(self, ctx: SlashContext):
-        r = requests.get('https://api.adviceslip.com/advice')
-        r_dictionnary = r.json()
-        advice_slip = r_dictionnary['slip']
-        advice = advice_slip['advice']
-        embed = discord.Embed(title="💡 Helpful Advice", color=0x2f3136,
-                              description=f"🗣 {advice}")
-        embed.set_footer(text="Follow or not this advice, up to you")
-        await ctx.send(embed=embed, hidden=False)
+        try:
+            json_data = await fetch('https://api.adviceslip.com/advice')
+            advice = json_data['slip']['advice']
+            embed = discord.Embed(title="💡 Helpful Advice", color=0x2f3136,
+                                  description=f"🗣 {advice}")
+            embed.set_footer(text="Follow or not this advice, up to you")
+            await ctx.send(embed=embed, hidden=False)
+        except:
+            await error_api(ctx)
 
 
 def setup(bot):
