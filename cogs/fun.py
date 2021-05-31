@@ -50,7 +50,7 @@ class Fun(commands.Cog):
     async def slashchadmeter(self, ctx: SlashContext, user: discord.user = None):
         await chadmeter(ctx, self.gigachad, user, True)
 
-    @commands.command(name="chadmeter")
+    @commands.command(name="chadmeter", usage="chadmeter [user]")
     async def cmdchadmeter(self, ctx, user: commands.MemberConverter = None):
         await chadmeter(ctx, self.gigachad, user)
 
@@ -65,15 +65,15 @@ class Fun(commands.Cog):
     async def slashgigachadify(self, ctx: SlashContext, user: discord.user = None):
         await gigachadify(ctx, self.gigachad, user, True)
 
-    @commands.command(name="gigachadify")
+    @commands.command(name="gigachadify", usage="chadmeter [user]")
     async def cmdgigachadify(self, ctx, user: commands.MemberConverter = None):
         await gigachadify(ctx, self.gigachad, user)
 
-    @cog_ext.cog_slash(name="quote", description="💬 Get an inspiring quote to get closer to being a Giga Chad")
+    @cog_ext.cog_slash(name="quote", description="💬 Get an inspiring quote to get closer to being a Giga Chad", usage="prefix [new prefix]")
     async def slashquote(self, ctx: SlashContext):
         await quote(ctx, True)
 
-    @commands.command(name="quote")
+    @commands.command(name="quote", usage="quote")
     async def cmdquote(self, ctx):
         await quote(ctx)
 
@@ -81,7 +81,7 @@ class Fun(commands.Cog):
     async def slashadvice(self, ctx: SlashContext):
         await advice(ctx, True)
 
-    @commands.command(name="advice")
+    @commands.command(name="advice", usage="advice")
     async def cmdadvice(self, ctx):
         await advice(ctx)
 

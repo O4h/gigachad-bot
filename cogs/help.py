@@ -15,12 +15,12 @@ class Help(commands.Cog):
     def __init__(self, gigachad):
         self.gigachad = gigachad
 
-    @commands.command()
+    @commands.command(name="support", usage="support")
     async def support(self, ctx):
         embed = discord.Embed(title="Test")
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(name="invite", usage="invite")
     async def invite(self, ctx):
         embed = discord.Embed(title="Invite Giga Chad!", color=0x2f3136,
                               description="Click [here](https://discord.com/api/oauth2/authorize?client_id"
@@ -28,7 +28,7 @@ class Help(commands.Cog):
                                           f"%20applications.commands) to invite Giga Chad!")
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=['about'])
+    @commands.command(name="info", usage="info", aliases=['about'])
     async def info(self, ctx):
         embed = discord.Embed(title="<:gigachad:845633149923753984> Giga Chad Info", color=0x2f3136,
                               description="Giga Chad is a bot written in Python <:python:846068944514711612> by "
@@ -78,7 +78,7 @@ class Help(commands.Cog):
         embed.set_footer(text="Join the suppport server for further information")
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(name="help", usage="help")
     async def help(self, ctx):
         prefix = get_prefix(self, ctx, True)
         embed = discord.Embed(title="<:gigachad:845633149923753984> Giga Chad Help", color=0x2f3136)
@@ -101,7 +101,7 @@ class Help(commands.Cog):
         embed.set_footer(text=f"Join the support server ({prefix}support) for further help")
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(name="support", usage="support")
     async def support(self, ctx):
         embed = discord.Embed(title="Support Server", color=0x2f3136,
                               description="Click [here](https://discord.gg/atPkjGgDBD) to access the support server")
