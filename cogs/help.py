@@ -79,27 +79,33 @@ class Help(commands.Cog):
         await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(name="help", usage="help")
-    async def help(self, ctx):
-        prefix = get_prefix(self, ctx, True)
-        embed = discord.Embed(title="<:gigachad:845633149923753984> Giga Chad Help", color=0x2f3136)
-        embed.add_field(name="<:slash:845659423569477632> Slash Commands",
-                        value="`•` Most of the Giga Chad's commands are [slash commands]("
-                              "https://support.discord.com/hc/fr/articles/1500000368501-Slash-Commands-FAQ). Click "
-                              "the blue link if you don't know what those are and how to use them. If the slash "
-                              "commands don't show up, check if users have the permission to use them, or kick then "
-                              "re-invite the bot using [this](https://discord.com/api/oauth2/authorize?client_id"
-                              f"={str(self.gigachad.user.id)}&permissions=346112&scope=bot%20applications"
-                              ".commands) link. The list of the available slash commands and "
-                              "their description can be found [here](https://discordbotlist.com/bots/giga-chad).",
-                        inline=False)
-        embed.add_field(name="<:settings:845659423561089034> Other Commands",
-                        value=f"`•` `{prefix}help` **-** That's the command you're using right now \n `•` `{prefix}in"
-                              f"fo` **-** Get info about the vote \n `•` `{prefix}invite` **-** Invite the bot to "
-                              f"another server \n `•` `{prefix}support` **-** Get an invite to the support server \n "
-                              f"`•` `{prefix}prefix [new prefix]` **-** Change the bot prefix",
-                        inline=False)
-        embed.set_footer(text=f"Join the support server ({prefix}support) for further help")
-        await ctx.reply(embed=embed, mention_author=False)
+    async def help(self, ctx, command= None):
+        if command is None:
+            prefix = get_prefix(self, ctx, True)
+            embed = discord.Embed(title="<:gigachad:845633149923753984> Giga Chad Help", color=0x2f3136)
+            embed.add_field(name="<:slash:845659423569477632> Slash Commands",
+                            value="`•` Most of the Giga Chad's commands are [slash commands]("
+                                  "https://support.discord.com/hc/fr/articles/1500000368501-Slash-Commands-FAQ). Click "
+                                  "the blue link if you don't know what those are and how to use them. If the slash "
+                                  "commands don't show up, check if users have the permission to use them, or kick then "
+                                  "re-invite the bot using [this](https://discord.com/api/oauth2/authorize?client_id"
+                                  f"={str(self.gigachad.user.id)}&permissions=346112&scope=bot%20applications"
+                                  ".commands) link. The list of the available slash commands and "
+                                  "their description can be found [here](https://discordbotlist.com/bots/giga-chad).",
+                            inline=False)
+            embed.add_field(name="<:settings:845659423561089034> Other Commands",
+                            value=f"`•` `{prefix}help` **-** That's the command you're using right now \n `•` `{prefix}in"
+                                  f"fo` **-** Get info about the vote \n `•` `{prefix}invite` **-** Invite the bot to "
+                                  f"another server \n `•` `{prefix}support` **-** Get an invite to the support server \n "
+                                  f"`•` `{prefix}prefix [new prefix]` **-** Change the bot prefix",
+                            inline=False)
+            embed.set_footer(text=f"Join the support server ({prefix}support) for further help")
+            await ctx.reply(embed=embed, mention_author=False)
+        else:
+            if command in self.gigachad.commands:
+                print("command")
+            else:
+                print("Command not in commands")
 
     @commands.command(name="support", usage="support")
     async def support(self, ctx):
