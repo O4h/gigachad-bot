@@ -4,6 +4,9 @@ import asyncio
 import traceback
 from discord.ext import commands
 from cogs.fun import error_api
+from discord.ext import commands
+from discord_slash import cog_ext, SlashContext
+from discord_slash.utils.manage_commands import create_option, create_choice
 
 
 class Caption(commands.Cog):
