@@ -49,7 +49,11 @@ class Help(commands.Cog):
                         value="`•` [@berlin.1969](https://www.instagram.com/berlin.1969/) \n `•` ["
                               "flaticon.com](https://www.flaticon.com/)",
                         inline=True)
-
+        embed.add_field(name="<:gc_docs:848858392805113886> Docs",
+                        value="`•` Click [here](https://docs.gigachad-bot.xyz/) to see the docs", inline=True)
+        embed.add_field(name="<:gc_github:848857906535333926> Source Code",
+                        value="`•` Click [here](https://github.com/thorgal108/gigachad-bot) to see the bot's source code"
+                        , inline=True)
         try:
             headers = {"AUTH-TOKEN": WATCHBOT_API_KEY}
             url = f"https://api.watchbot.app/bot/{str(self.gigachad.user.id)}"
@@ -58,8 +62,8 @@ class Help(commands.Cog):
                     data = await r.read()
             json_data = json.loads(data)
             embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
-                            value=f"`•` Click [here](https://status.watchbot.app/bot/"
-                                  f"{str(self.gigachad.user.id)}) to access the bot's uptime history\n - "
+                            value=f"`•` Click [here](https://status.gigachad-bot.xyz/"
+                                  f") to access the bot's uptime history\n - "
                                   f"Over the last week: `{json_data['7d']}%` uptime \n - Over the last month: `"
                                   f"{json_data['30d']}%` uptime \n - Over the last 90 days: `{json_data['90d']}% uptime`",
                             inline=False)
@@ -67,7 +71,8 @@ class Help(commands.Cog):
         except:
             embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
                             value=f"`•` <:gc_no:847027842365915167> Something went wrong, the bot wasn't able to "
-                                  f"retrieve its uptime.",
+                                  f"retrieve its uptime. \n `•` Click [here](https://status.gigachad-bot.xyz/) to acess "
+                                  f"the bot's detailed uptime",
                             inline=False)
 
         embed.set_footer(text="Join the suppport server for further information")
