@@ -18,7 +18,7 @@ class Help(commands.Cog):
     @commands.command(name="support", usage="support")
     async def support(self, ctx):
         embed = discord.Embed(title="Test")
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(name="invite", usage="invite")
     async def invite(self, ctx):
@@ -26,7 +26,7 @@ class Help(commands.Cog):
                               description="Click [here](https://discord.com/api/oauth2/authorize?client_id"
                                           f"={str(self.gigachad.user.id)}&permissions=346112&scope=bot"
                                           f"%20applications.commands) to invite Giga Chad!")
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(name="info", usage="info", aliases=['about'])
     async def info(self, ctx):
@@ -76,7 +76,7 @@ class Help(commands.Cog):
                             inline=False)
 
         embed.set_footer(text="Join the suppport server for further information")
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(name="help", usage="help")
     async def help(self, ctx):
@@ -99,13 +99,13 @@ class Help(commands.Cog):
                               f"`•` `{prefix}prefix [new prefix]` **-** Change the bot prefix",
                         inline=False)
         embed.set_footer(text=f"Join the support server ({prefix}support) for further help")
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(name="support", usage="support")
     async def support(self, ctx):
         embed = discord.Embed(title="Support Server", color=0x2f3136,
                               description="Click [here](https://discord.gg/atPkjGgDBD) to access the support server")
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
 
 
 def setup(gigachad):

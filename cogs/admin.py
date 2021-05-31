@@ -23,7 +23,7 @@ class Admin(commands.Cog):
                     except Exception as e:
                         embed.add_field(name=f"Failed to reload: `{ext}`", value=e, inline=False)
                     await asyncio.sleep(0.5)
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, mention_author=False)
         else:
             embed = discord.Embed(title=f"<:settings:845659423561089034> Reloading cog `{cog}.py`", color=0x2f3136)
             ext = f"{cog.lower()}.py"
@@ -38,7 +38,7 @@ class Admin(commands.Cog):
                     desired_trace = traceback.format_exc()
                     embed.add_field(
                         name=f"Failed to reload: `{ext}`", value=desired_trace, inline=False)
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, mention_author=False)
 
 
 def setup(gigachad):

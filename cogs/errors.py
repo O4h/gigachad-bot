@@ -14,14 +14,14 @@ class Errors(commands.Cog):
             embed = discord.Embed(title="Forbidden Command",
                                   color=0xed4245, description="Only the bot owner can execute this command")
             embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/847029255048658975.png?size=32")
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.NoPrivateMessage):
             embed = discord.Embed(color=0xed4245, title="Not in DMs",
                                   description="This commands **can not** be executed in direct messages, only in "
                                               "servers!")
             embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32")
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.MissingPermissions):
             missingperms = ""
@@ -32,7 +32,7 @@ class Errors(commands.Cog):
                                   description=f" <:gc_role:847078576058138644> You are missing the permission(s) "
                                               f"{missingperms}")
             embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32")
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.BotMissingPermissions):
             missingperms = ""
@@ -43,14 +43,14 @@ class Errors(commands.Cog):
                                   description=f" <:gc_role:847078576058138644> I am missing the following permission(s):"
                                               f" {missingperms}")
             embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32")
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.BadArgument):
             embed = discord.Embed(color=0xed4245, title="Wrong Argument(s)",
                                   description=f" You entered wrong arguments for the `{ctx.command.name}` command. \n"
-                                              f"Use it like `{ctx.command.usage}`")
+                                              f"Use it like that: `{ctx.command.usage}`")
             embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32")
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, mention_author=False)
 
         else:
             traceback.print_exception(type(error), error, error.__traceback__)
