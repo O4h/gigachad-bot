@@ -4,3 +4,4 @@ Pillow~=8.2.0
 discord-py-slash-commands~=1.12
 discord.py~=1.6.0
 urllib3~=1.26.4
+aiohttp~=3.7.4
