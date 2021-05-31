@@ -69,7 +69,7 @@ class Fun(commands.Cog):
     async def cmdgigachadify(self, ctx, user: commands.MemberConverter = None):
         await gigachadify(ctx, self.gigachad, user)
 
-    @cog_ext.cog_slash(name="quote", description="💬 Get an inspiring quote to get closer to being a Giga Chad", usage="prefix [new prefix]")
+    @cog_ext.cog_slash(name="quote", description="💬 Get an inspiring quote to get closer to being a Giga Chad")
     async def slashquote(self, ctx: SlashContext):
         await quote(ctx, True)
 
