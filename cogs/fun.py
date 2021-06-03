@@ -1,3 +1,4 @@
+@@ -1,223 +0,0 @@
 import random
 import discord
 import urllib.request
