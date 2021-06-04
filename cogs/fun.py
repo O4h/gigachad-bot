@@ -1,4 +1,3 @@
-@@ -1,223 +0,0 @@
 import random
 import discord
 import urllib.request
@@ -36,7 +35,9 @@ class Fun(commands.Cog):
     async def slashmeme(self, ctx: SlashContext, subreddit=None):
         await meme(ctx, subreddit, True)
 
-    @commands.command(name="meme", usage="meme [user]")
+    @commands.command(name="meme", usage="meme [subreddit]",
+                      description="Get a random meme from reddit or from a specific subreddit! Just type the name of "
+                                  "the subreddit, like 'fun' instead of 'r/fun' !")
     async def cmdmeme(self, ctx, subreddit: str = None):
         await meme(ctx, subreddit)
 
@@ -51,7 +52,8 @@ class Fun(commands.Cog):
     async def slashchadmeter(self, ctx: SlashContext, user: discord.user = None):
         await chadmeter(ctx, self.gigachad, user, True)
 
-    @commands.command(name="chadmeter", usage="chadmeter [user]")
+    @commands.command(name="chadmeter", usage="chadmeter [user]",
+                      description="Scientifcally measure your or someone else's Chad level!")
     async def cmdchadmeter(self, ctx, user: commands.MemberConverter = None):
         await chadmeter(ctx, self.gigachad, user)
 
@@ -66,7 +68,8 @@ class Fun(commands.Cog):
     async def slashgigachadify(self, ctx: SlashContext, user: discord.user = None):
         await gigachadify(ctx, self.gigachad, user, True)
 
-    @commands.command(name="gigachadify", usage="chadmeter [user]")
+    @commands.command(name="gigachadify", usage="gigachadify [user]",
+                      description="Turn you or someone else into a Giga Chad!")
     async def cmdgigachadify(self, ctx, user: commands.MemberConverter = None):
         await gigachadify(ctx, self.gigachad, user)
 
@@ -74,7 +77,8 @@ class Fun(commands.Cog):
     async def slashquote(self, ctx: SlashContext):
         await quote(ctx, True)
 
-    @commands.command(name="quote", usage="quote")
+    @commands.command(name="quote", usage="quote",
+                      description="Get an inspiring quote to get closer to being a Giga Chad")
     async def cmdquote(self, ctx):
         await quote(ctx)
 
@@ -82,7 +86,7 @@ class Fun(commands.Cog):
     async def slashadvice(self, ctx: SlashContext):
         await advice(ctx, True)
 
-    @commands.command(name="advice", usage="advice")
+    @commands.command(name="advice", usage="advice", description="Get some advice from Giga Chad!")
     async def cmdadvice(self, ctx):
         await advice(ctx)
 

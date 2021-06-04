@@ -9,7 +9,7 @@ class Admin(commands.Cog):
     def __init__(self, gigachad):
         self.gigachad = gigachad
 
-    @commands.command()
+    @commands.command(name="reload", usage="reload [cog]", description="Admin cmd, do not touch")
     @commands.is_owner()
     async def reload(self, ctx, cog=None):
         if cog is None:

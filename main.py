@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord_slash import SlashCommand
 from cogs.prefix import get_prefix
+from cogs.help import CustomHelp
 
 default_intents = discord.Intents.default()
 intents = discord.Intents(messages=True, guilds=True)
@@ -12,7 +13,7 @@ intents = discord.Intents(messages=True, guilds=True)
 
 class GigaChad(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=get_prefix, case_insensitive=True, intents=intents)
+        super().__init__(command_prefix=get_prefix, help_command=CustomHelp(), case_insensitive=True, strip_after_prefix=True, intents=intents)
 
     async def on_ready(self):
         print('------')
@@ -27,12 +28,11 @@ class GigaChad(commands.Bot):
 
 gigachad = GigaChad()
 
-gigachad.remove_command('help')
-
 slash = SlashCommand(gigachad, sync_commands=True, sync_on_cog_reload=True)
 
+
 for filename in os.listdir('./cogs'):
-    if filename.endswith(".py") and not filename.startswith("_"):
+    if filename.endswith(".py") and not filename.startswith("_") and not filename.startswith("help"):
         gigachad.load_extension(f"cogs.{filename[:-3]}")
 
 load_dotenv()
