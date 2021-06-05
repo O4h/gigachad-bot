@@ -17,7 +17,8 @@ class Other(commands.Cog):
 
     @commands.command(name="support", usage="support", description="Get an invite to the support server")
     async def support(self, ctx):
-        embed = discord.Embed(title="Test")
+        embed = discord.Embed(title="Support Server", color=0x2f3136,
+                              description="Click [here](https://discord.gg/atPkjGgDBD) to access the support server")
         await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(name="invite", usage="invite", description="Get the link to invite Giga Chad")
