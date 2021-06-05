@@ -1,6 +1,7 @@
 import discord
 import os
 import asyncio
+import jishaku
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord_slash import SlashCommand
@@ -38,6 +39,7 @@ slash = SlashCommand(gigachad, sync_commands=True, sync_on_cog_reload=True)
 for filename in os.listdir('./cogs'):
     if filename.endswith(".py") and not filename.startswith("_") and not filename.startswith("help"):
         gigachad.load_extension(f"cogs.{filename[:-3]}")
+gigachad.load_extension("jishaku")
 
 load_dotenv()
 gigachad.run(os.getenv("TOKEN"))
