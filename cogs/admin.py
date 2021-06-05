@@ -5,7 +5,7 @@ import traceback
 from discord.ext import commands
 
 
-class Admin(commands.Cog):
+class Admin(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, gigachad):
         self.gigachad = gigachad
 
