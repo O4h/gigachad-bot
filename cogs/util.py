@@ -55,29 +55,13 @@ class Other(commands.Cog):
         embed.add_field(name="<:gc_github:848857906535333926> Source Code",
                         value="`•` Click [here](https://github.com/thorgal108/gigachad-bot) to see the bot's source code"
                         , inline=True)
-        try:
-            headers = {"AUTH-TOKEN": WATCHBOT_API_KEY}
-            url = f"https://api.watchbot.app/bot/{str(self.gigachad.user.id)}"
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, headers=headers) as r:
-                    data = await r.read()
-            json_data = json.loads(data)
-            embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
-                            value=f"`•` Click [here](https://status.gigachad-bot.xyz/"
-                                  f") to access the bot's uptime history\n - "
-                                  f"Over the last week: `{json_data['7d']}%` uptime \n - Over the last month: `"
-                                  f"{json_data['30d']}%` uptime \n - Over the last 90 days: `{json_data['90d']}% uptime`",
-                            inline=False)
-
-        except:
-            embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
-                            value=f"`•` <:gc_no:847027842365915167> Something went wrong, the bot wasn't able to "
-                                  f"retrieve its uptime. \n `•` Click [here](https://status.gigachad-bot.xyz/) to acess "
-                                  f"the bot's detailed uptime",
-                            inline=False)
-
+        embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
+                        value="Loading... <a:gc_loading:850625396017594368>")
         embed.set_footer(text="Join the suppport server for further information")
-        await ctx.reply(embed=embed, mention_author=False)
+        message = await ctx.reply(embed=embed, mention_author=False)
+        embed.set_field_at(index=8, name="<:gc_uptime:847029255225344020> Uptime", value=await get_uptime(), inline=False)
+        await message.edit(embed=embed)
+
 
     @commands.command(name="prefix", usage="prefix [new prefix]",
                       description="Change the guild prefix. Requires the user to have <:gc_role:847078576058138644> "
@@ -121,6 +105,23 @@ class Other(commands.Cog):
                         value="`•` If none of the above solutions worked, click [here]("
                               "http://links.gigachad-bot.xyz/support) to join the support server and get further help")
         await ctx.reply(embed=embed, mention_author=False)
+
+
+async def get_uptime():
+    try:
+        headers = {"AUTH-TOKEN": WATCHBOT_API_KEY}
+        url = f"https://api.watchbot.app/bot/843550872293867570"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as r:
+                data = await r.read()
+        json_data = json.loads(data)
+        return f"`•` Click [here](https://status.gigachad-bot.xyz/) to access the bot's uptime history\n - Over the " \
+               f"last week: `{json_data['7d']}%` uptime \n - Over the last month: `{json_data['30d']}%` uptime \n - " \
+               f"Over the last 90 days: `{json_data['90d']}% uptime` "
+
+    except:
+        return "`•` <:gc_no:847027842365915167> Something went wrong, the bot wasn't able to retrieve its uptime. \n " \
+               "`•` Click [here](https://status.gigachad-bot.xyz/) to acess the bot's detailed uptime"
 
 
 def setup(gigachad):
