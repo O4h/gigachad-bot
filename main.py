@@ -13,7 +13,11 @@ intents = discord.Intents(messages=True, guilds=True)
 
 class GigaChad(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=get_prefix, help_command=CustomHelp(), case_insensitive=True, strip_after_prefix=True, intents=intents)
+        super().__init__(command_prefix=get_prefix,
+                         help_command=CustomHelp(),
+                         case_insensitive=True,
+                         strip_after_prefix=True,
+                         intents=intents)
 
     async def on_ready(self):
         print('------')

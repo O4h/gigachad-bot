@@ -104,7 +104,11 @@ async def meme(ctx, subreddit=None, slash: bool = False):
             else:
                 await ctx.send(content="Sorry, the meme was NSFW. Try another one!")
             return
-        embed = discord.Embed(color=0x2f3136, url=json_data['postLink'], title=json_data['title'])
+        embed = discord.Embed(
+                              color=0x2f3136,
+                              url=json_data['postLink'],
+                              title=json_data['title']
+                             )
         embed.set_footer(text=f"r/{json_data['subreddit']} | u/{json_data['author']}")
         embed.set_image(url=json_data['url'])
         if slash:
@@ -120,7 +124,9 @@ async def advice(ctx, slash: bool = False):
     try:
         json_data = await fetch('https://api.adviceslip.com/advice')
         advice = json_data['slip']['advice']
-        embed = discord.Embed(title="💡 Helpful Advice", color=0x2f3136,
+        embed = discord.Embed(
+                              title="💡 Helpful Advice",
+                              color=0x2f3136,
                               description=f"🗣 {advice}")
         embed.set_footer(text="Follow or not this advice, up to you")
         if slash:
@@ -141,7 +147,11 @@ async def chadmeter(ctx, bot, user, slash: bool = False):
         if user.id == appinfo.owner.id or bot.user.id:
             chadlevel = 100
         message = f"{user.mention}'s Chad level is `{chadlevel}%`!"
-    embed = discord.Embed(title="📏 Chadmeter", description=message, color=0x2f3136)
+    embed = discord.Embed(
+                          title="📏 Chadmeter",
+                          description=message,
+                          color=0x2f3136
+                         )
     embed.set_footer(icon_url=bot.user.avatar_url, text="Chadmeter never lies, Copyrighted © method")
     embed.set_thumbnail(
         url="https://preview.redd.it/23td86ox29j51.png?auto=webp&s=c617e39e98b1e601cc91168369bd6ea38cd55f89")
@@ -156,12 +166,12 @@ async def quote(ctx, slash: bool = False):
         json_data = await fetch("https://api.quotable.io/random")
         quote = json_data['content']
         author = json_data['author']
-        embed = discord.Embed(title="💬 Inspiring quote", color=0x2f3136,
-                              description=f"<:quote1:845745030912278598> \n**{quote}** \n <:blank:845752143226077245>"
-                                          "<:blank:845752143226077245><:blank:845752143226077245> "
-                                          "<:blank:845752143226077245> "
-                                          "<:blank:845752143226077245><:blank:845752143226077245> "
-                                          f"<:blank:845752143226077245><:quote2:845745030978994216> \n - {author}")
+        embed = discord.Embed(
+                              title="💬 Inspiring quote",
+                              color=0x2f3136,
+                              description=f"<:quote1:845745030912278598> \n**{quote}** \n \n - {author} "
+                                          f"<:quote2:845745030978994216>"
+                              )
         embed.set_footer(text="I hope this quote inspired you to become a Giga Chad")
         if slash:
             await ctx.send(embed=embed, hidden=False)
@@ -199,7 +209,10 @@ async def gigachadify(ctx, bot: discord.client, user=None, slash: bool = False):
             footer = "Yep. That's me"
             file = discord.File("gigachad.png")
             attachment = "attachment://gigachad.png"
-    embed = discord.Embed(title=prefix, color=0x2f3136)
+    embed = discord.Embed(
+                          title=prefix,
+                          color=0x2f3136
+                         )
     embed.set_footer(icon_url=bot.user.avatar_url, text=footer)
     embed.set_image(url=attachment)
     if slash:
@@ -216,8 +229,11 @@ async def fetch(url):
 
 
 async def error_api(ctx, slash: bool = False):
-    embed = discord.Embed(color=0xed4245, title="Something went wrong",
-                          description="Wait a bit and retry, and contact the bot support if it happens again")
+    embed = discord.Embed(
+                          title="Something went wrong",
+                          color=0xed4245,
+                          description="Wait a bit and retry, and contact the bot support if it happens again"
+                         )
     if slash:
         await ctx.send(embed=embed, hidden=True)
     else:
