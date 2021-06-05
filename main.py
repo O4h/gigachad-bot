@@ -18,6 +18,8 @@ class GigaChad(commands.Bot):
                          help_command=CustomHelp(),
                          case_insensitive=True,
                          strip_after_prefix=True,
+                         activity=discord.Activity(type=discord.ActivityType.listening,
+                                                   name="@Giga Chad help"),
                          intents=intents)
 
     async def on_ready(self):
@@ -27,8 +29,6 @@ class GigaChad(commands.Bot):
         print(self.user.id)
         print(discord.__version__)
         print('------')
-        await gigachad.change_presence(activity=discord.Activity(type=discord.ActivityType.listening,
-                                                                 name="@Giga Chad help"))
 
 
 gigachad = GigaChad()
