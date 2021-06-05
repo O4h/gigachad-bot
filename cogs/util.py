@@ -57,12 +57,12 @@ class Other(commands.Cog):
                         value="`•` Click [here](https://github.com/thorgal108/gigachad-bot) to see the bot's source code"
                         , inline=True)
         embed.add_field(name="<:gc_uptime:847029255225344020> Uptime",
-                        value="Loading... <a:gc_loading:850625396017594368>")
+                        value="Loading... <a:gc_loading:850625396017594368>", inline=False)
         embed.set_footer(text="Join the suppport server for further information")
         message = await ctx.reply(embed=embed, mention_author=False)
-        embed.set_field_at(index=8, name="<:gc_uptime:847029255225344020> Uptime", value=await get_uptime(), inline=False)
+        embed.set_field_at(index=8, name="<:gc_uptime:847029255225344020> Uptime", value=await get_uptime(),
+                           inline=False)
         await message.edit(embed=embed)
-
 
     @commands.command(name="prefix", usage="prefix [new prefix]",
                       description="Change the guild prefix. Requires the user to have <:gc_role:847078576058138644> "
