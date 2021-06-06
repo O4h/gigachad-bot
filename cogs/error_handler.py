@@ -52,6 +52,11 @@ class Errors(commands.Cog):
             embed.set_thumbnail(url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32")
             await ctx.reply(embed=embed, mention_author=False)
 
+        elif isinstance(error, commands.CommandOnCooldown):
+            await ctx.reply(content=f" <:gc_warning:847029255022837771> Please wait `{round(error.retry_after)}` "
+                                    f"seconds before using this command again!",
+                            mention_author=False, delete_after=error.retry_after)
+
         else:
             traceback.print_exception(type(error), error, error.__traceback__)
 
