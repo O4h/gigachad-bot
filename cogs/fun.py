@@ -38,6 +38,7 @@ class Fun(commands.Cog):
     @commands.command(name="meme", usage="meme [subreddit]",
                       description="Get a random meme from reddit or from a specific subreddit! Just type the name of "
                                   "the subreddit, like 'fun' instead of 'r/fun' !")
+    @commands.cooldown(1, 3, commands.BucketType.user)
     async def cmdmeme(self, ctx, subreddit: str = None):
         await meme(ctx, subreddit)
 
@@ -54,8 +55,62 @@ class Fun(commands.Cog):
 
     @commands.command(name="chadmeter", usage="chadmeter [user]",
                       description="Scientifcally measure your or someone else's Chad level!")
+    @commands.cooldown(1, 3, commands.BucketType.user)
     async def cmdchadmeter(self, ctx, user: commands.MemberConverter = None):
         await chadmeter(ctx, self.gigachad, user)
+
+    @cog_ext.cog_slash(name="caption",
+                       description="🎭 Caption a meme, 25 meme templates available!",
+                       options=[
+                           create_option(
+                               name="template",
+                               description="Choose a meme template",
+                               option_type=3,
+                               required=True,
+                               choices=[
+                                   create_choice(name="Two Buttons", value="87743020"),
+                                   create_choice(name="Distracted Boyfriend", value="112126428"),
+                                   create_choice(name="Drake Yikes", value="181913649"),
+                                   create_choice(name="Batman Slaps Robin", value="438680"),
+                                   create_choice(name="Trade Offer", value="309868304"),
+                                   create_choice(name="Change my Mind", value="129242436"),
+                                   create_choice(name="UNO Draw 25", value="217743513"),
+                                   create_choice(name="Woman Yelling at Cat", value="188390779"),
+                                   create_choice(name="Inhaling Seagull", value="114585149"),
+                                   create_choice(name="Giga Chad", value="190327839"),
+                                   create_choice(name="Another Woman", value="110163934"),
+                                   create_choice(name="Same Pictures", value="180190441"),
+                               ]
+                           ),
+                           create_option(
+                               name="top_caption",
+                               description="Write the top text",
+                               option_type=3,
+                               required=True
+                           ),
+                           create_option(
+                               name="bottom_caption",
+                               description="Write the bottom text",
+                               option_type=3,
+                               required=True
+                           ),
+                       ])
+    async def caption(self, ctx: SlashContext, template: int, top_caption: str, bottom_caption: str):
+        try:
+            pload = {'font': 'impact', 'username': 'Thorgal108', 'password': 'zrRyU&D!FxpK3T3',
+                     'template_id': template, 'text1': bottom_caption, 'text0': top_caption}
+            async with aiohttp.ClientSession() as session:
+                async with session.post('https://api.imgflip.com/caption_image', data=pload) as r:
+                    data = await r.read()
+            json_data = json.loads(data)
+            embed = discord.Embed(color=0x2f3136)
+            embed.set_image(url=json_data['data']['url'])
+            embed.set_author(name='Click to access the post', url=json_data['data']['page_url'])
+            embed.set_footer(text="Made with the imgflip.com API")
+            await ctx.send(embed=embed, hidden=False)
+
+        except:
+            await error_api(ctx)
 
     @cog_ext.cog_slash(name="gigachadify", description="💫 Gigadify yourself or another user!",
                        options=[
@@ -70,6 +125,7 @@ class Fun(commands.Cog):
 
     @commands.command(name="gigachadify", usage="gigachadify [user]",
                       description="Turn you or someone else into a Giga Chad!")
+    @commands.cooldown(1, 4, commands.BucketType.user)
     async def cmdgigachadify(self, ctx, user: commands.MemberConverter = None):
         await gigachadify(ctx, self.gigachad, user)
 
@@ -79,6 +135,7 @@ class Fun(commands.Cog):
 
     @commands.command(name="quote", usage="quote",
                       description="Get an inspiring quote to get closer to being a Giga Chad")
+    @commands.cooldown(1, 3, commands.BucketType.user)
     async def cmdquote(self, ctx):
         await quote(ctx)
 
@@ -87,6 +144,7 @@ class Fun(commands.Cog):
         await advice(ctx, True)
 
     @commands.command(name="advice", usage="advice", description="Get some advice from Giga Chad!")
+    @commands.cooldown(1, 3, commands.BucketType.user)
     async def cmdadvice(self, ctx):
         await advice(ctx)
 
