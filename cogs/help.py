@@ -39,7 +39,10 @@ class CustomHelp(commands.HelpCommand):
         embed.set_footer(
                         text=f"Join the support server ({prefix}support) for further help"
                         )
-        await self.context.reply(embed=embed, mention_author=False)
+        await self.context.reply(
+                                 embed=embed,
+                                 mention_author=False
+                                )
 
     async def send_command_help(self, command):
         prefix = get_prefix(self, self.context, True)
@@ -52,7 +55,10 @@ class CustomHelp(commands.HelpCommand):
         embed.set_footer(
                         text=f"Type {prefix}help for global help!"
                         )
-        await self.context.reply(embed=embed, mention_author=False)
+        await self.context.reply(
+                                 embed=embed,
+                                 mention_author=False
+                                )
 
     async def send_cog_help(self, cog):
         prefix = get_prefix(self, self.context, True)
@@ -66,5 +72,10 @@ class CustomHelp(commands.HelpCommand):
                               color=0x2f3136,
                               description=cmds
                              )
-        embed.set_footer(text=f"Type {prefix}help for global help!")
-        await self.context.reply(embed=embed, mention_author=False)
+        embed.set_footer(
+                        text=f"Type {prefix}help for global help!"
+                        )
+        await self.context.reply(
+                                 embed=embed,
+                                 mention_author=False
+                                )
