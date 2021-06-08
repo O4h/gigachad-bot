@@ -3,9 +3,11 @@ import asyncio
 import os
 import aiohttp
 import json
+
 from dotenv import load_dotenv
 from discord.ext import commands
 from cogs.prefix import get_prefix
+from util.emotes import get_emote
 
 load_dotenv()
 WATCHBOT_API_KEY = os.getenv("WATCHBOT_API_KEY")
@@ -38,7 +40,7 @@ class Other(commands.Cog):
                       )
     async def invite(self, ctx):
         embed = discord.Embed(
-                              title="Invite Giga Chad!",
+                              title=get_emote("invite") + "Invite Giga Chad!",
                               color=0x2f3136,
                               description="Click [here](https://discord.com/api/oauth2/authorize?client_id"
                                           f"={str(self.gigachad.user.id)}&permissions=346112&scope=bot"
@@ -57,58 +59,58 @@ class Other(commands.Cog):
                      )
     async def info(self, ctx):
         embed = discord.Embed(
-                              title="<:gigachad:845633149923753984> Giga Chad Info",
+                              title=get_emote("gigachad") + " Giga Chad Info",
                               color=0x2f3136,
-                              description="Giga Chad is a bot written in Python <:python:846068944514711612> by "
+                              description=f"Giga Chad is a bot written in Python {get_emote('python')} by "
                                           "`Thorgal#0982` using the discord.py and discord-py-slash-command "
                                           "librairies."
                               )
         embed.add_field(
-                        name="<:gc_info:847034105026838569> Version",
+                        name=get_emote("info") + " Version",
                         value="`•` Giga Chad Bot `v1.0`",
                         inline=True
                         )
         embed.add_field(
-                        name="<:gc_stats:847029255178944532> Stats",
+                        name=get_emote("stats") + " Stats",
                         value=f"`•` {str(len(self.gigachad.guilds))} Servers",
                         inline=True
                         )
         embed.add_field(
-                        name="<:gc_ping:847031168015794176> Ping",
+                        name=get_emote("ping") + " Ping",
                         value=f"`•` `{round(self.gigachad.latency * 1000)}ms`",
                         inline=True
                         )
         embed.add_field(
-                        name="<:gc_help:847030094417625108> Support Server",
+                        name=get_emote("sos") + " Support Server",
                         value="`•` Click [here](https://discord.gg/atPkjGgDBD) to join",
                         inline=True
                         )
         embed.add_field(
-                        name="<:gc_invite:847035767519707136> Invite",
+                        name=get_emote("invite") + " Invite",
                         value="`•` Click [here](https://discord.com/api/oauth2/authorize?client_id"
                               f"{str(self.gigachad.user.id)}&permissions=346112&scope=bot%20applications.commands"
                               ") to invite",
                         inline=True
                         )
         embed.add_field(
-                        name="<:gc_copyright:847029255254310933> Credits",
+                        name=get_emote("copyright") + " Credits",
                         value="`•` [@berlin.1969](https://www.instagram.com/berlin.1969/) \n `•` ["
                               "flaticon.com](https://www.flaticon.com/)",
                         inline=True)
         embed.add_field(
-                        name="<:gc_docs:848858392805113886> Docs",
+                        name=get_emote("docs") + " Docs",
                         value="`•` Click [here](https://docs.gigachad-bot.xyz/) to see the docs",
                         inline=True
                         )
         embed.add_field(
-                        name="<:gc_github:848857906535333926> Source Code",
+                        name=get_emote("github") + " Source Code",
                         value="`•` Click [here](https://github.com/thorgal108/gigachad-bot) to see the bot's source "
                               "code ",
                         inline=True
                         )
         embed.add_field(
-                        name="<:gc_uptime:847029255225344020> Uptime",
-                        value="Loading... <a:gc_loading:850625396017594368>",
+                        name=get_emote("uptime") + " Uptime",
+                        value="Loading..." + get_emote('loading'),
                         inline=False
                         )
         embed.set_footer(
@@ -120,7 +122,7 @@ class Other(commands.Cog):
                                   )
         embed.set_field_at(
                            index=8,
-                           name="<:gc_uptime:847029255225344020> Uptime",
+                           name=get_emote("uptime") + " Uptime",
                            value=await get_uptime(),
                            inline=False
                             )
@@ -131,9 +133,10 @@ class Other(commands.Cog):
     @commands.command(
                       name="prefix",
                       usage="prefix [new prefix]",
-                      description="Change the guild prefix. Requires the user to have <:gc_role:847078576058138644> "
+                      description=f"Change the guild prefix. Requires the user to have {get_emote('role')} "
                                   "`MANAGE_SERVER` permission"
                       )
+
     @commands.has_permissions(manage_guild=True)
     @commands.guild_only()
     async def prefix(self, ctx, prefix=None):
@@ -176,7 +179,7 @@ class Other(commands.Cog):
                      )
     async def slash(self, ctx):
         embed = discord.Embed(
-                              title="Slash Commands Troubleshooting",
+                              title=get_emote("slash") + " Slash Commands Troubleshooting",
                               color=0x2f3136,
                               description="There might be a few different reasons on why the slash commands aren't "
                                           "working. Here is a list of them:"
@@ -216,7 +219,7 @@ async def get_uptime():
                f"Over the last 90 days: `{json_data['90d']}% uptime` "
 
     except:
-        return "`•` <:gc_no:847027842365915167> Something went wrong, the bot wasn't able to retrieve its uptime. \n " \
+        return f"`•` {get_emote('no')} Something went wrong, the bot wasn't able to retrieve its uptime. \n " \
                "`•` Click [here](https://status.gigachad-bot.xyz/) to acess the bot's detailed uptime"
 
 

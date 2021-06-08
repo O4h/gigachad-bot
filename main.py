@@ -2,11 +2,12 @@ import discord
 import os
 import asyncio
 import jishaku
+
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord_slash import SlashCommand
 from cogs.prefix import get_prefix
-from cogs.help import CustomHelp
+from util.help import CustomHelp
 
 default_intents = discord.Intents.default()
 intents = discord.Intents(messages=True, guilds=True)
@@ -37,7 +38,7 @@ slash = SlashCommand(gigachad, sync_commands=True, sync_on_cog_reload=True)
 
 
 for filename in os.listdir('./cogs'):
-    if filename.endswith(".py") and not filename.startswith("_") and not filename.startswith("help"):
+    if filename.endswith(".py") and not filename.startswith("_"):
         gigachad.load_extension(f"cogs.{filename[:-3]}")
 gigachad.load_extension("jishaku")
 

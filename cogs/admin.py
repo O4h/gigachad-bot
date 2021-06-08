@@ -2,7 +2,9 @@ import discord
 import os
 import asyncio
 import traceback
+
 from discord.ext import commands
+from util.emotes import get_emote
 
 
 class Admin(commands.Cog, command_attrs=dict(hidden=True)):
@@ -19,7 +21,7 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
         if cog is None:
             async with ctx.typing():
                 embed = discord.Embed(
-                                      title="<:settings:845659423561089034> Reloading all cogs.",
+                                      title=f"{get_emote('settings')} Reloading all cogs.",
                                       color=0x2f3136
                                       )
                 for ext in os.listdir("./cogs/"):
@@ -29,7 +31,7 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
                             self.gigachad.load_extension(f"cogs.{ext[:-3]}")
                             embed.add_field(
                                             name=f"Reloaded: `{ext}`",
-                                            value='Succesful',
+                                            value=f"{get_emote('yes')} Succesful",
                                             inline=False
                                             )
                         except Exception as e:
@@ -46,7 +48,7 @@ class Admin(commands.Cog, command_attrs=dict(hidden=True)):
         else:
             async with ctx.typing():
                 embed = discord.Embed(
-                                      title=f"<:settings:845659423561089034> Reloading cog `{cog}.py`",
+                                      title=f"{get_emote('settings')} Reloading cog `{cog}.py`",
                                       color=0x2f3136
                                      )
                 ext = f"{cog.lower()}.py"

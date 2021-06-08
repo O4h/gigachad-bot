@@ -8,9 +8,11 @@ import asyncio
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 from io import BytesIO
+
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
+from util.emotes import get_emote
 
 load_dotenv()
 
@@ -104,78 +106,78 @@ class Fun(commands.Cog):
                     data = await r.read()
             json_data = json.loads(data)
             embed = discord.Embed(
-                                  color=0x2f3136
-                                 )
+                color=0x2f3136
+            )
             embed.set_image(
-                            url=json_data['data']['url']
-                            )
+                url=json_data['data']['url']
+            )
             embed.set_author(
-                             name='Click to access the post',
-                             url=json_data['data']['page_url']
-                            )
+                name='Click to access the post',
+                url=json_data['data']['page_url']
+            )
             embed.set_footer(
-                             text="Made with the imgflip.com API"
-                            )
+                text="Made with the imgflip.com API"
+            )
             await ctx.send(
-                           embed=embed,
-                           hidden=False
-                            )
+                embed=embed,
+                hidden=False
+            )
 
         except:
             await error_api(ctx)
 
     @cog_ext.cog_slash(
-                       name="gigachadify",
-                       description="💫 Gigadify yourself or another user!",
-                       options=[
-                           create_option(
-                               name="user",
-                               description="GigaChadify another user!",
-                               option_type=6,
-                               required=False,
-                                        )
-                                ]
-                        )
+        name="gigachadify",
+        description="💫 Gigadify yourself or another user!",
+        options=[
+            create_option(
+                name="user",
+                description="GigaChadify another user!",
+                option_type=6,
+                required=False,
+            )
+        ]
+    )
     async def slashgigachadify(self, ctx: SlashContext, user: discord.user = None):
         await gigachadify(ctx, self.gigachad, user, True)
 
     @commands.command(
-                      name="gigachadify",
-                      usage="gigachadify [user]",
-                      description="Turn you or someone else into a Giga Chad!"
-                        )
+        name="gigachadify",
+        usage="gigachadify [user]",
+        description="Turn you or someone else into a Giga Chad!"
+    )
     @commands.cooldown(1, 4, commands.BucketType.user)
     async def cmdgigachadify(self, ctx, user: commands.MemberConverter = None):
         await gigachadify(ctx, self.gigachad, user)
 
     @cog_ext.cog_slash(
-                       name="quote",
-                        description="💬 Get an inspiring quote to get closer to being a Giga Chad"
-                      )
+        name="quote",
+        description="💬 Get an inspiring quote to get closer to being a Giga Chad"
+    )
     async def slashquote(self, ctx: SlashContext):
         await quote(ctx, True)
 
     @commands.command(
-                      name="quote",
-                      usage="quote",
-                      description="Get an inspiring quote to get closer to being a Giga Chad"
-                      )
+        name="quote",
+        usage="quote",
+        description="Get an inspiring quote to get closer to being a Giga Chad"
+    )
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def cmdquote(self, ctx):
         await quote(ctx)
 
     @cog_ext.cog_slash(
-                       name="advice",
-                       description="💡 Get some advice from Giga Chad"
-                        )
+        name="advice",
+        description="💡 Get some advice from Giga Chad"
+    )
     async def slashadvice(self, ctx: SlashContext):
         await advice(ctx, True)
 
     @commands.command(
-                      name="advice",
-                      usage="advice",
-                      description="Get some advice from Giga Chad!"
-                      )
+        name="advice",
+        usage="advice",
+        description="Get some advice from Giga Chad!"
+    )
     @commands.cooldown(1, 3, commands.BucketType.user)
     async def cmdadvice(self, ctx):
         await advice(ctx)
@@ -191,36 +193,36 @@ async def meme(ctx, subreddit=None, slash: bool = False):
         if nsfw:
             if slash:
                 await ctx.send(
-                                content="Sorry, the meme was NSFW. Try another one!",
-                                hidden=True
-                                )
+                    content="Sorry, the meme was NSFW. Try another one!",
+                    hidden=True
+                )
             else:
                 await ctx.reply(
-                                content="Sorry, the meme was NSFW. Try another one!",
-                                mention_author=False
-                                )
+                    content="Sorry, the meme was NSFW. Try another one!",
+                    mention_author=False
+                )
             return
 
         embed = discord.Embed(
-                              color=0x2f3136,
-                              url=json_data['postLink'],
-                              title=json_data['title']
-                             )
+            color=0x2f3136,
+            url=json_data['postLink'],
+            title=json_data['title']
+        )
         embed.set_footer(
-                        text=f"r/{json_data['subreddit']} | u/{json_data['author']}"
-                        )
+            text=f"r/{json_data['subreddit']} | u/{json_data['author']}"
+        )
         embed.set_image(
-                        url=json_data['url']
-                        )
+            url=json_data['url']
+        )
         if slash:
             await ctx.send(
-                            embed=embed
-                            )
+                embed=embed
+            )
         else:
             await ctx.reply(
-                            embed=embed,
-                            mention_author=False
-                            )
+                embed=embed,
+                mention_author=False
+            )
 
     except:
         await error_api(ctx, slash)
@@ -231,23 +233,23 @@ async def advice(ctx, slash: bool = False):
         json_data = await fetch('https://api.adviceslip.com/advice')
         advice = json_data['slip']['advice']
         embed = discord.Embed(
-                              title="💡 Helpful Advice",
-                              color=0x2f3136,
-                              description=f"🗣 {advice}"
-                              )
+            title="💡 Helpful Advice",
+            color=0x2f3136,
+            description=f"🗣 {advice}"
+        )
         embed.set_footer(
-                         text="Follow or not this advice, up to you"
-                        )
+            text="Follow or not this advice, up to you"
+        )
         if slash:
             await ctx.send(
-                            embed=embed,
-                            hidden=False
-                            )
+                embed=embed,
+                hidden=False
+            )
         else:
             await ctx.reply(
-                            embed=embed,
-                            mention_author=False
-                            )
+                embed=embed,
+                mention_author=False
+            )
 
     except:
         await error_api(ctx, slash)
@@ -263,27 +265,27 @@ async def chadmeter(ctx, bot, user, slash: bool = False):
             chadlevel = 100
         message = f"{user.mention}'s Chad level is `{chadlevel}%`!"
     embed = discord.Embed(
-                          title="📏 Chadmeter",
-                          description=message,
-                          color=0x2f3136
-                         )
+        title="📏 Chadmeter",
+        description=message,
+        color=0x2f3136
+    )
     embed.set_footer(
-                     icon_url=bot.user.avatar_url,
-                     text="Chadmeter never lies, Copyrighted © method"
-                    )
+        icon_url=bot.user.avatar_url,
+        text="Chadmeter never lies, Copyrighted © method"
+    )
     embed.set_thumbnail(
-                        url="https://preview.redd.it/23td86ox29j51.png?auto=webp&s=c617e39e98b1e601cc91168369bd6ea38cd55f89"
-                        )
+        url="https://preview.redd.it/23td86ox29j51.png?auto=webp&s=c617e39e98b1e601cc91168369bd6ea38cd55f89"
+    )
     if slash:
         await ctx.send(
-                        embed=embed,
-                        hidden=False
-                        )
+            embed=embed,
+            hidden=False
+        )
     else:
         await ctx.reply(
-                        embed=embed,
-                        mention_author=False
-                        )
+            embed=embed,
+            mention_author=False
+        )
 
 
 async def quote(ctx, slash: bool = False):
@@ -292,24 +294,23 @@ async def quote(ctx, slash: bool = False):
         quote = json_data['content']
         author = json_data['author']
         embed = discord.Embed(
-                              title="💬 Inspiring quote",
-                              color=0x2f3136,
-                              description=f"<:quote1:845745030912278598> \n**{quote}** \n \n - {author} "
-                                          f"<:quote2:845745030978994216>"
-                              )
+            title="💬 Inspiring quote",
+            color=0x2f3136,
+            description=f"{get_emote('quote1')} \n**{quote}** \n \n - {author} {get_emote('quote2')}"
+        )
         embed.set_footer(
-                        text="I hope this quote inspired you to become a Giga Chad"
-                        )
+            text="I hope this quote inspired you to become a Giga Chad"
+        )
         if slash:
             await ctx.send(
-                            embed=embed,
-                            hidden=False
-                            )
+                embed=embed,
+                hidden=False
+            )
         else:
             await ctx.reply(
-                            embed=embed,
-                            mention_author=False
-                            )
+                embed=embed,
+                mention_author=False
+            )
 
     except:
         await error_api(ctx, slash)
@@ -343,27 +344,27 @@ async def gigachadify(ctx, bot: discord.client, user=None, slash: bool = False):
             file = discord.File("gigachad.png")
             attachment = "attachment://gigachad.png"
     embed = discord.Embed(
-                          title=prefix,
-                          color=0x2f3136
-                         )
+        title=prefix,
+        color=0x2f3136
+    )
     embed.set_footer(
-                     icon_url=bot.user.avatar_url,
-                     text=footer
-                     )
+        icon_url=bot.user.avatar_url,
+        text=footer
+    )
     embed.set_image(
-                    url=attachment
-                    )
+        url=attachment
+    )
     if slash:
         await ctx.send(
-                        file=file,
-                        embed=embed
-                        )
+            file=file,
+            embed=embed
+        )
     else:
         await ctx.reply(
-                        file=file,
-                        embed=embed,
-                        mention_author=False
-                        )
+            file=file,
+            embed=embed,
+            mention_author=False
+        )
 
 
 async def fetch(url):
@@ -375,19 +376,19 @@ async def fetch(url):
 
 async def error_api(ctx, slash: bool = False):
     embed = discord.Embed(
-                          title="Something went wrong",
-                          color=0xed4245,
-                          description="Wait a bit and retry, and contact the bot support if it happens again."
-                         )
+        title=f"{get_emote('warning')} Something went wrong",
+        color=0xed4245,
+        description="Wait a bit and retry, and contact the bot support if it happens again."
+    )
     if slash:
         await ctx.send(
-                        embed=embed,
-                        hidden=True
-                        )
+            embed=embed,
+            hidden=True
+        )
     else:
         await ctx.send(
-                        embed=embed
-                        )
+            embed=embed
+        )
 
 
 def setup(bot):

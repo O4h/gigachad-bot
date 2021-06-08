@@ -1,7 +1,9 @@
 import discord
 import asyncio
 import traceback
+
 from discord.ext import commands
+from util.emotes import get_emote
 
 
 class Errors(commands.Cog):
@@ -47,7 +49,7 @@ class Errors(commands.Cog):
             embed = discord.Embed(
                 color=0xed4245,
                 title="Missing Permissions",
-                description=f" <:gc_role:847078576058138644> You are missing the permission(s) "
+                description=f"{get_emote(role)} You are missing the permission(s) "
                             f"{missingperms}"
             )
             embed.set_thumbnail(
@@ -66,8 +68,7 @@ class Errors(commands.Cog):
             embed = discord.Embed(
                 color=0xed4245,
                 title="Bot Missing Permissions",
-                description=f" <:gc_role:847078576058138644> I am missing the following permission(s):"
-                            f" {missingperms}"
+                description=f"{get_emote(role)} I am missing the following permission(s):" + missingperms
             )
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
@@ -94,7 +95,7 @@ class Errors(commands.Cog):
 
         elif isinstance(error, commands.CommandOnCooldown):
             await ctx.reply(
-                            content=f" <:gc_warning:847029255022837771> Please wait `{round(error.retry_after)}` "
+                            content=f"{get_emote(warning)} Please wait `{round(error.retry_after)}` "
                                     f"seconds before using this command again!",
                             mention_author=False,
                             delete_after=error.retry_after
