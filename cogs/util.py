@@ -62,7 +62,7 @@ class Other(commands.Cog):
                               title=get_emote("gigachad") + " Giga Chad Info",
                               color=0x2f3136,
                               description=f"Giga Chad is a bot written in Python {get_emote('python')} by "
-                                          "`Thorgal#0982` using the discord.py and discord-py-slash-command "
+                                          "`Orh#0982` using the discord.py and discord-py-slash-command "
                                           "librairies."
                               )
         embed.add_field(
@@ -136,7 +136,6 @@ class Other(commands.Cog):
                       description=f"Change the guild prefix. Requires the user to have {get_emote('role')} "
                                   "`MANAGE_SERVER` permission"
                       )
-
     @commands.has_permissions(manage_guild=True)
     @commands.guild_only()
     async def prefix(self, ctx, prefix=None):
