@@ -1,7 +1,7 @@
 requests
 python-dotenv
 Pillow
-discord-py-slash-commands
+discord-py-slash-command
 discord.py
 urllib3
 aiohttp
