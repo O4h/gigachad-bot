@@ -42,5 +42,4 @@ for filename in os.listdir('./cogs'):
         gigachad.load_extension(f"cogs.{filename[:-3]}")
 gigachad.load_extension("jishaku")
 
-load_dotenv()
 gigachad.run(os.getenv("TOKEN"))
