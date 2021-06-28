@@ -9,7 +9,6 @@ from discord.ext import commands
 from cogs.prefix import get_prefix
 from util.emotes import get_emote
 
-load_dotenv()
 WATCHBOT_API_KEY = os.getenv("WATCHBOT_API_KEY")
 
 
