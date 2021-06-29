@@ -148,7 +148,7 @@ class Other(commands.Cog):
                                   )
 
         else:
-            with open('prefixes.json', 'r') as f:
+            with open('/data/prefixes.json', 'r') as f:
                 prefixes = json.load(f)
 
             prefixes[str(ctx.guild.id)] = prefix

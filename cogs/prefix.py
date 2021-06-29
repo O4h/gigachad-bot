@@ -6,7 +6,7 @@ from discord.ext import commands
 
 def get_prefix(bot, message, raw: bool = False):
     if message.guild is not None:
-        with open('prefixes.json', 'r') as f:
+        with open('/data/prefixes.json', 'r') as f:
             prefixes = json.load(f)
 
         if str(message.guild.id) in prefixes:
