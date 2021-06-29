@@ -5,3 +5,4 @@ discord-py-slash-command
 discord.py
 urllib3
 aiohttp
+jishaku
