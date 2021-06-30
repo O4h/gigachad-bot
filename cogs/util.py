@@ -153,7 +153,7 @@ class Other(commands.Cog):
 
             prefixes[str(ctx.guild.id)] = prefix
 
-            with open('prefixes.json', 'w') as f:
+            with open('/data/prefixes.json', 'w') as f:
                 json.dump(prefixes, f, indent=4)
 
             embed = discord.Embed(
