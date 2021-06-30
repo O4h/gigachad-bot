@@ -4,7 +4,6 @@ import asyncio
 import jishaku
 import topgg
 
-from dotenv import load_dotenv
 from discord.ext import commands
 from discord_slash import SlashCommand
 from cogs.prefix import get_prefix

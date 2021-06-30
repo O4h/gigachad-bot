@@ -4,7 +4,6 @@ import os
 import aiohttp
 import json
 
-from dotenv import load_dotenv
 from discord.ext import commands
 from cogs.prefix import get_prefix
 from util.emotes import get_emote

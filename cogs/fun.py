@@ -5,10 +5,9 @@ import aiohttp
 import os
 import json
 import asyncio
-from dotenv import load_dotenv
+
 from PIL import Image, ImageDraw
 from io import BytesIO
-
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
