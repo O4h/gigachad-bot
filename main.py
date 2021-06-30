@@ -2,6 +2,7 @@ import discord
 import os
 import asyncio
 import jishaku
+import topgg
 
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -35,6 +36,8 @@ class GigaChad(commands.Bot):
 gigachad = GigaChad()
 
 slash = SlashCommand(gigachad, sync_commands=True, sync_on_cog_reload=True)
+
+topggcli = topgg.DBLClient(bot=gigachad, token=os.getenv("TOPGG_TOKEN"), autopost=True)
 
 
 for filename in os.listdir('./cogs'):
