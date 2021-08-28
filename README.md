@@ -37,7 +37,7 @@ You can of course run the bot for testing if you want to contribue
 2. Include all the environnement variable from [sample.env](https://github.com/O4h/gigachad-bot/blob/main/sample.env)
   
 
-3. add a volume named `/data` that leads to a folder with a file named `prefixes.json` with `{}` in it
+3. Setup a Postgresql database
 
 
 4. Rename `sample.env` to `.env` and fill it correctly  
