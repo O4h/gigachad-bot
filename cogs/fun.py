@@ -391,7 +391,7 @@ def gigachadify_process(data):
     draw.ellipse([(0, 0), (175, 175)], fill=255)  # Draw an ellipse on it
     mask_im.save('mask_circle.jpg', quality=95)  # Save the mask
 
-    im1 = Image.open("gigachad.png")  # Open Giga Chad imahe
+    im1 = Image.open("ressources/gigachad.png")  # Open Giga Chad imahe
     im1.paste(im2, (300, 85), mask_im)  # Paste the profile picture on Giga Chad with the mask
     im1.save("test.jpg", quality=95)  # Save it for upload
 
