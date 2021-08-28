@@ -2,11 +2,15 @@ import discord
 import asyncio
 from discord.ext import commands
 from cogs.prefix import get_prefix
+from util.misc import create_embed
 
 
 class CustomHelp(commands.HelpCommand):
+    """
+    Use of the HelpCommand to make a clean help command
+    """
     async def send_bot_help(self, mapping):
-        prefix = get_prefix(self, self.context, True)
+        prefix = get_prefix(self.context.bot, self.context, True)
         fun_cog = self.context.bot.get_cog('Fun')
         fun_cmds_list = fun_cog.get_commands()
         fun_cmds = ""
@@ -37,7 +41,8 @@ class CustomHelp(commands.HelpCommand):
                         inline=False
                         )
         embed.set_footer(
-                        text=f"Join the support server ({prefix}support) for further help"
+                        text=f"Join the support server ({prefix}support) for further help",
+                        icon_url="https://cdn.discordapp.com/emojis/879697097467789373.png?v=1"
                         )
         await self.context.reply(
                                  embed=embed,
@@ -45,7 +50,7 @@ class CustomHelp(commands.HelpCommand):
                                 )
 
     async def send_command_help(self, command):
-        prefix = get_prefix(self, self.context, True)
+        prefix = get_prefix(self.context.bot, self.context, True)
         embed = discord.Embed(
                               title=f"`{prefix}{command.usage}`",
                               color=0x2f3136,
@@ -61,7 +66,7 @@ class CustomHelp(commands.HelpCommand):
                                 )
 
     async def send_cog_help(self, cog):
-        prefix = get_prefix(self, self.context, True)
+        prefix = get_prefix(self.context.bot, self.context, True)
         cmds_list = cog.get_commands()
         cmds = ""
         for x in range(len(cmds_list)):
@@ -79,3 +84,4 @@ class CustomHelp(commands.HelpCommand):
                                  embed=embed,
                                  mention_author=False
                                 )
+

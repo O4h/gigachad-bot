@@ -1,8 +1,8 @@
-requests
 Pillow
-discord-py-slash-command
+discord-py-slash-command<=3.0.1
 discord.py
 urllib3
 aiohttp
 jishaku
-topggpy
+psutil
+asyncpg

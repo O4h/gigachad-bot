@@ -1,5 +1,5 @@
 # Giga Chad 
-![Discord Bots](https://top.gg/api/widget/status/843550872293867570.svg?noavatar=true) [![Discord Bots](https://top.gg/api/widget/upvotes/843550872293867570.svg?noavatar=true) ](https://top.gg/bot/843550872293867570) ![Discord Bots](https://top.gg/api/widget/servers/843550872293867570.svg?noavatar=true)
+![Discord Bots](https://top.gg/api/widget/status/843550872293867570.svg?noavatar=true) [![Discord Bots](https://top.gg/api/widget/upvotes/843550872293867570.svg?noavatar=true) ](https://top.gg/bot/843550872293867570) ![Discord Bots](https://top.gg/api/widget/servers/843550872293867570.svg?noavatar=true) ![Docker Pulls](https://img.shields.io/docker/pulls/theorh/gigachad-bot) ![Dicsord](https://img.shields.io/discord/844911117881180190?color=%235865F2&logo=discord&logoColor=white)
 
 Da Giga Chad discord bot. Made in Python, and uses [discord.py](https://github.com/Rapptz/discord.py) & [discord-py-slash-command](https://github.com/eunwoo1104/discord-py-slash-command)  
 Check the Dockerhub image [here](https://hub.docker.com/repository/docker/theorh/gigachad-bot)

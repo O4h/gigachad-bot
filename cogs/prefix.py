@@ -1,25 +1,23 @@
-import discord
 import asyncio
 import json
+import asyncpg
+import discord
 from discord.ext import commands
 
 
-def get_prefix(bot, message, raw: bool = False):
-    if message.guild is not None:
-        with open('/data/prefixes.json', 'r') as f:
-            prefixes = json.load(f)
+def get_prefix(bot: commands.Bot, message, raw: bool = False) -> str:
+    """
+    Get the prefix with a given context
+    :param message: Can be a msg or a ctx
+    :param raw: Whether the prefix should be raw or
+    :param bot: Needs to be the gigachad bot instance
+    """
+    if message.guild is not None and message.guild.id in bot.prefix_cache:
 
-        if str(message.guild.id) in prefixes:
-            if raw:
-                return prefixes[str(message.guild.id)]
-            else:
-                return commands.when_mentioned_or(prefixes[str(message.guild.id)])(bot, message)
-
+        if raw:
+            return bot.prefix_cache[message.guild.id]
         else:
-            if raw:
-                return "gc!"
-            else:
-                return commands.when_mentioned_or("gc!")(bot, message)
+            return commands.when_mentioned_or(bot.prefix_cache[message.guild.id])(bot, message)
 
     else:
         if raw:
@@ -34,14 +32,17 @@ class Prefix(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
-        with open('/data/prefixes.json', 'r') as f:
-            prefixes = json.load(f)
+        """" Remove custom prefixes from the db if guild is left"""
+        if guild.id in self.gigachad.prefix_cache:
+            self.gigachad.prefix_cache.pop(guild.id)
 
-        if str(guild.id) in prefixes:
-            prefixes.pop(str(guild.id))
+            async with self.gigachad.db.acquire() as conn:
+                await conn.execute("DELETE FROM lang WHERE guild = $1", guild.id)
 
-            with open('/data/prefixes.json', 'w') as f:
-                json.dump(prefixes, f, indent=4)
+    @commands.command()
+    @commands.is_owner()
+    async def test(self, ctx):
+        await ctx.send(self.gigachad.prefix_cache)
 
 
 def setup(gigachad):

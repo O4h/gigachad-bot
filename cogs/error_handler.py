@@ -1,109 +1,91 @@
-import discord
 import asyncio
+import os
 import traceback
-
+import sys
+import discord
 from discord.ext import commands
-from util.emotes import get_emote
+from util.misc import get_emote, create_embed
+from util.misc import translate as _
 
 
-class Errors(commands.Cog):
+class ErrorHandler(commands.Cog):
     def __init__(self, gigachad):
         self.gigachad = gigachad
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.NotOwner):
-            embed = discord.Embed(
-                title="Forbidden Command",
-                color=0xed4245,
-                description="Only the bot owner can execute this command"
+            embed = create_embed(
+                title=_("errors.forbidden_cmd.title", ctx),
+                color="red",
+                desc=_("errors.forbidden_cmd.desc", ctx),
+                thumbnail="https://cdn.discordapp.com/emojis/847029255048658975.png?size=32"
             )
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/emojis/847029255048658975.png?size=32"
-            )
-            await ctx.reply(
-                embed=embed,
-                mention_author=False
-            )
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.NoPrivateMessage):
-            embed = discord.Embed(
-                color=0xed4245,
-                title="Not in DMs",
-                description="This commands **can not** be executed in direct messages, only in "
-                            "servers!"
+            embed = create_embed(
+                color="red",
+                title=_("errors.not_in_dms.title", ctx),
+                desc=_("errors.not_in_dms.desc", ctx),
+                thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
             )
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
-            )
-            await ctx.reply(
-                embed=embed,
-                mention_author=False
-            )
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.MissingPermissions):
             missingperms = ""
             for x in range(len(error.missing_perms)):
                 missingperms += f"`{error.missing_perms[x]}` "
             missingperms = missingperms.upper()
-            embed = discord.Embed(
-                color=0xed4245,
-                title="Missing Permissions",
-                description=f"{get_emote(role)} You are missing the permission(s) "
-                            f"{missingperms}"
+            embed = create_embed(
+                color="red",
+                title=_("errors.missing_perms.title", ctx),
+                desc=_("errors.missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
+                thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
             )
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
-            )
-            await ctx.reply(
-                embed=embed,
-                mention_author=False
-            )
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.BotMissingPermissions):
             missingperms = ""
             for x in range(len(error.missing_perms)):
                 missingperms += f"`{error.missing_perms[x]}` "
             missingperms = missingperms.upper()
-            embed = discord.Embed(
-                color=0xed4245,
-                title="Bot Missing Permissions",
-                description=f"{get_emote(role)} I am missing the following permission(s):" + missingperms
+            embed = create_embed(
+                color="red",
+                title=_("errors.bot_missing_perms.title", ctx),
+                desc=_("errors.bot_missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
+                thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
             )
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
-            )
-            await ctx.reply(
-                embed=embed,
-                mention_author=False
-            )
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.BadArgument):
-            embed = discord.Embed(
-                                  color=0xed4245,
-                                  title="Wrong Argument(s)",
-                                  description=f" You entered wrong arguments for the `{ctx.command.name}` command. \n"
-                                              f"Use it like that: `{ctx.command.usage}`"
-                                  )
-            embed.set_thumbnail(
-                                url="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
-                                )
-            await ctx.reply(
-                            embed=embed,
-                            mention_author=False
-                            )
+            embed = create_embed(
+                color="red",
+                title=_("errors.bad_argument.title", ctx),
+                desc=_("errors.bad_argument.desc", ctx, cmd_name=ctx.command.name,
+                       cmd_usage=ctx.command.usage),
+                thumnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
+            )
+            await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.CommandOnCooldown):
             await ctx.reply(
-                            content=f"{get_emote(warning)} Please wait `{round(error.retry_after)}` "
-                                    f"seconds before using this command again!",
-                            mention_author=False,
-                            delete_after=error.retry_after
-                            )
+                content=_("errors.cooldown", ctx, emote=get_emote("warning"), time_left=round(error.retry_after)),
+                mention_author=False,
+                delete_after=error.retry_after
+            )
+
+        elif isinstance(error, commands.CommandNotFound):
+            pass
 
         else:
-            traceback.print_exception(type(error), error, error.__traceback__)
+            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+            channel = await self.gigachad.fetch_channel(os.getenv("LOG_CHANNEL"))
+            await channel.send(
+                content="```\n {e} \n```".format(e=traceback.format_exception(type(error), error, error.__traceback__))
+            )
 
 
 def setup(gigachad):
-    gigachad.add_cog(Errors(gigachad))
+    gigachad.add_cog(ErrorHandler(gigachad))

@@ -1,83 +1,37 @@
-import discord
-import os
 import asyncio
+import datetime
+import os
+import time
 import traceback
+import discord
+import psutil
+import json
 
 from discord.ext import commands
-from util.emotes import get_emote
+from util.misc import get_emote, create_embed
+
+start_time = time.time()
 
 
 class Admin(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, gigachad):
         self.gigachad = gigachad
 
-    @commands.command(
-                      name="reload",
-                      usage="reload [cog]",
-                      description="Admin cmd, do not touch"
-                     )
+    @commands.command(name="astats", usage="astats")
     @commands.is_owner()
-    async def reload(self, ctx, cog=None):
-        if cog is None:
-            async with ctx.typing():
-                embed = discord.Embed(
-                                      title=f"{get_emote('settings')} Reloading all cogs.",
-                                      color=0x2f3136
-                                      )
-                for ext in os.listdir("./cogs/"):
-                    if ext.endswith(".py") and not ext.startswith("_"):
-                        try:
-                            self.gigachad.unload_extension(f"cogs.{ext[:-3]}")
-                            self.gigachad.load_extension(f"cogs.{ext[:-3]}")
-                            embed.add_field(
-                                            name=f"Reloaded: `{ext}`",
-                                            value=f"{get_emote('yes')} Succesful",
-                                            inline=False
-                                            )
-                        except Exception as e:
-                            embed.add_field(
-                                            name=f"Failed to reload: `{ext}`",
-                                            value=e,
-                                            inline=False
-                                            )
-                        await asyncio.sleep(0.5)
-                await ctx.reply(
-                                embed=embed,
-                                mention_author=False
-                                )
-        else:
-            async with ctx.typing():
-                embed = discord.Embed(
-                                      title=f"{get_emote('settings')} Reloading cog `{cog}.py`",
-                                      color=0x2f3136
-                                     )
-                ext = f"{cog.lower()}.py"
-                if not os.path.exists(f"./cogs/{ext}"):
-                    embed.add_field(
-                                    name=f"Failed to reload: `{ext}`",
-                                    value="This cog does not exist.",
-                                    inline=False
-                                   )
-                elif ext.endswith(".py") and not ext.startswith("_"):
-                    try:
-                        self.gigachad.unload_extension(f"cogs.{ext[:-3]}")
-                        self.gigachad.load_extension(f"cogs.{ext[:-3]}")
-                        embed.add_field(
-                                        name=f"Reloaded: `{ext}`",
-                                        value='Successful',
-                                        inline=False
-                                        )
-                    except Exception:
-                        desired_trace = traceback.format_exc()
-                        embed.add_field(
-                                        name=f"Failed to reload: `{ext}`",
-                                        value=desired_trace,
-                                        inline=False
-                                        )
-                await ctx.reply(
-                                embed=embed,
-                                mention_author=False
-                                )
+    async def astats(self, ctx):
+        embed = create_embed(
+            title=f"{get_emote('admin')}  **Advanced admin stats**",
+            fields=[
+                ["Uptime",
+                 f"`•` Online since <t:{int(round(start_time))}:F> \n  `•` Online since <t:{int(round(start_time))}:R>",
+                 True],
+                ["Hardware Stats",
+                 f"`•` CPU `{str(psutil.cpu_percent(interval=1))}%` \n `•` RAM `{str(psutil.virtual_memory().percent)}%`",
+                 True]
+            ]
+        )
+        await ctx.reply(embed=embed, mention_author=False)
 
 
 def setup(gigachad):
