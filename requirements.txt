@@ -6,3 +6,4 @@ aiohttp
 jishaku
 psutil
 asyncpg
+i18n
