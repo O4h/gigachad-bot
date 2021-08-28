@@ -7,3 +7,4 @@ jishaku
 psutil
 asyncpg
 python-i18n
+PyYAML
