@@ -6,4 +6,4 @@ aiohttp
 jishaku
 psutil
 asyncpg
-i18n
+python-i18n
