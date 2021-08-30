@@ -80,11 +80,20 @@ class Other(commands.Cog):
                 [_("info.info.source.title", ctx, emote=get_emote("github")),
                  _("info.info.source.desc", ctx), True],
                 [_("info.vote.title", ctx, emote=get_emote("vote")),
-                 _("info.vote.desc", ctx), True]
+                 _("info.vote.desc", ctx), True],
+                [_("info.info.uptime.title", ctx, emote=get_emote("uptime")),
+                 _("info.info.uptime.loading", ctx, emote=get_emote("loading"))]
             ],
             footer_text=_("info.info.footer", ctx)
         )
-        await ctx.reply(embed=embed, mention_author=False)
+        message = await ctx.reply(embed=embed, mention_author=False)
+        embed.set_field_at(
+            index=9,
+            name=_("info.info.uptime.title", ctx, emote=get_emote("uptime")),
+            value=await get_uptime(ctx),
+            inline=False
+        )
+        await message.edit(embed=embed)
 
     @commands.command(
         name="prefix",
@@ -191,6 +200,20 @@ class Other(commands.Cog):
             ]
         )
         await ctx.reply(embed=embed, mention_author=False)
+
+
+async def get_uptime(ctx):
+    try:
+        headers = {"AUTH-TOKEN": WATCHBOT_API_KEY}
+        url = "https://api.watchbot.app/bot/843550872293867570"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as r:
+                data = await r.read()
+        json_data = json.loads(data)
+        return _("info.info.uptime.success", ctx, week=json_data['7d'], month=json_data['30d'], months=json_data['90d'])
+
+    except:
+        return _("info.info.uptime.failure", ctx, emote=get_emote("no"))
 
 
 def setup(gigachad):

@@ -64,7 +64,7 @@ info:
       desc: "`•` `%{time}ms`"
     credits:
       title: "%{emote} Credits"
-      desc: "`•` [@berlin.1969](https://www.instagram.com/berlin.1969/) \n `•` [flaticon.com](https://www.flaticon.com/)"
+      desc: "`•` [@berlin.1969](https://www.instagram.com/berlin.1969/) \n`•` [flaticon.com](https://www.flaticon.com/)"
     docs:
       title: "%{emote} Docs"
       desc: "`•` Click [`here`](https://docs.gigachad-bot.xyz/) to see the docs"
@@ -74,7 +74,7 @@ info:
     uptime:
       title: "%{emote} Uptime"
       loading: Loading... %{emote}
-      success: "`•` Click [here](https://status.gigachad-bot.xyz/) to access the bot's uptime history\n - Over the last week: `%{week}%%` uptime \n- Over the last month: `%{month}%%` uptime \n- Over the last 90 days: `%{months}%%` uptime"
+      success: "`•` Click [here](https://status.gigachad-bot.xyz/) to access the bot's uptime history. \n`•` Uptime over: ➥ **7 days**: `%{week}%%`  ➥ **30 days**: `%{month}%%` ➥ **90 days**: `%{months}%%`"
       failure: "`•` %{emote} Something went wrong, the bot wasn't able to retrieve its uptime. \n `•` Click [here](https://status.gigachad-bot.xyz/) to acess the bot's detailed uptime"
     footer: Join the support server for further information
   prefix:
