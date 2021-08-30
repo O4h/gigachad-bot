@@ -360,8 +360,8 @@ async def gigachadify(ctx, bot: discord.client, user=None, slash: bool = False):
     loop = asyncio.get_event_loop()
     await loop.run_in_executor(None, gigachadify_process, data)
 
-    file = discord.File("test.jpg")
-    attachment = "attachment://test.jpg"
+    file = discord.File("output.jpg")
+    attachment = "attachment://output.jpg"
 
     if user is not None:
 
@@ -396,7 +396,7 @@ def gigachadify_process(data):
 
     im1 = Image.open("ressources/gigachad.png")  # Open Giga Chad imahe
     im1.paste(im2, (300, 85), mask_im)  # Paste the profile picture on Giga Chad with the mask
-    im1.save("test.jpg", quality=95)  # Save it for upload
+    im1.save("output.jpg", quality=95)  # Save it for upload
 
 
 async def fetch(url):

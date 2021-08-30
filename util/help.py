@@ -84,4 +84,3 @@ class CustomHelp(commands.HelpCommand):
                                  embed=embed,
                                  mention_author=False
                                 )
-
