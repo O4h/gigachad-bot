@@ -1,5 +1,6 @@
 # Giga Chad 
-![Discord Bots](https://top.gg/api/widget/status/843550872293867570.svg?noavatar=true) [![Discord Bots](https://top.gg/api/widget/upvotes/843550872293867570.svg?noavatar=true) ](https://top.gg/bot/843550872293867570) ![Discord Bots](https://top.gg/api/widget/servers/843550872293867570.svg?noavatar=true) ![Docker Pulls](https://img.shields.io/docker/pulls/theorh/gigachad-bot) ![Dicsord](https://img.shields.io/discord/844911117881180190?color=%235865F2&logo=discord&logoColor=white)
+![Discord Bots](https://top.gg/api/widget/status/843550872293867570.svg?noavatar=true) [![Discord Bots](https://top.gg/api/widget/upvotes/843550872293867570.svg?noavatar=true) ](https://top.gg/bot/843550872293867570) ![Discord Bots](https://top.gg/api/widget/servers/843550872293867570.svg?noavatar=true)  </br>
+[![Docker Pulls](https://img.shields.io/docker/pulls/theorh/gigachad-bot?logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/theorh/gigachad-bot) [![Discord](https://img.shields.io/discord/844911117881180190?color=%235865F2&logo=discord&logoColor=white)](https://discord.gg/atPkjGgDBD) ![GitHub](https://img.shields.io/github/license/o4h/gigachad-bot?logo=github)
 
 Da Giga Chad discord bot. Made in Python, and uses [discord.py](https://github.com/Rapptz/discord.py) & [discord-py-slash-command](https://github.com/eunwoo1104/discord-py-slash-command)  
 Check the Dockerhub image [here](https://hub.docker.com/repository/docker/theorh/gigachad-bot)
@@ -46,5 +47,4 @@ You can of course run the bot for testing if you want to contribue
 5. Run.
 
 ## License
-No license is used, which means that you are not allowed to do anything with the code without my permission. <br>
-Contact me on Discord (`Orh#0982`) if needed.
+This project is licensed under the **MIT License**. See more info about it [here](https://github.com/O4h/gigachad-bot/blob/main/LICENSE)
