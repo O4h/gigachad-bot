@@ -11,6 +11,7 @@ from util.help import CustomHelp
 
 intents = discord.Intents(messages=True, guilds=True)
 
+# the initial sql query, to add tables
 sql_query = "CREATE TABLE IF NOT EXISTS prefixes(guild BIGINT PRIMARY KEY, prefix VARCHAR(125));" \
             "CREATE TABLE IF NOT EXISTS lang(guild BIGINT PRIMARY KEY, lang VARCHAR(2));" \
             "CREATE TABLE IF NOT EXISTS commands_logs(time INT NOT NULL, guild BIGINT, cmd VARCHAR(25), usr BIGINT, type INT);" \
@@ -18,21 +19,28 @@ sql_query = "CREATE TABLE IF NOT EXISTS prefixes(guild BIGINT PRIMARY KEY, prefi
 
 
 async def run():
+    """ The function to run the bot, required cuz async stuff annoying basically"""
+
     credentials = {"user": os.getenv("DB_USER"), "password": os.getenv("DB_PASSWORD"),
                    "database": os.getenv("DB_DATABASE"),
                    "host": os.getenv("DB_HOST"), "port": os.getenv("DB_PORT")}
 
+    # make the connection to the db
     db = await asyncpg.create_pool(**credentials)
 
+    # initiate tables and fetch cache
     async with db.acquire() as conn:
         await conn.execute(sql_query)
         prefix_data = await conn.fetch("SELECT * FROM prefixes")
         lang_data = await conn.fetch("SELECT * FROM lang")
 
+    # load the bot class
     gigachad = GigaChad(db=db, prefix_cache=dict(prefix_data), lang_cache=dict(lang_data))
 
+    # load the slash commands class
     slash = SlashCommand(gigachad, sync_commands=True, sync_on_cog_reload=True)
 
+    # load cogs
     for filename in os.listdir('./cogs'):
 
         if filename.endswith(".py") and not filename.startswith("_"):
@@ -40,11 +48,16 @@ async def run():
 
     gigachad.load_extension("jishaku")
 
+    # and finally, start the bot!
     await gigachad.start(os.getenv("TOKEN"))
 
 
 class GigaChad(commands.Bot):
     def __init__(self, db, prefix_cache: dict, lang_cache: dict):
+        """" the bot class, used everywhere.
+        :param db: is passed for easier use, same for
+        :param prefix_cache: & :param lang_cache:
+        """
         super().__init__(
             command_prefix=get_prefix,
             help_command=CustomHelp(),

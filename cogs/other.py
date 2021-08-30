@@ -80,20 +80,11 @@ class Other(commands.Cog):
                 [_("info.info.source.title", ctx, emote=get_emote("github")),
                  _("info.info.source.desc", ctx), True],
                 [_("info.vote.title", ctx, emote=get_emote("vote")),
-                 _("info.vote.desc", ctx), True],
-                [_("info.info.uptime.title", ctx, emote=get_emote("uptime")),
-                 _("info.info.uptime.loading", ctx, emote=get_emote("loading"))]
+                 _("info.vote.desc", ctx), True]
             ],
             footer_text=_("info.info.footer", ctx)
         )
-        message = await ctx.reply(embed=embed, mention_author=False)
-        embed.set_field_at(
-            index=9,
-            name=_("info.info.uptime.title", ctx, emote=get_emote("uptime")),
-            value=await get_uptime(ctx),
-            inline=False
-        )
-        await message.edit(embed=embed)
+        await ctx.reply(embed=embed, mention_author=False)
 
     @commands.command(
         name="prefix",
@@ -105,7 +96,7 @@ class Other(commands.Cog):
     @commands.guild_only()
     async def prefix(self, ctx, prefix=None):
 
-        if prefix is None:
+        if prefix is None:  # return the actual prefix in the guild
 
             current_prefix = get_prefix(self.gigachad, ctx, True)
             embed = create_embed(
@@ -115,7 +106,7 @@ class Other(commands.Cog):
 
         else:
 
-            if prefix == "gc!":
+            if prefix == "gc!":  # prefix can't be reset this way, send error
 
                 current_prefix = get_prefix(self.gigachad, ctx, True)
                 embed = create_embed(
@@ -127,10 +118,11 @@ class Other(commands.Cog):
 
             else:
 
-                if prefix == "reset":
+                if prefix == "reset":  # if user tries to reset the prefix
 
-                    if ctx.guild.id in self.gigachad.prefix_cache:
+                    if ctx.guild.id in self.gigachad.prefix_cache:  # if a prefix is set for the guild
 
+                        # remove the prefix from database and cache
                         async with self.gigachad.db.acquire() as conn:
                             await conn.execute("DELETE FROM prefixes WHERE guild = $1", ctx.guild.id)
 
@@ -143,7 +135,7 @@ class Other(commands.Cog):
                             thumbnail="https://cdn.discordapp.com/emojis/847027842637103134.png?size=32"
                         )
 
-                    else:
+                    else:  # send error as no prefix is set for the guild
                         print("guild id is not in cache")
                         print(ctx.guild.id)
 
@@ -154,8 +146,9 @@ class Other(commands.Cog):
                             thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
                         )
 
-                else:
+                else:  # if user tries to change the prefix
 
+                    # modify prefix in cache and database
                     self.gigachad.prefix_cache[ctx.guild.id] = prefix
 
                     async with self.gigachad.db.acquire() as conn:
@@ -198,20 +191,6 @@ class Other(commands.Cog):
             ]
         )
         await ctx.reply(embed=embed, mention_author=False)
-
-
-async def get_uptime(ctx):
-    try:
-        headers = {"AUTH-TOKEN": WATCHBOT_API_KEY}
-        url = "https://api.watchbot.app/bot/843550872293867570"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers) as r:
-                data = await r.read()
-        json_data = json.loads(data)
-        return _("info.info.uptime.success", ctx, week=json_data['7d'], month=json_data['30d'], months=json_data['90d'])
-
-    except:
-        return _("info.info.uptime.failure", ctx, emote=get_emote("no"))
 
 
 def setup(gigachad):

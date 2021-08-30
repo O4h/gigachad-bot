@@ -15,6 +15,7 @@ start_time = time.time()
 
 class Admin(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, gigachad):
+        """ A cog with stricly admin-only cmds """
         self.gigachad = gigachad
 
     @commands.command(name="astats", usage="astats")

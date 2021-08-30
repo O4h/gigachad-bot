@@ -10,6 +10,10 @@ log_channel = os.getenv("LOG_CHANNEL")
 
 
 async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int):
+    """ Log commands uses
+    :param cmd_type: is used to log whether the logged cmd
+    was a normal command (-> type 1), a slash command (-> type 2)
+    or a context menu command (-> type 3) """
     if ctx.guild is None:
         guild = ctx.author.id
 
@@ -23,6 +27,9 @@ async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int):
 
 
 async def log_guild(gigachad: commands.Bot, guild: discord.Guild, joined: bool):
+    """ Log guilds join and leave events,
+    if :param joined: is True then it joined a guild,
+    if False it left it """
     async with gigachad.db.acquire() as conn:
         await conn.execute("INSERT INTO guilds_logs (time, guild, joined) "
                            "VALUES ($1, $2, $3)",
@@ -31,11 +38,13 @@ async def log_guild(gigachad: commands.Bot, guild: discord.Guild, joined: bool):
 
 class Logging(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, gigachad):
+        """ Log stats about the bot for better understanding of users utilisations """
         self.gigachad = gigachad
-        self.topgg_stats_update.start()
+        self.topgg_stats_update.start()  # start the top.gg automatic stats updates
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
+        """ Send embed and log on guild join"""
         await log_guild(self.gigachad, guild, True)
         owner = await self.gigachad.fetch_user(guild.owner_id)
         embed = create_embed(
@@ -51,6 +60,7 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
+        """ Send embed and log on guild leave"""
         await log_guild(self.gigachad, guild, False)
         owner = await self.gigachad.fetch_user(guild.owner_id)
         embed = create_embed(
@@ -66,14 +76,17 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
+        """ Log command """
         await log_cmd(self.gigachad, ctx.command, ctx, 1)
 
     @commands.Cog.listener()
     async def on_slash_command(self, ctx):
+        """ Log slash commands """
         await log_cmd(self.gigachad, ctx, ctx, 2)
 
     @tasks.loop(minutes=30)
     async def topgg_stats_update(self):
+        """ Automatically update stats on top.gg"""
         headers = {"Authorization": os.getenv("TOPGG_TOKEN")}
         url = "https://top.gg/api/bots/843550872293867570/stats"
         body = {"server_count": len(self.gigachad.guilds)}
@@ -86,6 +99,9 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
 
     @topgg_stats_update.before_loop
     async def before_topgg_stats_update(self):
+        """ Make sure that the loop waits until
+        the bot is ready before trying to post
+        stats """
         await self.gigachad.wait_until_ready()
 
 

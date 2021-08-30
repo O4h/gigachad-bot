@@ -14,13 +14,13 @@ i18n.set('fallback', 'en')
 i18n.load_path.append('./ressources/locales/')
 
 
-def translate(key: str, ctx, **kwargs):
+def translate(key: str, ctx, **kwargs) -> str:
     """ Return a translated string from locales"""
     lang = get_lang(ctx.bot, ctx)
     return i18n.t(key, locale=lang, **kwargs)
             
             
-def get_emote(emote: str):
+def get_emote(emote: str) -> str:
     """ Return an emote from emotes.json"""
     with open('ressources/emotes.json', 'r') as f:
         emotes = json.load(f)
@@ -32,7 +32,7 @@ def get_emote(emote: str):
         return ":exclamation:"
 
 
-async def has_voted(user_id: int):
+async def has_voted(user_id: int) -> bool:
     url = f"https://top.gg/api/bots/843550872293867570/check?userId={user_id}"
     headers = {"Authorization": os.getenv("TOPGG_TOKEN")}
     async with aiohttp.ClientSession() as c:
@@ -47,7 +47,8 @@ async def has_voted(user_id: int):
 
 def create_embed(title: str = None, desc: str = None, fields: list = None, color=None,
                  image: str = None, thumbnail: str = None, footer_text: str = None, footer_icon: str = None,
-                 author_text: str = None, author_image: str = None, author_url: str = None, title_url: str = None):
+                 author_text: str = None, author_image: str = None, author_url: str = None,
+                 title_url: str = None) -> discord.Embed:
     """
     Create an embed easily
     Either :param title: or :param desc:

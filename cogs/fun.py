@@ -19,24 +19,21 @@ from cogs.logging import log_cmd
 from util.misc import get_emote, create_embed, has_voted
 from util.misc import translate as _
 
-IMGFLIP_USERNAME = os.getenv("IMGFLIP_USERNAME")  # These env variables are called here
-IMGFLIP_PASSWORD = os.getenv("IMGFLIP_PASSWORD")  # to have them loaded only once at runtime
-
-
-# Retrieve the GigaChad image for gigachadify cmd
+IMGFLIP_USERNAME = os.getenv("IMGFLIP_USERNAME")  # load env variables
+IMGFLIP_PASSWORD = os.getenv("IMGFLIP_PASSWORD")
 
 
 class Fun(commands.Cog):
     """
     Fun stuff goes here!
-    (!) Slash cmds and normal cmds call outside functions
-    to make them compatible with both uses (!)
+    (!) Slash cmds, context menus and normal cmds call outside functions
+    to make them compatible with all these uses (!)
     """
 
     def __init__(self, gigachad):
         self.gigachad = gigachad
 
-    # MEME
+    # MEMES commands
     @cog_ext.cog_slash(name="Meme", description='🎲 Get a random meme!',
                        options=[
                            create_option(
@@ -55,7 +52,7 @@ class Fun(commands.Cog):
     async def cmdmeme(self, ctx, subreddit: str = None):
         await meme(ctx, subreddit)
 
-    # GIGACHADIFY
+    # GIGACHADIFY commands
     @cog_ext.cog_context_menu(name="Gigachadify",
                               target=ContextMenuType.USER)
     async def menugigachadify(self, ctx: MenuContext):
@@ -90,7 +87,7 @@ class Fun(commands.Cog):
     async def cmdgigachadify(self, ctx, user: commands.MemberConverter = None):
         await gigachadify(ctx, self.gigachad, user)
 
-    # CHADMETER
+    # CHADMETER commands
     @cog_ext.cog_context_menu(name="Chadmeter",
                               target=ContextMenuType.USER)
     async def chadmetermenu(self, ctx: MenuContext):
@@ -174,6 +171,7 @@ class Fun(commands.Cog):
         except:
             await error_api(ctx)
 
+    # QUOTE commands
     @cog_ext.cog_slash(
         name="quote",
         description="💬 Get an inspiring quote to get closer to being a Giga Chad"
@@ -190,6 +188,7 @@ class Fun(commands.Cog):
     async def cmdquote(self, ctx):
         await quote(ctx)
 
+    # ADVICE commands
     @cog_ext.cog_slash(
         name="advice",
         description="💡 Get some advice from Giga Chad"
@@ -209,6 +208,7 @@ class Fun(commands.Cog):
 
 async def meme(ctx, subreddit: str = None, slash: bool = False):
     try:
+        # first fetch the meme from an api
         if subreddit is None:
             json_data = await fetch('https://meme-api.herokuapp.com/gimme')
 
@@ -217,7 +217,7 @@ async def meme(ctx, subreddit: str = None, slash: bool = False):
 
         nsfw = json_data['nsfw']
 
-        if nsfw:
+        if nsfw:  # no nsfw memes shall be sent, even in nsfw channels
 
             if slash:
                 await ctx.send(content=_("errors.nsfw", ctx), hidden=True)
@@ -267,24 +267,26 @@ async def advice(ctx, slash: bool = False):
 
 
 async def chadmeter(ctx, bot, user, slash: bool = False):
-    if user is None:
-        if await has_voted(ctx.author.id):
-            chadlevel = random.randint(80, 100)
+    if user is None:  # check if a user param is specified
+
+        if await has_voted(ctx.author.id):  # check if this user has voted on top.gg
+            chadlevel = random.randint(75, 100)  # give a higher chadlevel if it is the case
             footer_icon = bot.user.avatar_url
             footer_text = _("fun.chadmeter.footer.voted", ctx)
 
         else:
-            chadlevel = random.randint(-1, 80)
+            chadlevel = random.randint(-1, 90)  # lower given chadlevel elsewhere
             footer_icon = "https://cdn.discordapp.com/emojis/879697097467789373.png?v=1"
             footer_text = _("fun.chadmeter.footer.notvoted", ctx, prefix=get_prefix(bot, ctx, raw=True))
+            # user is told that voting for the bot inscreases chadlever
 
         desc = _("fun.chadmeter.desc.own", ctx, chadlevel=chadlevel)
 
     else:
-        if await has_voted(user.id):
+        if await has_voted(user.id):  # same as above
             chadlevel = random.randint(80, 100)
 
-        elif user == bot.user:
+        elif user == bot.user:  # if user param is bot:
             chadlevel = 100
 
         else:
@@ -351,6 +353,7 @@ async def gigachadify(ctx, bot: discord.client, user=None, slash: bool = False):
     else:
         asset = user.avatar_url_as(size=128)
         prefix = _("fun.gigachadify.title.other", ctx, user=user.name)
+
     data = BytesIO(await asset.read())  # Load the user's profile picture
 
     # run sync code asyncronously
@@ -382,7 +385,7 @@ async def gigachadify(ctx, bot: discord.client, user=None, slash: bool = False):
 
 
 def gigachadify_process(data):
-    im2 = Image.open(data)  #
+    im2 = Image.open(data)  # open the image
     im2 = im2.resize((175, 175))  # Resize it
     im2 = im2.rotate(7)  # Slightly rotate the profile picture
 
@@ -397,6 +400,7 @@ def gigachadify_process(data):
 
 
 async def fetch(url):
+    """ Method to easily fetech data from an api """
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as r:
             data = await r.read()
@@ -405,6 +409,8 @@ async def fetch(url):
 
 
 async def error_api(ctx, slash: bool = False):
+    """ Create an embed if api can't be reached
+    or in cas of any error """
     embed = create_embed(
         title=_("errors.api.title", ctx, emote=get_emote("warning")),
         desc=_("errors.api.desc", ctx)

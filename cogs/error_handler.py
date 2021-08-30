@@ -10,6 +10,7 @@ from util.misc import translate as _
 
 class ErrorHandler(commands.Cog):
     def __init__(self, gigachad):
+        """ Errors are handled here, unknow ones are sent to LOG_CHANNEL """
         self.gigachad = gigachad
 
     @commands.Cog.listener()
