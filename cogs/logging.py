@@ -7,6 +7,7 @@ from discord.ext import commands, tasks
 from util.misc import create_embed, get_emote
 
 log_channel = os.getenv("LOG_CHANNEL")
+ignored_users = os.getenv("LOGS_IGNORED_USERS")
 
 
 async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int):
@@ -14,6 +15,8 @@ async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int):
     :param cmd_type: is used to log whether the logged cmd
     was a normal command (-> type 1), a slash command (-> type 2)
     or a context menu command (-> type 3) """
+    if str(ctx.author.id) in ignored_users:
+        return
     if ctx.guild is None:
         guild = ctx.author.id
 
