@@ -116,7 +116,7 @@ class Fun(commands.Cog):
         await chadmeter(ctx, self.gigachad, user)
 
     # CAPTION
-    @cog_ext.cog_slash(name="caption",
+    @cog_ext.cog_slash(name="mememaker",
                        description="🎭 Caption a meme, 25 meme templates available!",
                        options=[
                            create_option(
@@ -152,7 +152,7 @@ class Fun(commands.Cog):
                                required=True
                            ),
                        ])
-    async def caption(self, ctx: SlashContext, template: int, top_caption: str, bottom_caption: str):
+    async def make_meme(self, ctx: SlashContext, template: int, top_caption: str, bottom_caption: str):
         try:
             pload = {'font': 'impact', 'username': IMGFLIP_USERNAME, 'password': IMGFLIP_PASSWORD,
                      'template_id': template, 'text1': bottom_caption, 'text0': top_caption}
