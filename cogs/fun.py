@@ -117,7 +117,7 @@ class Fun(commands.Cog):
 
     # CAPTION
     @cog_ext.cog_slash(name="mememaker",
-                       description="🎭 Caption a meme, 25 meme templates available!",
+                       description="🎭 Create a meme, 25 meme templates available!",
                        options=[
                            create_option(
                                name="template",
