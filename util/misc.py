@@ -18,8 +18,8 @@ def translate(key: str, ctx, **kwargs) -> str:
     """ Return a translated string from locales"""
     lang = get_lang(ctx.bot, ctx)
     return i18n.t(key, locale=lang, **kwargs)
-            
-            
+
+
 def get_emote(emote: str) -> str:
     """ Return an emote from emotes.json"""
     with open('ressources/emotes.json', 'r') as f:
@@ -66,24 +66,27 @@ def create_embed(title: str = None, desc: str = None, fields: list = None, color
     else:
         color = 0x2f3136
 
-    if title is None:
-        embed = discord.Embed(description=desc, color=color)
+    if desc is None:
+        if title_url is None:
+            if title is None:
+                embed = discord.Embed(color=color)
 
-    else:
-
-        if desc is None:
-            if title_url is None:
+            else:
                 embed = discord.Embed(title=title, color=color)
 
-            else:
-                embed = discord.Embed(title=title, color=color, url=title_url)
-
         else:
-            if title_url is None:
+            embed = discord.Embed(title=title, color=color, url=title_url)
+
+    else:
+        if title_url is None:
+            if title is None:
+                embed = discord.Embed(description=desc, color=color)
+
+            else:
                 embed = discord.Embed(title=title, description=desc, color=color)
 
-            else:
-                embed = discord.Embed(title=title, description=desc, color=color, url=title_url)
+        else:
+            embed = discord.Embed(title=title, description=desc, color=color, url=title_url)
 
     if fields is not None:
 
