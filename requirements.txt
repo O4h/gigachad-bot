@@ -1,6 +1,5 @@
 Pillow
-discord-py-slash-command<=3.0.1
-discord.py
+discord-py-interactions
 urllib3
 aiohttp
 jishaku
