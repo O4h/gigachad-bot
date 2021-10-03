@@ -61,30 +61,31 @@ class Other(commands.Cog):
     async def info(self, ctx):
         embed = create_embed(
             title=_("info.info.title", ctx, emote=get_emote("gigachad")),
-            desc=_("info.info.desc", ctx, emote=get_emote("python")),
+            desc=_("info.info.desc", ctx, dot=get_emote("dot"), emote=get_emote("python")),
             fields=[
                 [_("info.info.version.title", ctx, emote=get_emote("info")),
-                 "`•` Giga Chad Bot `v1.0`", True],
+                 get_emote('dot') + " Giga Chad Bot `v1.0`", True],
                 [_("info.info.stats.title", ctx, emote=get_emote("stats")),
-                 _("info.info.stats.desc", ctx, nb=str(len(self.gigachad.guilds))), True],
+                 get_emote('dot') + _("info.info.stats.desc", ctx, nb=str(len(self.gigachad.guilds))), True],
                 [_("info.info.ping.title", ctx, emote=get_emote("ping")),
-                 _("info.info.ping.desc", ctx, time=round(self.gigachad.latency * 1000)), True],
+                 get_emote('dot') + _("info.info.ping.desc", ctx, time=round(self.gigachad.latency * 1000)), True],
                 [_("info.support.title", ctx, emote=get_emote("sos")),
-                 _("info.support.desc", ctx), True],
+                 get_emote('dot') + _("info.support.desc", ctx), True],
                 [_("info.invite.title", ctx, emote=get_emote("invite")),
-                 _("info.invite.desc", ctx, invite_link=self.gigachad.invite_link), True],
-                [_("info.info.credits.title", ctx, emote=get_emote("copyright")),
-                 _("info.info.credits.desc", ctx), True],
-                [_("info.info.docs.title", ctx, emote=get_emote("docs")),
-                 _("info.info.docs.desc", ctx), True],
-                [_("info.info.source.title", ctx, emote=get_emote("github")),
-                 _("info.info.source.desc", ctx), True],
+                 get_emote('dot') + _("info.invite.desc", ctx, invite_link=self.gigachad.invite_link), True],
                 [_("info.vote.title", ctx, emote=get_emote("vote")),
-                 _("info.vote.desc", ctx), True],
+                 get_emote('dot') + _("info.vote.desc", ctx), True],
+                [_("info.info.docs.title", ctx, emote=get_emote("docs")),
+                 get_emote('dot') + _("info.info.docs.desc", ctx), True],
+                [_("info.info.source.title", ctx, emote=get_emote("github")),
+                 get_emote('dot') + _("info.info.source.desc", ctx), True],
+                [_("info.info.credits.title", ctx, emote=get_emote("copyright")),
+                 get_emote('dot') + _("info.info.credits.desc", ctx, emote=get_emote('dot')), True],
                 [_("info.info.uptime.title", ctx, emote=get_emote("uptime")),
-                 _("info.info.uptime.loading", ctx, emote=get_emote("loading"))]
+                 get_emote('dot') + _("info.info.uptime.loading", ctx, emote=get_emote("loading"))]
             ],
-            footer_text=_("info.info.footer", ctx)
+            footer_text=_("info.info.footer", ctx),
+            image="https://i.imgur.com/MiVm8av.png"
         )
         message = await ctx.reply(embed=embed, mention_author=False)
         embed.set_field_at(
@@ -121,7 +122,7 @@ class Other(commands.Cog):
                 embed = create_embed(
                     title=_("info.prefix.failure.default.title", ctx),
                     desc=_("info.prefix.failure.default.desc", ctx, prefix=current_prefix),
-                    thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32",
+                    thumbnail=get_emote('no', type='image'),
                     color="red"
                 )
 
@@ -141,7 +142,7 @@ class Other(commands.Cog):
                             color="green",
                             title=_("info.prefix.success.reset.title", ctx),
                             desc=_("info.prefix.success.reset.desc", ctx),
-                            thumbnail="https://cdn.discordapp.com/emojis/847027842637103134.png?size=32"
+                            thumbnail=get_emote('yes', type='image')
                         )
 
                     else:  # send error as no prefix is set for the guild
@@ -152,7 +153,7 @@ class Other(commands.Cog):
                             color="red",
                             title=_("info.prefix.failure.reset.title", ctx),
                             desc=_("info.prefix.failure.reset.desc", ctx),
-                            thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
+                            thumbnail=get_emote('no', type='image')
                         )
 
                 else:  # if user tries to change the prefix
@@ -210,10 +211,10 @@ async def get_uptime(ctx):
             async with session.get(url, headers=headers) as r:
                 data = await r.read()
         json_data = json.loads(data)
-        return _("info.info.uptime.success", ctx, week=json_data['7d'], month=json_data['30d'], months=json_data['90d'])
+        return _("info.info.uptime.success", ctx, emote=get_emote('dot'),week=json_data['7d'], month=json_data['30d'], months=json_data['90d'])
 
     except:
-        return _("info.info.uptime.failure", ctx, emote=get_emote("no"))
+        return _("info.info.uptime.failure", ctx, emote=get_emote("no"), dot=get_emote('dot'))
 
 
 def setup(gigachad):

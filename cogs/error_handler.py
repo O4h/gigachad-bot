@@ -20,7 +20,7 @@ class ErrorHandler(commands.Cog):
                 title=_("errors.forbidden_cmd.title", ctx),
                 color="red",
                 desc=_("errors.forbidden_cmd.desc", ctx),
-                thumbnail="https://cdn.discordapp.com/emojis/847029255048658975.png?size=32"
+                thumbnail=get_emote('forbidden', type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
@@ -29,7 +29,7 @@ class ErrorHandler(commands.Cog):
                 color="red",
                 title=_("errors.not_in_dms.title", ctx),
                 desc=_("errors.not_in_dms.desc", ctx),
-                thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
+                thumbnail=get_emote('no', type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
@@ -42,7 +42,7 @@ class ErrorHandler(commands.Cog):
                 color="red",
                 title=_("errors.missing_perms.title", ctx),
                 desc=_("errors.missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
-                thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
+                thumbnail=get_emote('no', type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
@@ -55,7 +55,7 @@ class ErrorHandler(commands.Cog):
                 color="red",
                 title=_("errors.bot_missing_perms.title", ctx),
                 desc=_("errors.bot_missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
-                thumbnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
+                thumbnail=get_emote('no', type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
@@ -63,9 +63,8 @@ class ErrorHandler(commands.Cog):
             embed = create_embed(
                 color="red",
                 title=_("errors.bad_argument.title", ctx),
-                desc=_("errors.bad_argument.desc", ctx, cmd_name=ctx.command.name,
-                       cmd_usage=ctx.command.usage),
-                thumnail="https://cdn.discordapp.com/emojis/847027842365915167.png?size=32"
+                desc=_("errors.bad_argument.desc", ctx, cmd_name=ctx.command.name, cmd_usage=ctx.command.usage),
+                thumnail=get_emote('no', type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 

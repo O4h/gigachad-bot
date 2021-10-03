@@ -1,21 +1,21 @@
-import random
-import discord
-import urllib.request
-import aiohttp
-import os
-import json
 import asyncio
-
-from PIL import Image, ImageDraw
+import json
+import os
+import random
+import urllib.request
 from io import BytesIO
+
+import aiohttp
+import discord
+from PIL import Image, ImageDraw
+from cogs.logging import log_cmd
+from cogs.prefix import get_prefix
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.context import MenuContext
-from discord_slash.model import ContextMenuType
+from discord_slash.model import ContextMenuType, ButtonStyle
 from discord_slash.utils.manage_commands import create_option, create_choice
-
-from cogs.prefix import get_prefix
-from cogs.logging import log_cmd
+from discord_slash.utils.manage_components import create_button, create_actionrow
 from util.misc import get_emote, create_embed, has_voted
 from util.misc import translate as _
 
@@ -116,7 +116,7 @@ class Fun(commands.Cog):
         await chadmeter(ctx, self.gigachad, user)
 
     # CAPTION
-    @cog_ext.cog_slash(name="mememaker",
+    @cog_ext.cog_slash(name="caption",
                        description="🎭 Create a meme, 25 meme templates available!",
                        options=[
                            create_option(
@@ -166,44 +166,18 @@ class Fun(commands.Cog):
                 author_text=_("fun.caption.click", ctx),
                 footer_text=_("fun.caption.footer", ctx)
             )
-            await ctx.send(embed=embed, hidden=False)
+            buttons = [
+                create_button(
+                    style=ButtonStyle.grey,
+                    label="Save to gallery",
+                    custom_id=f"save_{ctx.author.id}",
+                    emoji=ctx.bot.get_emoji(get_emote("add", type='id'))
+                )
+            ]
+            await ctx.send(embed=embed, components=[create_actionrow(*buttons)], hidden=False)
 
         except:
             await error_api(ctx)
-
-    # QUOTE commands
-    @cog_ext.cog_slash(
-        name="quote",
-        description="💬 Get an inspiring quote to get closer to being a Giga Chad"
-    )
-    async def slashquote(self, ctx: SlashContext):
-        await quote(ctx, True)
-
-    @commands.command(
-        name="quote",
-        usage="quote",
-        description="Get an inspiring quote to get closer to being a Giga Chad"
-    )
-    @commands.cooldown(1, 3, commands.BucketType.user)
-    async def cmdquote(self, ctx):
-        await quote(ctx)
-
-    # ADVICE commands
-    @cog_ext.cog_slash(
-        name="advice",
-        description="💡 Get some advice from Giga Chad"
-    )
-    async def slashadvice(self, ctx: SlashContext):
-        await advice(ctx, True)
-
-    @commands.command(
-        name="advice",
-        usage="advice",
-        description="Get some advice from Giga Chad!"
-    )
-    @commands.cooldown(1, 3, commands.BucketType.user)
-    async def cmdadvice(self, ctx):
-        await advice(ctx)
 
 
 async def meme(ctx, subreddit: str = None, slash: bool = False):
@@ -231,36 +205,23 @@ async def meme(ctx, subreddit: str = None, slash: bool = False):
         embed = create_embed(
             title_url=json_data['postLink'],
             title=json_data['title'],
-            footer_text=f"r/{json_data['subreddit']} | u/{json_data['author']}",
-            footer_icon="https://cdn.discordapp.com/emojis/879795881036099584.png?v=1",
-            image=json_data['url']
+            image=json_data['url'],
+            author_text=f"r/{json_data['subreddit']} | u/{json_data['author']}",
+            author_image=get_emote('reddit', type='image')
         )
-
+        buttons = [
+            create_button(
+                style=ButtonStyle.grey,
+                label="Save to gallery",
+                custom_id=f"save_{ctx.author.id}",
+                emoji=ctx.bot.get_emoji(get_emote("add", type='id'))
+            )
+        ]
         if slash:
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, components=[create_actionrow(*buttons)])
 
         else:
-            await ctx.reply(embed=embed, mention_author=False)
-
-    except:
-        await error_api(ctx, slash)
-
-
-async def advice(ctx, slash: bool = False):
-    try:
-        json_data = await fetch('https://api.adviceslip.com/advice')
-        advice_slip = json_data['slip']['advice']
-        embed = create_embed(
-            title=_("fun.advice.title", ctx),
-            description=f"🗣 {advice_slip}",
-            footer_text=_("fun.advice.footer", ctx)
-        )
-
-        if slash:
-            await ctx.send(embed=embed, hidden=False)
-
-        else:
-            await ctx.reply(embed=embed, mention_author=False)
+            await ctx.reply(embed=embed, mention_author=False, components=[create_actionrow(*buttons)])
 
     except:
         await error_api(ctx, slash)
@@ -276,7 +237,7 @@ async def chadmeter(ctx, bot, user, slash: bool = False):
 
         else:
             chadlevel = random.randint(-1, 90)  # lower given chadlevel elsewhere
-            footer_icon = "https://cdn.discordapp.com/emojis/879697097467789373.png?v=1"
+            footer_icon = get_emote('hint', type='image')
             footer_text = _("fun.chadmeter.footer.notvoted", ctx, prefix=get_prefix(bot, ctx, raw=True))
             # user is told that voting for the bot inscreases chadlever
 
@@ -322,27 +283,6 @@ async def chadmeter(ctx, bot, user, slash: bool = False):
 
     else:
         await ctx.reply(embed=embed, mention_author=False)
-
-
-async def quote(ctx, slash: bool = False):
-    try:
-        json_data = await fetch("https://api.quotable.io/random")
-        quote_slip = json_data['content']
-        author = json_data['author']
-        embed = create_embed(
-            title=_("fun.quote.title", ctx),
-            description=f"{get_emote('quote1')} \n**{quote_slip}* \n \n - {author} {get_emote('quote2')}",
-            footer_text=_("fun.quote.footer", ctx)
-        )
-
-        if slash:
-            await ctx.send(embed=embed, hidden=False)
-
-        else:
-            await ctx.reply(embed=embed, mention_author=False)
-
-    except:
-        await error_api(ctx, slash)
 
 
 async def gigachadify(ctx, bot: discord.client, user=None, slash: bool = False):

@@ -44,38 +44,38 @@ usages:
 info:
   support:
     title: "%{emote} Support Server"
-    desc: "`•` Click [`here`](https://discord.gg/atPkjGgDBD) to join"
+    desc: " Click [`here`](https://discord.gg/atPkjGgDBD) to join"
   invite:
     title: "%{emote} Invite Giga Chad!"
-    desc: "`•` Click [`here`](%{invite_link}) to invite Giga Chad!"
+    desc: " Click [`here`](%{invite_link}) to invite Giga Chad!"
   vote:
     title: "%{emote} Vote for Giga Chad!"
-    desc: "`•` Vote for Giga Chad [`here`](https://top.gg/bot/843550872293867570/vote)!"
+    desc: " Vote for Giga Chad [`here`](https://top.gg/bot/843550872293867570/vote)!"
   info:
     title: "%{emote} Giga Chad Info"
-    desc: Giga Chad is a bot written in Python %{emote} by `Orh#0982` using the discord.py and discord-py-slash-command librairies.
+    desc: "%{dot} Giga Chad is a bot written in Python %{emote} by `Orh#0982` using the discord.py and discord-py-interactions librairies."
     version:
       title: "%{emote} Version"
     stats:
       title: "%{emote} Stats"
-      desc: "`•` %{nb} Servers"
+      desc: " %{nb} Servers"
     ping:
       title: "%{emote} Ping"
-      desc: "`•` `%{time}ms`"
+      desc: " `%{time}ms`"
     credits:
       title: "%{emote} Credits"
-      desc: "`•` [@berlin.1969](https://www.instagram.com/berlin.1969/) \n`•` [flaticon.com](https://www.flaticon.com/)"
+      desc: " [@berlin.1969](https://www.instagram.com/berlin.1969/) \n%{emote} [S/ash FR](https://discord.gg/fr)"
     docs:
       title: "%{emote} Docs"
-      desc: "`•` Click [`here`](https://docs.gigachad-bot.xyz/) to see the docs"
+      desc: " Click [`here`](https://docs.gigachad-bot.xyz/) to see the docs"
     source:
       title: "%{emote} Source Code"
-      desc: "`•` Click [`here`](https://github.com/o4h/gigachad-bot) to see the bot's source code"
+      desc: " Click [`here`](https://github.com/o4h/gigachad-bot) to see the bot's source code"
     uptime:
       title: "%{emote} Uptime"
       loading: Loading... %{emote}
-      success: "`•` Click [here](https://status.gigachad-bot.xyz/) to access the bot's uptime history. \n`•` Uptime over: ➥ **7 days**: `%{week}%%`  ➥ **30 days**: `%{month}%%` ➥ **90 days**: `%{months}%%`"
-      failure: "`•` %{emote} Something went wrong, the bot wasn't able to retrieve its uptime. \n `•` Click [here](https://status.gigachad-bot.xyz/) to acess the bot's detailed uptime"
+      success: " Click [here](https://status.gigachad-bot.xyz/) to access the bot's uptime history. \n%{emote} Uptime over: ➥ **7 days**: `%{week}%%`  ➥ **30 days**: `%{month}%%` ➥ **90 days**: `%{months}%%`"
+      failure: " %{emote} Something went wrong, the bot wasn't able to retrieve its uptime. \n%{dot} Click [here](https://status.gigachad-bot.xyz/) to acess the bot's detailed uptime"
     footer: Join the support server for further information
   prefix:
     current:
@@ -99,9 +99,6 @@ fun:
   caption:
     click: Click to access the post
     footer: Made with the imgflip.com API
-  advice:
-    title: "💡 Helpful Advice"
-    footer: Follow or not this advice, up to you
   chadmeter:
     title: "📏 Chadmeter"
     desc:
@@ -110,12 +107,71 @@ fun:
     footer:
       voted: Chadmeter never lies, Copyrighted © method
       notvoted: "Voting for Giga Chad (%{prefix}vote) might increase that... 😉"
-  quote:
-    title: "💬 Inspiring quote"
-    footer: I hope that this quote inspired you to become a Giga Chad
   gigachadify:
     title:
       own: You look gorgeous, surely not as good as I do, but still...
       other: "%{user} looks gorgeous, surely not as good as I do, but still..."
       giga_chad: "I am Giga Chad. I gigachadify, I can't be gigachadified!"
     footer: Feel free to use this picture in your resume, or on any dating site
+  gallery:
+    send_meme:
+      no_memes: "You don't have any memes in your gallery! Save some first before trying to send them!"
+      meme_selection:
+        title: "What meme do you want to send?"
+        desc: "%{dot} Select a a meme to send to the chat! Use the menu below to choose"
+        select: "Click to open the menu"
+        success: "Meme successfully sent"
+      unknown_meme:
+        title: "Meme couldn't be found"
+        desc: "%{dot} A meme with this id couldn't be found in your gallery. Check again the id, or-re-do the command without specifying any option, a menu will show up allowing you to choose a meme."
+      sent: "From %{user}'s gallery • Meme saved:"
+    set_title:
+      no_memes: "You don't have no memes in your gallery! Save some first before trying to change their title!"
+      others_meme:
+        title: "That isn't your meme!"
+        desc: "%{dot} You are trying to change the title of a meme that isn't in your gallery :/. \nCheck the id and retry!"
+      unknown_meme: "A meme with that id couldn't be found :/"
+      success:
+        title: "Meme title successfully updated"
+        desc: "%{dot} The meme with ID `%{id}` has been updated! \nHere is what it looks like now:"
+    save_meme:
+      already_saved: "You have already saved this meme!"
+      confirm:
+        buttons:
+          confirm: "Yes"
+          cancel: "Cancel"
+        title: "Save this meme?"
+        desc: "%{dot} Are you sure that you want to save this meme to your gallery \n%{dot} If you don't know what your gallery is, use the command %{emote}`gallery open` for information! \n%{dot} Use the buttons below to decide!"
+      success:
+        title: "Meme saved to your gallery"
+        desc: "%{dot} This meme has been saved to your gallery with the id `%{id}` (the id is a way to identify the meme in your gallery) and with the title `%{title}`. If you want to change the title, execute %{emote}`gallery set-title [new title]`!"
+        to_others: "%{user} saved this meme in their gallery!"
+      canceled: "Meme saving successfully canceled!"
+    paginator:
+      no_memes: "You have no memes in your gallery!"
+      buttons:
+        close: "Close Gallery"
+        deletion: "Delete Meme(s)"
+        navigator:
+          title: "Page %{page}/%{total} | Click to navigate"
+          select: "%{page}/%{total} | ID: %{id} | Created at %{time}"
+      deletion:
+        selection:
+          title: "What meme(s) do you want to delete?"
+          desc: "Select below the meme(s) you want to remove from your gallery or hit the cancel button"
+          buttons:
+            cancel: "Cancel"
+            navigator:
+              title: "Select the meme(s) you want to delete"
+              select: "ID: %{id} | Created at %{time}"
+        confirmation:
+          title: "Are you sure that you want to delete these memes"
+          desc: "Use the buttons below to confirm or cancel"
+          buttons:
+            delete: "Delete Meme(s)"
+            cancel: "Cancel"
+        success:
+          title: "Meme(s) deleted"
+          desc: "Re-open the gallery to see the changes take effect"
+        cancel: "Meme deletion successfully canceled"
+      closed: "Gallery Closed"

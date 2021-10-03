@@ -13,6 +13,8 @@ i18n.set('filename_format', '{locale}.{format}')
 i18n.set('fallback', 'en')
 i18n.load_path.append('./ressources/locales/')
 
+beta = True if os.getenv("BETA") == "TRUE" else False
+
 
 def translate(key: str, ctx, **kwargs) -> str:
     """ Return a translated string from locales"""
@@ -20,13 +22,28 @@ def translate(key: str, ctx, **kwargs) -> str:
     return i18n.t(key, locale=lang, **kwargs)
 
 
-def get_emote(emote: str) -> str:
-    """ Return an emote from emotes.json"""
-    with open('ressources/emotes.json', 'r') as f:
+def get_emote(emote: str, type: str = None) -> str:
+    """ return an emote from emotes.json
+    :param type: if not specified, the emoji is sent.
+     type 'id' will return the id,
+     type 'image' will return the image """
+    if beta:
+        path = "ressources/beta-emotes.json"
+    else:
+        path = "ressources/emotes.json"
+
+    with open(path, 'r') as f:
         emotes = json.load(f)
 
     if str(emote) in emotes:
-        return emotes[str(emote)]
+        if type is None:
+            return emotes[str(emote)]
+
+        elif type == "id":
+            return int(emotes[str(emote)].split(":")[2][:-1])
+
+        elif type == "image":
+            return f"https://cdn.discordapp.com/emojis/{emotes[str(emote)].split(':')[2][:-1]}.png"
 
     else:
         return ":exclamation:"

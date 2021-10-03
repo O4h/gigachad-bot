@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 from cogs.prefix import get_prefix
-from util.misc import create_embed
+from util.misc import get_emote, create_embed
 
 
 class CustomHelp(commands.HelpCommand):
@@ -17,14 +17,14 @@ class CustomHelp(commands.HelpCommand):
         for x in range(len(fun_cmds_list)):
             fun_cmds += f"`{prefix}{fun_cmds_list[x].name}` "
         embed = discord.Embed(
-                              title="<:gigachad:845633149923753984> Giga Chad Help",
+                              title=f"{get_emote('gigachad')} Giga Chad Help",
                               color=0x2f3136,
                               description=f"`•` To see help on a category or on a commands do `{prefix}help Category` "
                                           f"or `{prefix}help command` (e.g `{prefix}help Fun` or `{prefix}help info`). "
                                           f"\n `•` The docs are available [here](https://docs.gigachad-bot.xyz)"
                              )
         embed.add_field(
-                        name="<:gc_emote:849913849158696960> Fun Commands",
+                        name=f"{get_emote('fun')} Fun Commands",
                         value=f"`•` The fun commands are both normal command (that you call with the prefix `{prefix}` "
                               f"and [slash commands](https://support.discord.com/hc/fr/articles/1500000368501-Slash-Com"
                               f"mands-FAQ). If you can't see slash commands, type `{prefix}slash`for troubleshooting \n"
@@ -36,7 +36,7 @@ class CustomHelp(commands.HelpCommand):
         for x in range(len(othr_cmds_list)):
             othr_cmds += f"`{prefix}{othr_cmds_list[x].name}` "
         embed.add_field(
-                        name="<:settings:845659423561089034> Other Commands",
+                        name=f"{get_emote('settings')} Other Commands",
                         value=f"`•` These commands are all the other commands, mostly utility/information \n {othr_cmds}",
                         inline=False
                         )

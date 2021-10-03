@@ -15,7 +15,9 @@ intents = discord.Intents(messages=True, guilds=True)
 sql_query = "CREATE TABLE IF NOT EXISTS prefixes(guild BIGINT PRIMARY KEY, prefix VARCHAR(125));" \
             "CREATE TABLE IF NOT EXISTS lang(guild BIGINT PRIMARY KEY, lang VARCHAR(2));" \
             "CREATE TABLE IF NOT EXISTS commands_logs(time INT NOT NULL, guild BIGINT, cmd VARCHAR(25), usr BIGINT, type INT);" \
-            "CREATE TABLE IF NOT EXISTS guilds_logs(time INT NOT NULL, guild BIGINT, joined BOOLEAN)"
+            "CREATE TABLE IF NOT EXISTS guilds_logs(time INT NOT NULL, guild BIGINT, joined BOOLEAN);" \
+            "CREATE TABLE IF NOT EXISTS gallery(time INT NOT NULL, embed JSON, title VARCHAR(100), " \
+                                                "usr BIGINT, id VARCHAR(5), message BIGINT, madeby BIGINT)"
 
 
 async def run():
