@@ -252,6 +252,14 @@ class Gallery(commands.Cog):
                 )
                 await ctx.send(embed=embed, hidden=True)
 
+            elif count['count'] == 25:
+                embed = create_embed(
+                    author_text="You have too much memes saved!",
+                    author_image=get_emote('no', type='image'),
+                    description="You can only save a maximum of 25 memes, please delete memes from your gallery before trying to send any more"
+                )
+                await ctx.send(embed=embed, hidden=True)
+
             else:
                 component = create_actionrow(
                     create_button(
