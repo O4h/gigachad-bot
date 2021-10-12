@@ -95,7 +95,7 @@ class Fun(commands.Cog):
 
         else:
             user = ctx.target_author
-            
+
         await chadmeter(ctx=ctx, bot=self.gigachad, user=user, slash=True)
         await log_cmd(self.gigachad, ctx, ctx, 3)
 

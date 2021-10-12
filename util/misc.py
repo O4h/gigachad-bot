@@ -3,6 +3,7 @@ import os
 import discord
 import i18n
 import aiohttp
+from typing import Optional, List, Tuple
 from discord.ext import tasks, commands
 from cogs.lang import get_lang
 
@@ -22,7 +23,7 @@ def translate(key: str, ctx, **kwargs) -> str:
     return i18n.t(key, locale=lang, **kwargs)
 
 
-def get_emote(emote: str, type: str = None) -> str:
+def get_emote(emote: str, type: Optional[str] = None) -> str:
     """ return an emote from emotes.json
     :param type: if not specified, the emoji is sent.
      type 'id' will return the id,
@@ -62,10 +63,20 @@ async def has_voted(user_id: int) -> bool:
         return False
 
 
-def create_embed(title: str = None, desc: str = None, fields: list = None, color=None,
-                 image: str = None, thumbnail: str = None, footer_text: str = None, footer_icon: str = None,
-                 author_text: str = None, author_image: str = None, author_url: str = None,
-                 title_url: str = None) -> discord.Embed:
+def create_embed(
+        title: Optional[str] = None,
+        desc: Optional[str] = None,
+        fields: Optional[List[Tuple[str, str, Optional[bool]]]] = None,
+        color: Optional[str] = None,
+        image: Optional[str] = None,
+        thumbnail: Optional[str] = None,
+        footer_text: Optional[str] = None,
+        footer_icon: Optional[str] = None,
+        author_text: Optional[str] = None,
+        author_image: Optional[str] = None,
+        author_url: Optional[str] = None,
+        title_url: Optional[str] = None,
+) -> discord.Embed:
     """
     Create an embed easily
     Either :param title: or :param desc:

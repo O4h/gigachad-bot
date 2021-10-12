@@ -125,6 +125,7 @@ fun:
         title: "Meme couldn't be found"
         desc: "%{dot} A meme with this id couldn't be found in your gallery. Check again the id, or-re-do the command without specifying any option, a menu will show up allowing you to choose a meme."
       sent: "From %{user}'s gallery • Meme saved:"
+      made_by: "Meme made by %{user}"
     set_title:
       no_memes: "You don't have no memes in your gallery! Save some first before trying to change their title!"
       others_meme:
@@ -136,6 +137,9 @@ fun:
         desc: "%{dot} The meme with ID `%{id}` has been updated! \nHere is what it looks like now:"
     save_meme:
       already_saved: "You have already saved this meme!"
+      too_much_memes:
+        title: "You have too much memes saved!"
+        desc: " %{dot} You can only save a maximum of 25 memes, please delete memes from your gallery before trying to save any more memes!"
       confirm:
         buttons:
           confirm: "Yes"
@@ -148,6 +152,14 @@ fun:
         to_others: "%{user} saved this meme in their gallery!"
       canceled: "Meme saving successfully canceled!"
     paginator:
+      presentation:
+        title: "Your gallery"
+        what_is_it:
+          title: "What is it?"
+          desc: "%{dot} The gallery is a place to 'save' memes that you made or found with the bot! It will allow you to send them to chat and to not lose those masterpieces!"
+          how:
+            title: "How does it work?"
+            desc: "%{dot} Click on the %{button} button below memes found or made with Giga Chad! \n%{dot} Use the buttons below to navigate or delete memes! \n%{dot} Use %{slash}`gallery set-title` without any argument or with a meme id to change its title! \n%{dot} Use the %{slash}`gallery send-meme` command to send a meme to the chat at any time!"
       no_memes: "You have no memes in your gallery!"
       buttons:
         close: "Close Gallery"

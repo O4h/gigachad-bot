@@ -14,7 +14,7 @@ class ErrorHandler(commands.Cog):
         self.gigachad = gigachad
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx: commands.Context, error) -> None:
         if isinstance(error, commands.NotOwner):
             embed = create_embed(
                 title=_("errors.forbidden_cmd.title", ctx),

@@ -39,7 +39,7 @@ async def generate_key(bot: commands.Bot) -> str:
     return key
 
 
-async def send_meme(ctx: commands.Context, data: dict, hidden: bool = False):
+async def send_meme(ctx: commands.Context, data: dict, hidden: bool = False) -> None:
     """ Send a meme to discord
     :param ctx: the context to where the meme is going to be sent
     :param data: contains the data returned from the db as dict
@@ -49,7 +49,7 @@ async def send_meme(ctx: commands.Context, data: dict, hidden: bool = False):
     if data['madeby'] is not None:
         user = await ctx.bot.fetch_user(data['madeby'])
         embed.set_author(
-            name=f"Meme made by {user}",
+            name=_("fun.gallery.send-meme.made_by", ctx, user=user),
             icon_url=user.avatar_url
         )
     embed.set_footer(
@@ -67,9 +67,8 @@ async def send_meme(ctx: commands.Context, data: dict, hidden: bool = False):
 
 
 class Gallery(commands.Cog):
-    def __init__(self, gigachad):
+    def __init__(self, gigachad) -> None:
         self.gigachad = gigachad
-        self.open_paginators = {}
 
     @cog_ext.cog_subcommand(
         base="gallery",
@@ -90,7 +89,7 @@ class Gallery(commands.Cog):
             )
         ]
     )
-    async def gallery_set_title(self, ctx: SlashContext, title: str, meme_id: str = None):
+    async def gallery_set_title(self, ctx: SlashContext, title: str, meme_id: str = None) -> None:
         if meme_id is None:
             try:
                 async with self.gigachad.db.acquire() as conn:
@@ -154,7 +153,7 @@ class Gallery(commands.Cog):
             option_type=3
         )]
     )
-    async def gallery_send_meme(self, ctx: SlashContext, meme_id: str = None):
+    async def gallery_send_meme(self, ctx: SlashContext, meme_id: str = None) -> None:
         if meme_id is None:
             async with self.gigachad.db.acquire() as conn:
                 data = await conn.fetch("SELECT * FROM gallery WHERE usr = $1 ORDER BY time DESC", ctx.author.id)
@@ -238,25 +237,30 @@ class Gallery(commands.Cog):
         await paginator.run()
 
     @commands.Cog.listener()
-    async def on_component(self, ctx: ComponentContext):
+    async def on_component(self, ctx: ComponentContext) -> None:
         if ctx.custom_id.startswith("save"):
             async with self.gigachad.db.acquire() as conn:
                 count = dict(
                     await conn.fetchrow("SELECT COUNT(*) FROM gallery WHERE message = $1 AND usr = $2",
                                         ctx.origin_message_id, ctx.author.id)
                 )
+                total_count = dict(
+                    await conn.fetchrow("SELECT COUNT(*) FROM gallery WHERE usr = $2",
+                                        ctx.author.id)
+
+                )
             if count['count'] != 0:
                 embed = create_embed(
-                    author_text="You have already saved this meme!",
+                    author_text=_("fun.gallery.save_meme.already_saved"),
                     author_image=get_emote('no', type='image')
                 )
                 await ctx.send(embed=embed, hidden=True)
 
-            elif count['count'] == 25:
+            elif total_count['count'] == 25:
                 embed = create_embed(
-                    author_text="You have too much memes saved!",
+                    author_text=_("fun.gallery.save_meme.too_much_memes.title", ctx),
                     author_image=get_emote('no', type='image'),
-                    description="You can only save a maximum of 25 memes, please delete memes from your gallery before trying to send any more"
+                    desc=_("fun.gallery.save_meme.too_much_memes.desc", ctx, dot=get_emote("dot"))
                 )
                 await ctx.send(embed=embed, hidden=True)
 
@@ -355,19 +359,15 @@ class GalleryPaginator:
         self.gallery_embed = create_embed(
             author_image=get_emote("gallery", type="image"),
             author_text="Your gallery",
-            fields=[["What is it?", f"{get_emote('dot')} The gallery is a place to 'save' memes that you made or "
-                                    f"found with the bot! It will allow you to send them to chat and to not lose "
-                                    f"those masterpieces!"],
-                    ["How does it work?",
-                     f"{get_emote('dot')} Click on the {get_emote('add')} button below memes found or made with Giga "
-                     f"Chad!  \n{get_emote('dot')} Use the buttons below to navigate or delete memes! \n"
-                     f"{get_emote('dot')} Use {get_emote('slash')}`gallery set-title` without any argument or with a "
-                     f"meme id to changed its title! \n{get_emote('dot')} Use the {get_emote('slash')}`gallery "
-                     f"send-meme` command to send a meme to the chat at any time!"]
+            fields=[[_("fun.gallery.paginator.presentation.what_is_it.title", self.ctx),
+                     _("fun.gallery.paginator.presentation.what_is_it.title", self.ctx, dot=get_emote("dot"))],
+                    [_("fun.gallery.paginator.presentation.how.title", self.ctx),
+                     _("fun.gallery.paginator.presentation.how.desc", self.ctx, dot=get_emote("dot"),
+                       button=get_emote("add"), slash=get_emote("slash"))]
                     ]
         )
 
-    async def run(self):
+    async def run(self) -> None:
         """" Runs the gallery paginator """
         async with self.gigachad.db.acquire() as conn:
             memes = await conn.fetch("SELECT * FROM gallery WHERE usr = $1 ORDER BY time DESC", self.user.id)
@@ -490,7 +490,7 @@ class GalleryPaginator:
                         component["disabled"] = True
                 await self.msg.edit(components=components)
 
-    async def delete_memes(self, ctx: ComponentContext):
+    async def delete_memes(self, ctx: ComponentContext) -> list:
         embed = create_embed(
             author_text=_("fun.gallery.paginator.deletion.selection.title", self.ctx),
             author_image=get_emote("delete", type="image"),
@@ -528,7 +528,7 @@ class GalleryPaginator:
         self.delete = True
         return components
 
-    async def delete_memes_confirm(self, ctx: ComponentContext):
+    async def delete_memes_confirm(self, ctx: ComponentContext) -> list:
         embed = create_embed(
             author_image=get_emote("delete", type="image"),
             author_text=_("fun.gallery.paginator.deletion.confirmation.title", self.ctx),
@@ -623,7 +623,7 @@ class GalleryPaginator:
         components = [create_actionrow(select), create_actionrow(*nav_buttons), create_actionrow(*action_buttons)]
         return components
 
-    def check(self, button_ctx) -> bool:
+    def check(self, button_ctx: ComponentContext) -> bool:
         return button_ctx.author == self.ctx.author
 
 
