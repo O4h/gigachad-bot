@@ -66,7 +66,7 @@ async def run():
 
 
 class GigaChad(commands.Bot):
-    def __init__(self, db, prefix_cache: dict, lang_cache: dict, beta: bool):
+    def __init__(self, db, prefix_cache: dict, lang_cache: dict):
         """" the bot class, used everywhere.
         :param db: is passed for easier use, same for
         :param prefix_cache: & :param lang_cache:

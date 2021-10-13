@@ -9,6 +9,8 @@ from util.misc import create_embed, get_emote
 log_channel = os.getenv("LOG_CHANNEL")
 ignored_users = os.getenv("LOGS_IGNORED_USERS")
 
+beta = True if os.getenv("BETA") == "TRUE" else False
+
 
 async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int):
     """ Log commands uses
@@ -43,7 +45,8 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, gigachad):
         """ Log stats about the bot for better understanding of users utilisations """
         self.gigachad = gigachad
-        self.topgg_stats_update.start()  # start the top.gg automatic stats updates
+        if beta:
+            self.topgg_stats_update.start()  # start the top.gg automatic stats updates
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
