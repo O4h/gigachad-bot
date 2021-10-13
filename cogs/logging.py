@@ -45,7 +45,7 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, gigachad):
         """ Log stats about the bot for better understanding of users utilisations """
         self.gigachad = gigachad
-        
+
         if not beta:
             self.topgg_stats_update.start()  # start the top.gg automatic stats updates
 

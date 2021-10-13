@@ -47,17 +47,21 @@ class ErrorHandler(commands.Cog):
             await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.BotMissingPermissions):
-            missingperms = ""
-            for x in range(len(error.missing_perms)):
-                missingperms += f"`{error.missing_perms[x]}` "
-            missingperms = missingperms.upper()
-            embed = create_embed(
-                color="red",
-                title=_("errors.bot_missing_perms.title", ctx),
-                desc=_("errors.bot_missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
-                thumbnail=get_emote('no', type='image')
-            )
-            await ctx.reply(embed=embed, mention_author=False)
+            try:
+                missingperms = ""
+                for x in range(len(error.missing_perms)):
+                    missingperms += f"`{error.missing_perms[x]}` "
+                missingperms = missingperms.upper()
+                embed = create_embed(
+                    color="red",
+                    title=_("errors.bot_missing_perms.title", ctx),
+                    desc=_("errors.bot_missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
+                    thumbnail=get_emote('no', type='image')
+                )
+                await ctx.reply(embed=embed, mention_author=False)
+
+            except:  # Bot can't send messages, not much we can do about it :/
+                pass
 
         elif isinstance(error, commands.BadArgument):
             embed = create_embed(
