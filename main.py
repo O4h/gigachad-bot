@@ -4,6 +4,7 @@ import os
 import asyncpg
 import discord
 import jishaku
+import sentry_sdk
 from cogs.prefix import get_prefix
 from discord.ext import commands
 from discord_slash import SlashCommand
@@ -17,7 +18,17 @@ sql_query = "CREATE TABLE IF NOT EXISTS prefixes(guild BIGINT PRIMARY KEY, prefi
             "CREATE TABLE IF NOT EXISTS commands_logs(time INT NOT NULL, guild BIGINT, cmd VARCHAR(25), usr BIGINT, type INT);" \
             "CREATE TABLE IF NOT EXISTS guilds_logs(time INT NOT NULL, guild BIGINT, joined BOOLEAN);" \
             "CREATE TABLE IF NOT EXISTS gallery(time INT NOT NULL, embed JSON, title VARCHAR(100), " \
-                                                "usr BIGINT, id VARCHAR(5), message BIGINT, madeby BIGINT)"
+            "usr BIGINT, id VARCHAR(5), message BIGINT, madeby BIGINT)"
+
+
+# Init sentry
+beta = True if os.getenv("BETA") == "TRUE" else False
+
+if not beta:
+    sentry_sdk.init(
+        os.getenv("SENTRY_ENDPOINT"),
+        traces_sample_rate=1.0
+    )
 
 
 async def run():
@@ -55,7 +66,7 @@ async def run():
 
 
 class GigaChad(commands.Bot):
-    def __init__(self, db, prefix_cache: dict, lang_cache: dict):
+    def __init__(self, db, prefix_cache: dict, lang_cache: dict, beta: bool):
         """" the bot class, used everywhere.
         :param db: is passed for easier use, same for
         :param prefix_cache: & :param lang_cache:

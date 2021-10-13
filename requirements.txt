@@ -7,3 +7,4 @@ psutil
 asyncpg
 python-i18n
 PyYAML
+sentry-sdk
