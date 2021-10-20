@@ -402,15 +402,15 @@ class GalleryPaginator:
             components=self.components()
         )
 
-        timeout = False
-        while not timeout:
+        while True:
             try:
                 gallery_edit = False
+
                 if self.delete:
                     button_ctx = await wait_for_component(
                         client=self.gigachad,
                         components=self.delete_components + self.components(),
-                        timeout=120,
+                        timeout=10,
                         check=self.check
                     )
                 else:
@@ -418,10 +418,10 @@ class GalleryPaginator:
                         client=self.gigachad,
                         messages=self.msg,
                         components=self.components(),
-                        timeout=120,
+                        timeout=10,
                         check=self.check
                     )
- 
+
                 if button_ctx.custom_id == "first":
                     gallery_edit = True
                     self.index = 1
@@ -464,11 +464,6 @@ class GalleryPaginator:
                         embed=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],
                         components=self.components()
                     )
-                if gallery_edit:
-                    await button_ctx.edit_origin(
-                        embeds=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],
-                        components=self.components()
-                    )
                 elif button_ctx.custom_id == "confirm_delete":
                     async with self.gigachad.db.acquire() as conn:
                         for meme in self.memes_to_delete:
@@ -480,14 +475,19 @@ class GalleryPaginator:
                     )
                     self.delete = False
                     await button_ctx.edit_origin(embed=embed, components=[])
+                if gallery_edit:
+                    await button_ctx.edit_origin(
+                        embeds=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],
+                        components=self.components()
+                    )
 
-            except TimeoutError:
-                timeout = True
+            except asyncio.TimeoutError:
                 components = self.components()
                 for row in components:
                     for component in row["components"]:
                         component["disabled"] = True
                 await self.msg.edit(components=components)
+                return
 
     async def delete_memes(self, ctx: ComponentContext) -> list:
         embed = create_embed(
