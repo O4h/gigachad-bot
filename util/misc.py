@@ -14,7 +14,7 @@ i18n.set('filename_format', '{locale}.{format}')
 i18n.set('fallback', 'en')
 i18n.load_path.append('./ressources/locales/')
 
-beta = True if os.getenv("BETA") == "TRUE" else False
+beta = bool(os.getenv("BETA") == "TRUE")
 
 
 def translate(key: str, ctx, **kwargs) -> str:
@@ -25,6 +25,7 @@ def translate(key: str, ctx, **kwargs) -> str:
 
 def get_emote(emote: str, type: Optional[str] = None) -> str:
     """ return an emote from emotes.json
+    :param emote: emote to get
     :param type: if not specified, the emoji is sent.
      type 'id' will return the id,
      type 'image' will return the image """
@@ -51,6 +52,9 @@ def get_emote(emote: str, type: Optional[str] = None) -> str:
 
 
 async def has_voted(user_id: int) -> bool:
+    """ Check if a user has voted
+    :param user_id: ID of a user
+    """
     url = f"https://top.gg/api/bots/843550872293867570/check?userId={user_id}"
     headers = {"Authorization": os.getenv("TOPGG_TOKEN")}
     async with aiohttp.ClientSession() as c:

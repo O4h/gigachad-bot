@@ -22,8 +22,7 @@ sql_query = "CREATE TABLE IF NOT EXISTS prefixes(guild BIGINT PRIMARY KEY, prefi
 
 
 # Init sentry
-beta = True if os.getenv("BETA") == "TRUE" else False
-
+beta = bool(os.getenv("BETA") == "TRUE")
 if not beta:
     sentry_sdk.init(
         os.getenv("SENTRY_ENDPOINT"),
@@ -32,7 +31,7 @@ if not beta:
 
 
 async def run():
-    """ The function to run the bot, required cuz async stuff annoying basically"""
+    """ The function to run the bot """
 
     credentials = {"user": os.getenv("DB_USER"), "password": os.getenv("DB_PASSWORD"),
                    "database": os.getenv("DB_DATABASE"),
@@ -88,7 +87,7 @@ class GigaChad(commands.Bot):
         self.lang_cache = lang_cache
         self.invite_link = "https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=379904&scope=bot%20applications.commands"
 
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         print('------')
         print('Logged in as')
         print(self.user.name)
@@ -96,7 +95,7 @@ class GigaChad(commands.Bot):
         print(discord.__version__)
         print('------')
 
-    async def reload_cache(self, table: str):
+    async def reload_cache(self, table: str) -> None:
         """ Reload prefix or lang cache at runtime
         :param table: can either be "prefixes" or "lang"
         """

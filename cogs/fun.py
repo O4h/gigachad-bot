@@ -22,6 +22,16 @@ from util.misc import translate as _
 IMGFLIP_USERNAME = os.getenv("IMGFLIP_USERNAME")  # load env variables
 IMGFLIP_PASSWORD = os.getenv("IMGFLIP_PASSWORD")
 
+eol_txt_cmds = create_embed(
+    author_text="Text Commands Soon Unsupported",
+    author_image=get_emote("hint", type="image"),
+    desc=f"{get_emote('dot')} Text commands will soon be unsupported by Giga Chad due to descisions Discord is "
+         f"taking. Read more about it [here](https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message"
+         f"-Content-Access-Deprecation-for-Verified-Bots). [tldr; Giga Chad won't have access to message contents].\n "
+         f"{get_emote('dot')}Start switching to [Slash Commands now!",
+    color="red"
+)
+
 
 class Fun(commands.Cog):
     """
@@ -222,7 +232,9 @@ async def meme(ctx: Union[SlashContext, commands.Context], subreddit: Optional[s
             await ctx.send(embed=embed, components=[create_actionrow(*buttons)])
 
         else:
-            await ctx.reply(embed=embed, mention_author=False, components=[create_actionrow(*buttons)])
+            await ctx.reply(embed=eol_txt_cmds, mention_author=False,)
+            await ctx.send(embed=embed, components=[create_actionrow(*buttons)])
+
 
     except:
         await error_api(ctx, slash)
@@ -265,7 +277,7 @@ async def chadmeter(ctx: Union[SlashContext, commands.Context, MenuContext], use
     rn = round(chadlevel / 10)
     body = "░" * 10
     li = list(body)
-    for i in enumerate(li[:rn]):
+    for i, elem in enumerate(li[:rn]):
         li[i] = "▓"
     a = "".join(li)
     b = a.replace("▓", blurple)
@@ -284,7 +296,8 @@ async def chadmeter(ctx: Union[SlashContext, commands.Context, MenuContext], use
         await ctx.send(embed=embed, hidden=False)
 
     else:
-        await ctx.reply(embed=embed, mention_author=False)
+        await ctx.reply(embed=eol_txt_cmds, mention_author=False)
+        await ctx.send(embed=embed)
 
 
 async def gigachadify(ctx: Union[SlashContext, commands.Context, MenuContext], user: Optional[discord.Member] = None,
@@ -333,7 +346,8 @@ async def gigachadify(ctx: Union[SlashContext, commands.Context, MenuContext], u
         await ctx.send(file=file, embed=embed)
 
     else:
-        await ctx.reply(file=file, embed=embed, mention_author=False)
+        await ctx.reply(embed=eol_txt_cmds, mention_author=False)
+        await ctx.send(file=file, embed=embed)
 
 
 def gigachadify_process(data) -> None:

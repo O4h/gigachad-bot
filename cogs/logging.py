@@ -9,10 +9,10 @@ from util.misc import create_embed, get_emote
 log_channel = os.getenv("LOG_CHANNEL")
 ignored_users = os.getenv("LOGS_IGNORED_USERS")
 
-beta = True if os.getenv("BETA") == "TRUE" else False
+beta = bool(os.getenv("BETA") == "TRUE")
 
 
-async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int):
+async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int) -> None:
     """ Log commands uses
     :param cmd_type: is used to log whether the logged cmd
     was a normal command (-> type 1), a slash command (-> type 2)
@@ -31,7 +31,7 @@ async def log_cmd(gigachad: commands.Bot, name, ctx, cmd_type: int):
                            round(time.time()), guild, name.name, ctx.author.id, cmd_type)
 
 
-async def log_guild(gigachad: commands.Bot, guild: discord.Guild, joined: bool):
+async def log_guild(gigachad: commands.Bot, guild: discord.Guild, joined: bool) -> None:
     """ Log guilds join and leave events,
     if :param joined: is True then it joined a guild,
     if False it left it """
@@ -42,7 +42,7 @@ async def log_guild(gigachad: commands.Bot, guild: discord.Guild, joined: bool):
 
 
 class Logging(commands.Cog, command_attrs=dict(hidden=True)):
-    def __init__(self, gigachad):
+    def __init__(self, gigachad) -> None:
         """ Log stats about the bot for better understanding of users utilisations """
         self.gigachad = gigachad
 
@@ -50,7 +50,7 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
             self.topgg_stats_update.start()  # start the top.gg automatic stats updates
 
     @commands.Cog.listener()
-    async def on_guild_join(self, guild):
+    async def on_guild_join(self, guild) -> None:
         """ Send embed and log on guild join"""
         await log_guild(self.gigachad, guild, True)
         owner = await self.gigachad.fetch_user(guild.owner_id)
@@ -66,7 +66,7 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
         await chan.send(embed=embed)
 
     @commands.Cog.listener()
-    async def on_guild_remove(self, guild):
+    async def on_guild_remove(self, guild) -> None:
         """ Send embed and log on guild leave"""
         await log_guild(self.gigachad, guild, False)
         owner = await self.gigachad.fetch_user(guild.owner_id)
@@ -82,17 +82,17 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
         await chan.send(embed=embed)
 
     @commands.Cog.listener()
-    async def on_command(self, ctx):
+    async def on_command(self, ctx) -> None:
         """ Log command """
         await log_cmd(self.gigachad, ctx.command, ctx, 1)
 
     @commands.Cog.listener()
-    async def on_slash_command(self, ctx):
+    async def on_slash_command(self, ctx) -> None:
         """ Log slash commands """
         await log_cmd(self.gigachad, ctx, ctx, 2)
 
     @tasks.loop(minutes=30)
-    async def topgg_stats_update(self):
+    async def topgg_stats_update(self) -> None:
         """ Automatically update stats on top.gg"""
         headers = {"Authorization": os.getenv("TOPGG_TOKEN")}
         url = "https://top.gg/api/bots/843550872293867570/stats"
@@ -105,10 +105,10 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
                     print(f"Error while posting stats: {await response.read()}")
 
     @topgg_stats_update.before_loop
-    async def before_topgg_stats_update(self):
-        """ Make sure that the loop waits until
-        the bot is ready before trying to post
-        stats """
+    async def before_topgg_stats_update(self) -> None:
+        """ Make sure that the loop waits until the
+        bot is ready before trying to post stats
+        """
         await self.gigachad.wait_until_ready()
 
 
