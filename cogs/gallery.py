@@ -4,11 +4,11 @@ import os
 import random
 import string
 import time
-from asyncio import TimeoutError
 from datetime import datetime
 
 import aiohttp
 import discord
+import discord_slash
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.context import InteractionContext, ComponentContext
@@ -120,7 +120,7 @@ class Gallery(commands.Cog):
 
             except TypeError:
                 embed = create_embed(
-                    author_text=_("fun.gallery.set_title.unknown_meme"),
+                    author_text=_("fun.gallery.set_title.unknown_meme", ctx),
                     author_image=get_emote('no', type='image')
                 )
                 await ctx.send(embed=embed, hidden=True)
@@ -216,8 +216,7 @@ class Gallery(commands.Cog):
                 if data['usr'] != ctx.author.id:
                     return
 
-                else:
-                    await send_meme(ctx, data)
+                await send_meme(ctx, data)
 
             except TypeError:
                 embed = create_embed(
@@ -251,7 +250,7 @@ class Gallery(commands.Cog):
                 )
             if count['count'] != 0:
                 embed = create_embed(
-                    author_text=_("fun.gallery.save_meme.already_saved"),
+                    author_text=_("fun.gallery.save_meme.already_saved", ctx),
                     author_image=get_emote('no', type='image')
                 )
                 await ctx.send(embed=embed, hidden=True)
@@ -360,9 +359,9 @@ class GalleryPaginator:
             author_image=get_emote("gallery", type="image"),
             author_text="Your gallery",
             fields=[[_("fun.gallery.paginator.presentation.what_is_it.title", self.ctx),
-                     _("fun.gallery.paginator.presentation.what_is_it.title", self.ctx, dot=get_emote("dot"))],
-                    [_("fun.gallery.paginator.presentation.how.title", self.ctx),
-                     _("fun.gallery.paginator.presentation.how.desc", self.ctx, dot=get_emote("dot"),
+                     _("fun.gallery.paginator.presentation.what_is_it.desc", self.ctx, dot=get_emote("dot"))],
+                    [_("fun.gallery.paginator.presentation.what_is_it.how.title", self.ctx),
+                     _("fun.gallery.paginator.presentation.what_is_it.how.desc", self.ctx, dot=get_emote("dot"),
                        button=get_emote("add"), slash=get_emote("slash"))]
                     ]
         )
@@ -422,7 +421,7 @@ class GalleryPaginator:
                         timeout=120,
                         check=self.check
                     )
-
+ 
                 if button_ctx.custom_id == "first":
                     gallery_edit = True
                     self.index = 1
