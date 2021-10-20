@@ -82,14 +82,6 @@ class ErrorHandler(commands.Cog):
         elif isinstance(error, commands.CommandNotFound):
             pass
 
-        else:
-            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
-            channel = await self.gigachad.fetch_channel(os.getenv("LOG_CHANNEL"))
-            await channel.send(
-                content="```\n {e} \n```".format(e=traceback.format_exception(type(error), error, error.__traceback__))
-            )
-
 
 def setup(gigachad):
     gigachad.add_cog(ErrorHandler(gigachad))

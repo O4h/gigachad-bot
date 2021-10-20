@@ -1,22 +1,21 @@
-import asyncio
+from typing import Union, Optional
 import json
 import os
 import random
-import urllib.request
+import asyncio
 from io import BytesIO
-
 import aiohttp
 import discord
 from PIL import Image, ImageDraw
-from typing import Union, Optional
-from cogs.logging import log_cmd
-from cogs.prefix import get_prefix
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.context import MenuContext
 from discord_slash.model import ContextMenuType, ButtonStyle
 from discord_slash.utils.manage_commands import create_option, create_choice
 from discord_slash.utils.manage_components import create_button, create_actionrow
+
+from cogs.logging import log_cmd
+from cogs.prefix import get_prefix
 from util.misc import get_emote, create_embed, has_voted
 from util.misc import translate as _
 
@@ -85,7 +84,7 @@ class Fun(commands.Cog):
     )
     @commands.cooldown(1, 4, commands.BucketType.user)
     async def cmdgigachadify(self, ctx: commands.context, user: Optional[commands.MemberConverter] = None) -> None:
-        await gigachadify(ctx, self.gigachad, user)
+        await gigachadify(ctx, user)
 
     # CHADMETER commands
     @cog_ext.cog_context_menu(name="Chadmeter", target=ContextMenuType.USER)
@@ -96,7 +95,7 @@ class Fun(commands.Cog):
         else:
             user = ctx.target_author
 
-        await chadmeter(ctx=ctx, bot=self.gigachad, user=user, slash=True)
+        await chadmeter(ctx=ctx, user=user, slash=True)
         await log_cmd(self.gigachad, ctx, ctx, 3)
 
     @cog_ext.cog_slash(name="chadmeter", description="📏 Scientifically measure your Chad level",
@@ -108,7 +107,7 @@ class Fun(commands.Cog):
                                required=False,
                            )])
     async def slashchadmeter(self, ctx: SlashContext, user: Optional[discord.Member] = None):
-        await chadmeter(ctx, self.gigachad, user, True)
+        await chadmeter(ctx, user, True)
 
     @commands.command(name="chadmeter", usage="chadmeter [user]",
                       description="Scientifcally measure your or someone else's Chad level!")
@@ -182,7 +181,7 @@ class Fun(commands.Cog):
 
 
 async def meme(ctx: Union[SlashContext, commands.Context], subreddit: Optional[str] = None,
-               slash: Optional[bool] = False):
+               slash: Optional[bool] = False) -> None:
     try:
         # first fetch the meme from an api
         if subreddit is None:
@@ -230,12 +229,12 @@ async def meme(ctx: Union[SlashContext, commands.Context], subreddit: Optional[s
 
 
 async def chadmeter(ctx: Union[SlashContext, commands.Context, MenuContext], user: Optional[discord.Member],
-                    slash: Optional[bool] = False):
+                    slash: Optional[bool] = False) -> None:
     if user is None:  # check if a user param is specified
 
         if await has_voted(ctx.author.id):  # check if this user has voted on top.gg
             chadlevel = random.randint(75, 100)  # give a higher chadlevel if it is the case
-            footer_icon = bot.user.avatar_url
+            footer_icon = ctx.bot.user.avatar_url
             footer_text = _("fun.chadmeter.footer.voted", ctx)
 
         else:
@@ -250,13 +249,13 @@ async def chadmeter(ctx: Union[SlashContext, commands.Context, MenuContext], use
         if await has_voted(user.id):  # same as above
             chadlevel = random.randint(80, 100)
 
-        elif user == bot.user:  # if user param is bot:
+        elif user == ctx.bot.user:  # if user param is bot:
             chadlevel = 100
 
         else:
             chadlevel = random.randint(-1, 80)
 
-        footer_icon = bot.user.avatar_url
+        footer_icon = ctx.bot.user.avatar_url
         footer_text = _("fun.chadmeter.footer.voted", ctx)
         desc = _("fun.chadmeter.desc.other", ctx, user=user.mention, chadlevel=chadlevel)
 
@@ -266,7 +265,7 @@ async def chadmeter(ctx: Union[SlashContext, commands.Context, MenuContext], use
     rn = round(chadlevel / 10)
     body = "░" * 10
     li = list(body)
-    for i, elem in enumerate(li[:rn]):
+    for i in enumerate(li[:rn]):
         li[i] = "▓"
     a = "".join(li)
     b = a.replace("▓", blurple)
@@ -289,7 +288,7 @@ async def chadmeter(ctx: Union[SlashContext, commands.Context, MenuContext], use
 
 
 async def gigachadify(ctx: Union[SlashContext, commands.Context, MenuContext], user: Optional[discord.Member] = None,
-                      slash: Optional[bool] = False):
+                      slash: Optional[bool] = False) -> None:
     if user is None:
         asset = ctx.author.avatar_url_as(size=128)
         prefix = _("fun.gigachadify.title.own", ctx)
@@ -337,7 +336,7 @@ async def gigachadify(ctx: Union[SlashContext, commands.Context, MenuContext], u
         await ctx.reply(file=file, embed=embed, mention_author=False)
 
 
-def gigachadify_process(data):
+def gigachadify_process(data) -> None:
     im2 = Image.open(data)  # open the image
     im2 = im2.resize((175, 175))  # Resize it
     im2 = im2.rotate(7)  # Slightly rotate the profile picture
@@ -352,7 +351,7 @@ def gigachadify_process(data):
     im1.save("output.jpg", quality=95)  # Save it for upload
 
 
-async def fetch(url: str):
+async def fetch(url: str) -> dict:
     """ Method to easily fetech data from an api """
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as r:
@@ -361,7 +360,7 @@ async def fetch(url: str):
     return json.loads(data)
 
 
-async def error_api(ctx: Union[commands.Context, SlashContext, MenuContext], slash: Optional[bool] = False):
+async def error_api(ctx: Union[commands.Context, SlashContext, MenuContext], slash: Optional[bool] = False) -> None:
     """ Create an embed if api can't be reached
     or in cas of any error """
     embed = create_embed(
