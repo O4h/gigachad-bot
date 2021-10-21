@@ -27,7 +27,7 @@ eol_txt_cmds = create_embed(
     author_image=get_emote("hint", type="image"),
     desc=f"{get_emote('dot')} Text commands will soon be unsupported by Giga Chad due to descisions Discord is "
          f"taking. Read more about it [here](https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message"
-         f"-Content-Access-Deprecation-for-Verified-Bots). [tldr; Giga Chad won't have access to message contents].\n "
+         f"-Content-Access-Deprecation-for-Verified-Bots). [tldr; Giga Chad won't have access to message contents].\n"
          f"{get_emote('dot')}Start switching to [Slash Commands now!",
     color="red"
 )
@@ -36,8 +36,8 @@ eol_txt_cmds = create_embed(
 class Fun(commands.Cog):
     """
     Fun stuff goes here!
-    (!) Slash cmds, context menus and normal cmds call outside functions
-    to make them compatible with all these uses (!)
+    Slash cmds, context menus and normal cmds call outside functions
+    to make them compatible with all these uses 
     """
 
     def __init__(self, gigachad: commands.Bot) -> None:
