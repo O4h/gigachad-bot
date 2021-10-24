@@ -222,7 +222,7 @@ class Gallery(commands.Cog):
                 embed = create_embed(
                     author_text=_("fun.gallery.send_meme.unknow_meme.title", ctx),
                     author_image=get_emote('no', type='image'),
-                    desc=_("fun.gallery.send_meme.unknow_meme.desc", ctx, get_emote("dot"))
+                    desc=_("fun.gallery.send_meme.unknow_meme.desc", ctx, dot=get_emote("dot"))
                 )
                 await ctx.send(embed=embed, hidden=True)
 
