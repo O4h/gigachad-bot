@@ -49,7 +49,7 @@ async def send_meme(ctx: commands.Context, data: dict, hidden: bool = False) -> 
     if data['madeby'] is not None:
         user = await ctx.bot.fetch_user(data['madeby'])
         embed.set_author(
-            name=_("fun.gallery.send-meme.made_by", ctx, user=user),
+            name=_("fun.gallery.send_meme.made_by", ctx, user=user),
             icon_url=user.avatar_url
         )
     embed.set_footer(
@@ -220,9 +220,9 @@ class Gallery(commands.Cog):
 
             except TypeError:
                 embed = create_embed(
-                    author_text=_("fun.gallery.send_meme.unknow_meme.title", ctx),
+                    author_text=_("fun.gallery.send_meme.unknown_meme.title", ctx),
                     author_image=get_emote('no', type='image'),
-                    desc=_("fun.gallery.send_meme.unknow_meme.desc", ctx, dot=get_emote("dot"))
+                    desc=_("fun.gallery.send_meme.unknown_meme.desc", ctx, dot=get_emote("dot"))
                 )
                 await ctx.send(embed=embed, hidden=True)
 
