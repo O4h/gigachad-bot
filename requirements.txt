@@ -1,6 +1,5 @@
 Pillow
 discord-py-interactions
-urllib3
 aiohttp
 jishaku
 asyncpg
