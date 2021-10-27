@@ -3,7 +3,6 @@ discord-py-interactions
 urllib3
 aiohttp
 jishaku
-psutil
 asyncpg
 python-i18n
 PyYAML
