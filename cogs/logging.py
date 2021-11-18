@@ -36,9 +36,9 @@ async def log_guild(gigachad: commands.Bot, guild: discord.Guild, joined: bool) 
     if :param joined: is True then it joined a guild,
     if False it left it """
     async with gigachad.db.acquire() as conn:
-        await conn.execute("INSERT INTO guilds_logs (time, guild, joined) "
-                           "VALUES ($1, $2, $3)",
-                           round(time.time()), guild.id, joined)
+        await conn.execute("INSERT INTO guilds_logs (time, guild, joined, guild_count) "
+                           "VALUES ($1, $2, $3, $4)",
+                           round(time.time()), guild.id, joined, len(gigachad.guilds))
 
 
 class Logging(commands.Cog, command_attrs=dict(hidden=True)):

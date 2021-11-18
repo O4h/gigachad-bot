@@ -237,6 +237,7 @@ class Gallery(commands.Cog):
 
     @commands.Cog.listener()
     async def on_component(self, ctx: ComponentContext) -> None:
+        """ Save memes this way """
         if ctx.custom_id.startswith("save"):
             async with self.gigachad.db.acquire() as conn:
                 count = dict(
@@ -244,7 +245,7 @@ class Gallery(commands.Cog):
                                         ctx.origin_message_id, ctx.author.id)
                 )
                 total_count = dict(
-                    await conn.fetchrow("SELECT COUNT(*) FROM gallery WHERE usr = $2",
+                    await conn.fetchrow("SELECT COUNT(*) FROM gallery WHERE usr = $1",
                                         ctx.author.id)
 
                 )
@@ -342,8 +343,16 @@ class Gallery(commands.Cog):
                     )
                     await button_ctx.edit_origin(embed=embed, components=[])
 
+        elif ctx.custom_id in ["first", "prev", "next", "last", "close", "nav", "nav_delete", "cancel", "delete",
+                               "confirm_delete"]:
+            # Handle buttons from timed out paginator to prevent errors
+            pass
+
 
 class GalleryPaginator:
+    """
+
+    """
     def __init__(self, ctx, user):
         self.gigachad = ctx.bot
         self.user: discord.User = user
@@ -358,11 +367,11 @@ class GalleryPaginator:
         self.gallery_embed = create_embed(
             author_image=get_emote("gallery", type="image"),
             author_text="Your gallery",
-            fields=[[_("fun.gallery.paginator.presentation.what_is_it.title", self.ctx),
-                     _("fun.gallery.paginator.presentation.what_is_it.desc", self.ctx, dot=get_emote("dot"))],
-                    [_("fun.gallery.paginator.presentation.what_is_it.how.title", self.ctx),
+            fields=[(_("fun.gallery.paginator.presentation.what_is_it.title", self.ctx),
+                     _("fun.gallery.paginator.presentation.what_is_it.desc", self.ctx, dot=get_emote("dot"))),
+                    (_("fun.gallery.paginator.presentation.what_is_it.how.title", self.ctx),
                      _("fun.gallery.paginator.presentation.what_is_it.how.desc", self.ctx, dot=get_emote("dot"),
-                       button=get_emote("add"), slash=get_emote("slash"))]
+                       button=get_emote("add"), slash=get_emote("slash")))
                     ]
         )
 
@@ -421,60 +430,61 @@ class GalleryPaginator:
                         timeout=10,
                         check=self.check
                     )
+                match button_ctx.custom_id:
+                    case "first":
+                        gallery_edit = True
+                        self.index = 1
+                    case "prev":
+                        self.index = self.index - 1 or 1
+                        gallery_edit = True
+                    case "next":
+                        gallery_edit = True
+                        self.index = self.index + 1 or self.top
+                    case "last":
+                        gallery_edit = True
+                        self.index = self.top
+                    case "nav":
+                        gallery_edit = True
+                        self.index = int(button_ctx.selected_options[0])
+                    case "close":
+                        embed = create_embed(
+                            author_text=_("fun.gallery.paginator.closed", self.ctx),
+                            author_image=get_emote('no', type='image')
+                        )
+                        await self.msg.edit(embed=embed, components=[])
+                        return
+                    case "delete":
+                        self.delete_components = await self.delete_memes(button_ctx)
+                        await self.msg.edit(
+                            embeds=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],
+                            components=self.components()
+                        )
+                    case "nav_delete":
+                        self.memes_to_delete = button_ctx.selected_options
+                        self.delete_components = await self.delete_memes_confirm(button_ctx)
+                    case "cancel":
+                        embed = create_embed(
+                            author_image=get_emote('yes', type="image"),
+                            author_text=_("fun.gallery.paginator.deletion.cancel", self.ctx)
+                        )
+                        self.delete = False
+                        await button_ctx.edit_origin(embed=embed, components=[])
+                        await self.msg.edit(
+                            embed=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],
+                            components=self.components()
+                        )
+                    case "confirm_delete":
+                        async with self.gigachad.db.acquire() as conn:
+                            for meme in self.memes_to_delete:
+                                await conn.execute("DELETE FROM gallery WHERE ID = $1", meme)
+                        embed = create_embed(
+                            author_image=get_emote("yes", type="image"),
+                            author_text=_("fun.gallery.paginator.deletion.success.title", self.ctx),
+                            desc=_("fun.gallery.paginator.deletion.success.desc", self.ctx)
+                        )
+                        self.delete = False
+                        await button_ctx.edit_origin(embed=embed, components=[])
 
-                if button_ctx.custom_id == "first":
-                    gallery_edit = True
-                    self.index = 1
-                elif button_ctx.custom_id == "prev":
-                    self.index = self.index - 1 or 1
-                    gallery_edit = True
-                elif button_ctx.custom_id == "next":
-                    gallery_edit = True
-                    self.index = self.index + 1 or self.top
-                elif button_ctx.custom_id == "last":
-                    gallery_edit = True
-                    self.index = self.top
-                elif button_ctx.custom_id == "nav":
-                    gallery_edit = True
-                    self.index = int(button_ctx.selected_options[0])
-                elif button_ctx.custom_id == "close":
-                    embed = create_embed(
-                        author_text=_("fun.gallery.paginator.closed", self.ctx),
-                        author_image=get_emote('no', type='image')
-                    )
-                    await self.msg.edit(embed=embed, components=[])
-                    return
-                elif button_ctx.custom_id == "delete":
-                    self.delete_components = await self.delete_memes(button_ctx)
-                    await self.msg.edit(
-                        embeds=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],
-                        components=self.components()
-                    )
-                elif button_ctx.custom_id == "nav_delete":
-                    self.memes_to_delete = button_ctx.selected_options
-                    self.delete_components = await self.delete_memes_confirm(button_ctx)
-                elif button_ctx.custom_id == "cancel":
-                    embed = create_embed(
-                        author_image=get_emote('yes', type="image"),
-                        author_text=_("fun.gallery.paginator.deletion.cancel", self.ctx)
-                    )
-                    self.delete = False
-                    await button_ctx.edit_origin(embed=embed, components=[])
-                    await self.msg.edit(
-                        embed=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],
-                        components=self.components()
-                    )
-                elif button_ctx.custom_id == "confirm_delete":
-                    async with self.gigachad.db.acquire() as conn:
-                        for meme in self.memes_to_delete:
-                            await conn.execute("DELETE FROM gallery WHERE ID = $1", meme)
-                    embed = create_embed(
-                        author_image=get_emote("yes", type="image"),
-                        author_text=_("fun.gallery.paginator.deletion.success.title", self.ctx),
-                        desc=_("fun.gallery.paginator.deletion.success.desc", self.ctx)
-                    )
-                    self.delete = False
-                    await button_ctx.edit_origin(embed=embed, components=[])
                 if gallery_edit:
                     await button_ctx.edit_origin(
                         embeds=[self.gallery_embed, self.memes_pages[self.index - 1]['embed']],

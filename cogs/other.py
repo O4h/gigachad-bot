@@ -63,26 +63,26 @@ class Other(commands.Cog):
             title=_("info.info.title", ctx, emote=get_emote("gigachad")),
             desc=_("info.info.desc", ctx, dot=get_emote("dot"), emote=get_emote("python")),
             fields=[
-                [_("info.info.version.title", ctx, emote=get_emote("info")),
-                 get_emote('dot') + " Giga Chad Bot `v1.0`", True],
-                [_("info.info.stats.title", ctx, emote=get_emote("stats")),
-                 get_emote('dot') + _("info.info.stats.desc", ctx, nb=str(len(self.gigachad.guilds))), True],
-                [_("info.info.ping.title", ctx, emote=get_emote("ping")),
-                 get_emote('dot') + _("info.info.ping.desc", ctx, time=round(self.gigachad.latency * 1000)), True],
-                [_("info.support.title", ctx, emote=get_emote("sos")),
-                 get_emote('dot') + _("info.support.desc", ctx), True],
-                [_("info.invite.title", ctx, emote=get_emote("invite")),
-                 get_emote('dot') + _("info.invite.desc", ctx, invite_link=self.gigachad.invite_link), True],
-                [_("info.vote.title", ctx, emote=get_emote("vote")),
-                 get_emote('dot') + _("info.vote.desc", ctx), True],
-                [_("info.info.docs.title", ctx, emote=get_emote("docs")),
-                 get_emote('dot') + _("info.info.docs.desc", ctx), True],
-                [_("info.info.source.title", ctx, emote=get_emote("github")),
-                 get_emote('dot') + _("info.info.source.desc", ctx), True],
-                [_("info.info.credits.title", ctx, emote=get_emote("copyright")),
-                 get_emote('dot') + _("info.info.credits.desc", ctx, emote=get_emote('dot')), True],
-                [_("info.info.uptime.title", ctx, emote=get_emote("uptime")),
-                 get_emote('dot') + _("info.info.uptime.loading", ctx, emote=get_emote("loading"))]
+                (_("info.info.version.title", ctx, emote=get_emote("info")),
+                 get_emote('dot') + " Giga Chad Bot `v1.0`", True),
+                (_("info.info.stats.title", ctx, emote=get_emote("stats")),
+                 get_emote('dot') + _("info.info.stats.desc", ctx, nb=str(len(self.gigachad.guilds))), True),
+                (_("info.info.ping.title", ctx, emote=get_emote("ping")),
+                 get_emote('dot') + _("info.info.ping.desc", ctx, time=round(self.gigachad.latency * 1000)), True),
+                (_("info.support.title", ctx, emote=get_emote("sos")),
+                 get_emote('dot') + _("info.support.desc", ctx), True),
+                (_("info.invite.title", ctx, emote=get_emote("invite")),
+                 get_emote('dot') + _("info.invite.desc", ctx, invite_link=self.gigachad.invite_link), True),
+                (_("info.vote.title", ctx, emote=get_emote("vote")),
+                 get_emote('dot') + _("info.vote.desc", ctx), True),
+                (_("info.info.docs.title", ctx, emote=get_emote("docs")),
+                 get_emote('dot') + _("info.info.docs.desc", ctx), True),
+                (_("info.info.source.title", ctx, emote=get_emote("github")),
+                 get_emote('dot') + _("info.info.source.desc", ctx), True),
+                (_("info.info.credits.title", ctx, emote=get_emote("copyright")),
+                 get_emote('dot') + _("info.info.credits.desc", ctx, emote=get_emote('dot')), True),
+                (_("info.info.uptime.title", ctx, emote=get_emote("uptime")),
+                 get_emote('dot') + _("info.info.uptime.loading", ctx, emote=get_emote("loading")))
             ],
             footer_text=_("info.info.footer", ctx),
             image="https://i.imgur.com/MiVm8av.png"
@@ -189,15 +189,15 @@ class Other(commands.Cog):
             desc="There might be a few different reasons on why the slash commands aren't working. Here is a list of "
                  "them:",
             fields=[
-                ["Wrong Permissions",
+                ("Wrong Permissions",
                  "`•` Make sure that you/bot users have permissions to use slash commands in the apropriate channel",
-                 True],
-                ["Wrong Invites",
+                 True),
+                ("Wrong Invites",
                  "`•` The bot might have been invited with the wrong invite. Click [here]("
-                 "https://invite.gigachad-bot.xyz) to invite the bot again", True],
-                ["Support Server",
+                 "https://invite.gigachad-bot.xyz) to invite the bot again", True),
+                ("Support Server",
                  "`•` If none of the above solutions worked, click [here](https://links.gigachad-bot.xyz/support) to "
-                 "join the support server and get further help ", True]
+                 "join the support server and get further help ", True)
             ]
         )
         await ctx.reply(embed=embed, mention_author=False)
