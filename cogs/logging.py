@@ -45,7 +45,7 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
     def __init__(self, gigachad) -> None:
         """ Log stats about the bot for better understanding of users utilisations """
         self.gigachad = gigachad
-
+        self.commands_stats_update.start()
         if not beta:
             self.topgg_stats_update.start()  # start the top.gg automatic stats updates
 
@@ -103,6 +103,37 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
                     print(f"Stats Posted! {self.gigachad.user}")
                 else:
                     print(f"Error while posting stats: {await response.read()}")
+
+    @tasks.loop(minutes=10)
+    async def commands_stats_update(self) -> None:
+        """ Update command stats to db """
+        values_to_insert = {}
+        async with self.gigachad.db.acquire() as conn:
+            for commands in self.gigachad.command_list.keys():
+                values_to_insert[commands] = 0
+                for command_alias in self.gigachad.command_list[commands]:
+                    temp_value = await conn.fetchrow(
+                        "SELECT COUNT(*) FROM commands_logs WHERE cmd = $1",
+                        command_alias
+                    )
+                    values_to_insert[commands] += dict(temp_value)["count"]
+            await conn.execute(
+                "INSERT INTO commands_stats_total (time, gallery, gigachadify, meme, caption, chadmeter)"
+                " VALUES ($1, $2, $3, $4, $5, $6)",
+                round(time.time()),
+                values_to_insert['gallery'],
+                values_to_insert['gigachadify'],
+                values_to_insert['meme'],
+                values_to_insert['caption'],
+                values_to_insert['chadmeter']
+            )
+
+    @commands_stats_update.before_loop
+    async def before_commands_stats_update(self) -> None:
+        """ Make sure that the loop waits until the
+        bot is ready before trying to post stats
+        """
+        await self.gigachad.wait_until_ready()
 
     @topgg_stats_update.before_loop
     async def before_topgg_stats_update(self) -> None:

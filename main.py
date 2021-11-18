@@ -16,9 +16,10 @@ intents = discord.Intents(messages=True, guilds=True)
 sql_query = "CREATE TABLE IF NOT EXISTS prefixes(guild BIGINT PRIMARY KEY, prefix VARCHAR(125));" \
             "CREATE TABLE IF NOT EXISTS lang(guild BIGINT PRIMARY KEY, lang VARCHAR(2));" \
             "CREATE TABLE IF NOT EXISTS commands_logs(time INT NOT NULL, guild BIGINT, cmd VARCHAR(25), usr BIGINT, type INT);" \
-            "CREATE TABLE IF NOT EXISTS guilds_logs(time INT NOT NULL, guild BIGINT, joined BOOLEAN);" \
+            "CREATE TABLE IF NOT EXISTS guilds_logs(time INT NOT NULL, guild BIGINT, joined BOOLEAN, guild_count INT);" \
             "CREATE TABLE IF NOT EXISTS gallery(time INT NOT NULL, embed JSON, title VARCHAR(100), " \
-            "usr BIGINT, id VARCHAR(5), message BIGINT, madeby BIGINT)"
+            "usr BIGINT, id VARCHAR(5), message BIGINT, madeby BIGINT);" \
+            "CREATE TABLE IF NOT EXISTS commands_stats_total(time INT NOT NULL, gallery INT, gigachadify INT, meme INT, chadmeter INT, caption INT)"
 
 
 # Init sentry
@@ -33,9 +34,13 @@ if not beta:
 async def run():
     """ The function to run the bot """
 
-    credentials = {"user": os.getenv("DB_USER"), "password": os.getenv("DB_PASSWORD"),
-                   "database": os.getenv("DB_DATABASE"),
-                   "host": os.getenv("DB_HOST"), "port": os.getenv("DB_PORT")}
+    credentials = {
+        "user": os.getenv("DB_USER"), 
+        "password": os.getenv("DB_PASSWORD"),
+        "database": os.getenv("DB_DATABASE"),
+        "host": os.getenv("DB_HOST"), 
+        "port": os.getenv("DB_PORT")
+    }
 
     # make the connection to the db
     db = await asyncpg.create_pool(**credentials)
@@ -86,7 +91,14 @@ class GigaChad(commands.Bot):
         self.prefix_cache = prefix_cache
         self.lang_cache = lang_cache
         self.invite_link = "https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=379904&scope=bot%20applications.commands"
-
+        self.command_list = {
+            'meme': ["meme"], 
+            'gigachadify': ["gigachadify", "Gigachadify"], 
+            'chadmeter': ["chadmeter", "Chadmeter"],
+            'caption': ["caption"],
+            'gallery': ["gallery"]
+        }
+        
     async def on_ready(self) -> None:
         print('------')
         print('Logged in as')
