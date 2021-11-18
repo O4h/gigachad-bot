@@ -6,4 +6,4 @@ asyncpg
 python-i18n
 PyYAML
 sentry-sdk
-discord.py
+discord.py>=1.7.3
