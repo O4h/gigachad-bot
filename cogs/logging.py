@@ -117,15 +117,27 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
                         command_alias
                     )
                     values_to_insert[commands] += dict(temp_value)["count"]
+            temp_value = await conn.fetchrow("SELECT COUNT(*) FROM commands_logs")
+            total_commands = dict(temp_value)["count"]
+            temp_value = await conn.fetchrow("SELECT COUNT(*) FROM commands_logs WHERE type = 1")
+            type1_commands = dict(temp_value)["count"]
+            temp_value = await conn.fetchrow("SELECT COUNT(*) FROM commands_logs WHERE type = 2")
+            type2_commands = dict(temp_value)["count"]
+            temp_value = await conn.fetchrow("SELECT COUNT(*) FROM commands_logs WHERE type = 3")
+            type3_commands = dict(temp_value)["count"]
             await conn.execute(
-                "INSERT INTO commands_stats_total (time, gallery, gigachadify, meme, caption, chadmeter)"
-                " VALUES ($1, $2, $3, $4, $5, $6)",
+                "INSERT INTO commands_stats_total (time, gallery, gigachadify, meme, caption, chadmeter, total, type1, type2, type3)"
+                " VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
                 round(time.time()),
                 values_to_insert['gallery'],
                 values_to_insert['gigachadify'],
                 values_to_insert['meme'],
                 values_to_insert['caption'],
-                values_to_insert['chadmeter']
+                values_to_insert['chadmeter'],
+                total_commands,
+                type1_commands,
+                type2_commands,
+                type3_commands
             )
 
     @commands_stats_update.before_loop
