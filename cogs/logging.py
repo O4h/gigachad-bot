@@ -118,7 +118,7 @@ class Logging(commands.Cog, command_attrs=dict(hidden=True)):
                     )
                     values_to_insert[commands] += dict(temp_value)["count"]
             await conn.execute(
-                "INSERT INTO commands_stats_total (time, gallery, gigachadify, meme, caption, chadmeter, total, type1, type2, type3)"
+                "INSERT INTO commands_stats_total (time, gallery, gigachadify, meme, caption, chadmeter)"
                 " VALUES ($1, $2, $3, $4, $5, $6)",
                 round(time.time()),
                 values_to_insert['gallery'],
