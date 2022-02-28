@@ -1,5 +1,5 @@
 Pillow>=8.4.0
-discord-py-interactions>=3.0.2
+discord-py-interactions==3.0.2
 aiohttp>=3.7.4
 jishaku>=2.3.1
 asyncpg>=0.24.0
