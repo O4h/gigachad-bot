@@ -3,7 +3,6 @@ import json
 import os
 
 import aiohttp
-import discord
 import disnake
 from disnake.ext import commands
 from util.misc import get_emote, create_embed

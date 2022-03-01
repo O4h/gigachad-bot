@@ -277,7 +277,7 @@ async def gigachadify(
         loop = asyncio.get_event_loop()
         await loop.run_in_executor(None, gigachadify_process, data)
 
-        file = discord.File("output.jpg")
+        file = disnake.File("output.jpg")
         attachment = "attachment://output.jpg"
 
     elif user == ctx.bot.user:

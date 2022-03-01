@@ -2,7 +2,6 @@ import os
 import time
 
 import aiohttp
-import discord
 import disnake
 from disnake.ext import commands, tasks
 from util.misc import create_embed, get_emote
@@ -46,7 +45,7 @@ async def log_cmd(bot: commands.AutoShardedBot, name, ctx, cmd_type: int) -> Non
 
 
 async def log_guild(
-    bot: commands.AutoShardedBot, guild: discord.Guild, joined: bool
+    bot: commands.AutoShardedBot, guild: disnake.Guild, joined: bool
 ) -> None:
     """
     Log guilds join and leave events
@@ -55,7 +54,7 @@ async def log_guild(
     ----------
     bot : commands.AutoShardedBot
         The bot instance
-    guild : discord.Guild
+    guild : disnake.Guild
         The guild that is being joined or left
     joined : bool
         True if the guild is being joined, False if it is being left
