@@ -2,15 +2,18 @@ import asyncio
 import os
 import traceback
 import sys
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
+
 from util.misc import get_emote, create_embed
 from util.misc import translate as _
 
 
 class ErrorHandler(commands.Cog):
     def __init__(self, gigachad):
-        """ Errors are handled here, unknow ones are sent to LOG_CHANNEL """
+        """
+        Errors are handled here, unknow ones are sent to LOG_CHANNEL 
+        """
         self.gigachad = gigachad
 
     @commands.Cog.listener()
@@ -34,9 +37,11 @@ class ErrorHandler(commands.Cog):
             await ctx.reply(embed=embed, mention_author=False)
 
         elif isinstance(error, commands.MissingPermissions):
-            missingperms = ""
-            for x in range(len(error.missing_perms)):
-                missingperms += f"`{error.missing_perms[x]}` "
+            missingperms = "".join(
+                f"`{error.missing_perms[x]}` "
+                for x in range(len(error.missing_perms))
+            )
+
             missingperms = missingperms.upper()
             embed = create_embed(
                 color="red",
@@ -48,9 +53,11 @@ class ErrorHandler(commands.Cog):
 
         elif isinstance(error, commands.BotMissingPermissions):
             try:
-                missingperms = ""
-                for x in range(len(error.missing_perms)):
-                    missingperms += f"`{error.missing_perms[x]}` "
+                missingperms = "".join(
+                    f"`{error.missing_perms[x]}` "
+                    for x in range(len(error.missing_perms))
+                )
+
                 missingperms = missingperms.upper()
                 embed = create_embed(
                     color="red",
@@ -78,9 +85,6 @@ class ErrorHandler(commands.Cog):
                 mention_author=False,
                 delete_after=error.retry_after
             )
-
-        elif isinstance(error, commands.CommandNotFound):
-            pass
 
 
 def setup(gigachad):
