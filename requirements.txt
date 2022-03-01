@@ -1,9 +1,9 @@
 Pillow>=8.4.0
 discord-py-interactions==3.0.2
 aiohttp>=3.7.4
-jishaku>=2.3.1
+disnake
+git+https://github.com/Disnake-Extensions/jishaku
 asyncpg>=0.24.0
 python-i18n>=0.3.9
 PyYAML>=6.0
 sentry-sdk>=1.4.3
-discord.py>=1.7.3
