@@ -264,6 +264,8 @@ async def gigachadify(
 
     Parameters
     ----------
+    ctx : disnake.ApplicationCommandInteraction
+        The context of the command
     user : Optional[disnake.Member]
         The user to gigachadify
     """
