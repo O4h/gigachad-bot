@@ -82,7 +82,7 @@ class Fun(commands.Cog):
         user: Optional[disnake.Member] = None,
     ) -> None:
         """
-        Turn you or someone else into a Giga Chad!
+        ✨ Turn you or someone else into a Giga Chad!
 
         Parameters
         ----------
@@ -98,7 +98,7 @@ class Fun(commands.Cog):
         self, ctx: disnake.ApplicationCommandInteraction, user: Optional[disnake.Member]
     ) -> None:
         """
-        Turn you or someone else into a Giga Chad!
+        ✨ Turn you or someone else into a Giga Chad!
 
         Parameters
         ----------
