@@ -2,7 +2,8 @@
 ![Discord Bots](https://top.gg/api/widget/status/843550872293867570.svg?noavatar=true) [![Discord Bots](https://top.gg/api/widget/upvotes/843550872293867570.svg?noavatar=true) ](https://top.gg/bot/843550872293867570) ![Discord Bots](https://top.gg/api/widget/servers/843550872293867570.svg?noavatar=true)  </br>
 [![Docker Pulls](https://img.shields.io/docker/pulls/theorh/gigachad-bot?logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/theorh/gigachad-bot) [![Discord](https://img.shields.io/discord/844911117881180190?color=%235865F2&logo=discord&logoColor=white)](https://discord.gg/atPkjGgDBD) ![GitHub](https://img.shields.io/github/license/o4h/gigachad-bot?logo=github)
 
-Da Giga Chad discord bot. Made in Python, and uses [discord.py](https://github.com/Rapptz/discord.py) & [discord-py-slash-command](https://github.com/eunwoo1104/discord-py-slash-command)  
+Da Giga Chad discord bot. Made in Python, and uses [disnake](https://github.com/DisnakeDev/disnake).
+
 Check the Dockerhub image [here](https://hub.docker.com/repository/docker/theorh/gigachad-bot)
 ### Invite Gigachad  
   
