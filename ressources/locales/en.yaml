@@ -19,38 +19,8 @@ errors:
     title: "%{emote} Something went wrong"
     desc: Wait a bit and retry, and contact the bot support if it happens again.
   nsfw: Sorry, the meme was NSFW.Try another one!
-descriptions:
-  invite: Get the link to invite Giga Chad
-  support: Get an invite to the support server
-  info: Get useful information about Giga Chad
-  prefix: Change the guild prefix. Requires the user to have %{emote} `MANAGE_SERVER` permission
-  slash: A guide to help if slash commands aren't working
-  meme: Get a random meme from reddit or from a specific subreddit! Just type the name of the subreddit, like 'fun' instead of 'r/fun' !
-  chadmeter: Scientifcally measure yours or someone else's Chad level!
-  gigachadify: Turn you or someone else into a Giga Chad!
-  quote: Get an inspiring quote to get closer to being a Giga Chad
-  advice: Get some advice from Giga Chad
-usages:
-  support: support
-  invite: invite
-  info: info
-  prefix: prefix [new prefix]
-  slash: slash
-  meme: meme [subreddit]
-  chadmeter: chadmeter [user]
-  gigachadify: gigachadify [user]
-  quote: quote
-  advice: advice
+
 info:
-  support:
-    title: "%{emote} Support Server"
-    desc: " Click [`here`](https://discord.gg/atPkjGgDBD) to join"
-  invite:
-    title: "%{emote} Invite Giga Chad!"
-    desc: " Click [`here`](%{invite_link}) to invite Giga Chad!"
-  vote:
-    title: "%{emote} Vote for Giga Chad!"
-    desc: " Vote for Giga Chad [`here`](https://top.gg/bot/843550872293867570/vote)!"
   info:
     title: "%{emote} Giga Chad Info"
     desc: "%{dot} Giga Chad is a bot written in Python %{emote} by `Orh#0982` using the discord.py and discord-py-interactions librairies."
@@ -77,24 +47,7 @@ info:
       success: " Click [here](https://status.gigachad-bot.xyz/) to access the bot's uptime history. \n%{emote} Uptime over: ➥ **7 days**: `%{week}%%`  ➥ **30 days**: `%{month}%%` ➥ **90 days**: `%{months}%%`"
       failure: " %{emote} Something went wrong, the bot wasn't able to retrieve its uptime. \n%{dot} Click [here](https://status.gigachad-bot.xyz/) to acess the bot's detailed uptime"
     footer: Join the support server for further information
-  prefix:
-    current:
-      title: Current Prefix
-      desc:  "My current prefix is `%{prefix}`. \n Execute `%{prefix}prefix [newprefix]` to set a new prefix!"
-    failure:
-      default:
-        title: Prefix couldn't be changed
-        desc: You can't set the prefix to `gc!`, that's the default prefix! You can execute `%{prefix}prefix reset` to reset the prefix to `gc!`
-      reset:
-        title: Prefix couldn't be reset
-        desc: The prefix for this server couldn't be reset, it is already the default `gc!`
-    success:
-      reset:
-        title: Prefix successfully reset
-        desc: My prefix for this server has successfuly been reset to `gc!`
-      changed:
-        title: Prefix successfully changed
-        desc: My prefix for this server has successfully been changed to `%{prefix}`.
+
 fun:
   caption:
     click: Click to access the post
@@ -113,77 +66,3 @@ fun:
       other: "%{user} looks gorgeous, surely not as good as I do, but still..."
       giga_chad: "I am Giga Chad. I gigachadify, I can't be gigachadified!"
     footer: Feel free to use this picture in your resume, or on any dating site
-  gallery:
-    send_meme:
-      no_memes: "You don't have any memes in your gallery! Save some first before trying to send them!"
-      meme_selection:
-        title: "What meme do you want to send?"
-        desc: "%{dot} Select a a meme to send to the chat! Use the menu below to choose"
-        select: "Click to open the menu"
-        success: "Meme successfully sent"
-      unknown_meme:
-        title: "Meme couldn't be found"
-        desc: "%{dot} A meme with this id couldn't be found in your gallery. Check again the id, or-re-do the command without specifying any option, a menu will show up allowing you to choose a meme."
-      sent: "From %{user}'s gallery • Meme saved:"
-      made_by: "Meme made by %{user}"
-    set_title:
-      no_memes: "You don't have no memes in your gallery! Save some first before trying to change their title!"
-      others_meme:
-        title: "That isn't your meme!"
-        desc: "%{dot} You are trying to change the title of a meme that isn't in your gallery :/. \nCheck the id and retry!"
-      unknown_meme: "A meme with that id couldn't be found :/"
-      success:
-        title: "Meme title successfully updated"
-        desc: "%{dot} The meme with ID `%{id}` has been updated! \nHere is what it looks like now:"
-    save_meme:
-      already_saved: "You have already saved this meme!"
-      too_much_memes:
-        title: "You have too much memes saved!"
-        desc: " %{dot} You can only save a maximum of 25 memes, please delete memes from your gallery before trying to save any more memes!"
-      confirm:
-        buttons:
-          confirm: "Yes"
-          cancel: "Cancel"
-        title: "Save this meme?"
-        desc: "%{dot} Are you sure that you want to save this meme to your gallery \n%{dot} If you don't know what your gallery is, use the command %{emote}`gallery open` for information! \n%{dot} Use the buttons below to decide!"
-      success:
-        title: "Meme saved to your gallery"
-        desc: "%{dot} This meme has been saved to your gallery with the id `%{id}` (the id is a way to identify the meme in your gallery) and with the title `%{title}`. If you want to change the title, execute %{emote}`gallery set-title [new title]`!"
-        to_others: "%{user} saved this meme in their gallery!"
-      canceled: "Meme saving successfully canceled!"
-    paginator:
-      presentation:
-        title: "Your gallery"
-        what_is_it:
-          title: "What is it?"
-          desc: "%{dot} The gallery is a place to 'save' memes that you made or found with the bot! It will allow you to send them to chat and to not lose those masterpieces!"
-          how:
-            title: "How does it work?"
-            desc: "%{dot} Click on the %{button} button below memes found or made with Giga Chad! \n%{dot} Use the buttons below to navigate or delete memes! \n%{dot} Use %{slash}`gallery set-title` without any argument or with a meme id to change its title! \n%{dot} Use the %{slash}`gallery send-meme` command to send a meme to the chat at any time!"
-      no_memes: "You have no memes in your gallery!"
-      buttons:
-        close: "Close Gallery"
-        deletion: "Delete Meme(s)"
-        navigator:
-          title: "Page %{page}/%{total} | Click to navigate"
-          select: "%{page}/%{total} | ID: %{id} | Created at %{time}"
-      deletion:
-        selection:
-          title: "What meme(s) do you want to delete?"
-          desc: "Select below the meme(s) you want to remove from your gallery or hit the cancel button"
-          buttons:
-            cancel: "Cancel"
-            navigator:
-              title: "Select the meme(s) you want to delete"
-              select: "ID: %{id} | Created at %{time}"
-        confirmation:
-          title: "Are you sure that you want to delete these memes"
-          desc: "Use the buttons below to confirm or cancel"
-          buttons:
-            delete: "Delete Meme(s)"
-            cancel: "Cancel"
-        success:
-          title: "Meme(s) deleted"
-          desc: "Re-open the gallery to see the changes take effect"
-        cancel: "Meme deletion successfully canceled"
-      closed: "Gallery Closed"
