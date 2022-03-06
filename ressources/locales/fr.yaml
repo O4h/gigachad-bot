@@ -1,0 +1,76 @@
+errors:
+  forbidden_cmd:
+    title: Commande Interdite
+    desc: Seul le propriétaire du bot peut exécuter cette commande
+  not_in_dms:
+    title: Pas en DMs
+    desc: Cette commande ne **peut pas** être exécutée en messages privés, seulement dans des serveurs
+  missing_perms:
+    title: Permission(s) manquante(s)
+    desc: '%{emote} Il vous manque les permissions suuivantes: %{missingperms}'
+  bot_missing_perms:
+    title: Le Bot manque des permissions
+    desc: '%{emote} Il me manque les permissions suivantes: %{missingperms}'
+  bad_argument:
+    title: Mauvais argument(s)
+    desc: 'Vous avez entré de mauvais arguments pour la commande %{cmd_name}. \n Utilisez-la comme ça: %{cmd_usage}'
+  cooldown: "%{emote} Attendez encore %{time_left} secondes avant d'utiliser cette commande à nouveau !"
+  api:
+    title: "%{emote} Quelque chose s'est mal passé"
+    desc: Attendez un peu avant de réessayer, contactez le support du bot si cela se produit à nouveau.
+  nsfw: Désolé, le meme était NSFW (innaproprié). Essayez un autre meme !
+info:
+  support:
+    title: "%{emote} Serveur de Support"
+    desc: " Cliquez [`ici`](https://discord.gg/atPkjGgDBD) pour rejoindre le serveur de support du bot"
+  invite:
+    title: "%{emote} Invitez Giga Chad!"
+    desc: " Cliquez [`ici`](%{invite_link}) Pour inviter Giga Chad!"
+  vote:
+    title: "%{emote} Votez pour Giga Chad!"
+    desc: " Votez pour Giga Chad [`ici`](https://top.gg/bot/843550872293867570/vote)!"
+  info:
+    title: "%{emote} Info sur Giga Chad"
+    desc: "%{dot} Giga Chad est un bot écrit en Python %{emote} par `Orh#0982` en utilisant la libraire disnake."
+    version:
+      title: "%{emote} Version"
+    stats:
+      title: "%{emote} Stats"
+      desc: " %{nb} Servers"
+    ping:
+      title: "%{emote} Ping"
+      desc: " `%{time}ms`"
+    credits:
+      title: "%{emote} Crédits"
+      desc: " [@berlin.1969](https://www.instagram.com/berlin.1969/) \n%{emote} [S/ash FR](https://discord.gg/fr)"
+    docs:
+      title: "%{emote} Documentation"
+      desc: " Cliquez [`ici`](https://docs.gigachad-bot.xyz/) pour lire la documentation"
+    source:
+      title: "%{emote} Code Source"
+      desc: " Cliquez [`ici`](https://github.com/o4h/gigachad-bot) pour voir le code source du bot"
+    uptime:
+      title: "%{emote} Durée de fonctionnement"
+      loading: Chargement... %{emote}
+      success: " Cliquez [ici](https://status.gigachad-bot.xyz/) pour voir l'historique de disponibilité du bot. \n%{emote} Taux de disponibilité sur: ➥ **7 jours**: `%{week}%%`  ➥ **30 jours**: `%{month}%%` ➥ **90 jours**: `%{months}%%`"
+      failure: " %{emote} Quelque chose s'est mal passé, le bot n'a pas pu récupérer son historique de disponibilité. \n%{dot} Cliquez [ici](https://status.gigachad-bot.xyz/) pour voir l'historique de disponibilité du bot."
+    footer: Rejoignez le serveur de support pour obtenir de l'aide et de l'information sur le bot
+
+fun:
+  caption:
+    click: Cliquez pour accéder au post
+    footer: Fait avec l'API d'Imgflip
+  chadmeter:
+    title: "📏 Chadmeter"
+    desc:
+      own: Votre niveau de chad est de __**`%{chadlevel}%`**__!
+      other: "Le niveau de chad de %{user} est de __**`%{chadlevel}%`**__!"
+    footer:
+      voted: Chadmeter ne se trompe jamais, Méthode © Copyrightée
+      notvoted: "Voter pour Giga Chad (/vote) pourrait améliorer ce score... 😉"
+  gigachadify:
+    title:
+      own: Vous êtes magnifique, pas autant que moi mais quand même...
+      other: "%{user} est mangnifique, pas autant que moi mais quand même..."
+      giga_chad: "Je suis Giga Chad. Je transforme les gens en Giga Chad, je peux pas être transformé!"
+    footer: Sentez-vous libre d'utiliser cette image dans votre CV ou sur un site de rencontre
