@@ -19,8 +19,11 @@ path = "ressources/beta-emotes.json" if beta else "ressources/emotes.json"
 with open(path, "r") as f:
     emotes = json.load(f)
 
+with open("ressources/locales/supported-locales.json", "r") as f:
+    supported_locales = json.load(f)
 
-def get_lang(bot: commands.AutoShardedBot, ctx) -> str:
+
+def get_lang(bot: commands.AutoShardedBot, ctx: disnake.ApplicationCommandInteraction) -> str:
     """
     Returns a server/user language from a given context
 
@@ -36,12 +39,14 @@ def get_lang(bot: commands.AutoShardedBot, ctx) -> str:
     str
         The language for the given context
     """
-    if ctx.guild is not None and ctx.guild.id in bot.lang_cache:
-        # If it is in a guild basically and if a different language than default is set
-        return bot.lang_cache[ctx.guild.id]
-
+    if ctx.guild_locale is not None and "COMMUNITY" in ctx.guild.features:
+        locale = ctx.guild_locale
     else:
-        return "en"  # Return the default language
+        locale = ctx.locale
+
+    return next(
+        (supported_locales[lang] for lang in supported_locales.keys() if locale.startswith(lang)), "en"
+    )
 
 
 def translate(key: str, ctx: disnake.ApplicationCommandInteraction, **kwargs) -> str:
@@ -129,18 +134,18 @@ async def has_voted(user_id: int) -> bool:
 
 
 def create_embed(
-    title: Optional[str] = None,
-    desc: Optional[str] = None,
-    fields: Optional[List[Tuple[str, str, Optional[bool]]]] = None,
-    color: Optional[str] = None,
-    image: Optional[str] = None,
-    thumbnail: Optional[str] = None,
-    footer_text: Optional[str] = None,
-    footer_icon: Optional[str] = None,
-    author_text: Optional[str] = None,
-    author_image: Optional[str] = None,
-    author_url: Optional[str] = None,
-    title_url: Optional[str] = None,
+        title: Optional[str] = None,
+        desc: Optional[str] = None,
+        fields: Optional[List[Tuple[str, str, Optional[bool]]]] = None,
+        color: Optional[str] = None,
+        image: Optional[str] = None,
+        thumbnail: Optional[str] = None,
+        footer_text: Optional[str] = None,
+        footer_icon: Optional[str] = None,
+        author_text: Optional[str] = None,
+        author_image: Optional[str] = None,
+        author_url: Optional[str] = None,
+        title_url: Optional[str] = None,
 ) -> disnake.Embed:
     """
     Create an embed easily
