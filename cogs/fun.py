@@ -71,7 +71,7 @@ class Fun(commands.Cog):
             title=json_data["title"],
             image=json_data["url"],
             author_text=f"r/{json_data['subreddit']} | u/{json_data['author']}",
-            author_image=get_emote("reddit", type="image"),
+            author_image=get_emote("reddit", return_type="image"),
         )
         await ctx.send(embed=embed)
 
@@ -111,7 +111,7 @@ class Fun(commands.Cog):
 
     @commands.slash_command(name="chadmeter")
     async def chadmeter_slash(
-        self, ctx: disnake.ApplicationCommandInteraction, user: Optional[disnake.Member]
+        self, ctx: disnake.ApplicationCommandInteraction, user: Optional[disnake.Member] = None
     ) -> None:
         """
          📏 Scientifically measure your Chad level
@@ -206,11 +206,10 @@ async def chadmeter(
 
         else:
             chadlevel = random.randint(-1, 90)  # lower given chadlevel elsewhere
-            footer_icon = get_emote("hint", type="image")
+            footer_icon = get_emote("hint", return_type="image")
             footer_text = _(
                 "fun.chadmeter.footer.notvoted",
-                ctx,
-                prefix=get_prefix(ctx.bot, ctx, raw=True),
+                ctx
             )
             # user is told that voting for the bot inscreases chadlever
 
