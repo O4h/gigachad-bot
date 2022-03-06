@@ -1,5 +1,4 @@
 Pillow>=8.4.0
-discord-py-interactions==3.0.2
 aiohttp>=3.7.4
 disnake>=2.4.0
 git+https://github.com/Disnake-Extensions/jishaku
