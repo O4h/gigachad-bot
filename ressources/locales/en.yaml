@@ -21,6 +21,15 @@ errors:
   nsfw: Sorry, the meme was NSFW.Try another one!
 
 info:
+  support:
+    title: "%{emote} Support Server"
+    desc: " Click [`here`](https://discord.gg/atPkjGgDBD) to join"
+  invite:
+    title: "%{emote} Invite Giga Chad!"
+    desc: " Click [`here`](%{invite_link}) to invite Giga Chad!"
+  vote:
+    title: "%{emote} Vote for Giga Chad!"
+    desc: " Vote for Giga Chad [`here`](https://top.gg/bot/843550872293867570/vote)!"
   info:
     title: "%{emote} Giga Chad Info"
     desc: "%{dot} Giga Chad is a bot written in Python %{emote} by `Orh#0982` using the discord.py and discord-py-interactions librairies."
