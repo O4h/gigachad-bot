@@ -98,7 +98,7 @@ class Logging(commands.Cog):
             desc=f"`•` Owner: `{owner.name}#{owner.discriminator}` \n"
             f"`•` Members: `{guild.member_count}` \n "
             f"`•` `{len(self.bot.guilds)}th` guild ",
-            thumbnail=guild.icon_url,
+            thumbnail=guild.icon.url,
             footer_text=guild.id,
             color="green",
         )
@@ -122,7 +122,7 @@ class Logging(commands.Cog):
             desc=f"`•` Owner: `{owner.name}#{owner.discriminator}` \n"
             f"`•` Members: `{guild.member_count}`\n "
             f"`•` `{len(self.bot.guilds)}` guilds left ",
-            thumbnail=guild.icon_url,
+            thumbnail=guild.icon.url,
             footer_text=guild.id,
             color="red",
         )
