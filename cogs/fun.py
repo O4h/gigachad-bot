@@ -11,7 +11,6 @@ import aiohttp
 import disnake
 from disnake.ext import commands
 
-from cogs.logging import log_cmd
 from util.misc import get_emote, create_embed, has_voted
 from util.misc import translate as _
 
@@ -269,7 +268,7 @@ async def gigachadify(
         The user to gigachadify
     """
     if user is None:
-        asset = ctx.author.avatar_url_as(size=128)
+        asset = ctx.author.display_avatar.replace(size=128)
         prefix = _("fun.gigachadify.title.own", ctx)
 
         data = BytesIO(await asset.read())  # Load the user's profile picture
