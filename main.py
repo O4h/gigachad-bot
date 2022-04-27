@@ -2,6 +2,7 @@ import asyncio
 import os
 import asyncpg
 import disnake
+import jishaku
 import sentry_sdk
 
 from disnake.ext import commands
@@ -35,12 +36,6 @@ async def run():
     # make the connection to the db
     db = await asyncpg.create_pool(**credentials)
 
-    # initiate tables and fetch cache
-    async with db.acquire() as conn:
-        await conn.execute(sql_query)
-        prefix_data = await conn.fetch("SELECT * FROM prefixes")
-        lang_data = await conn.fetch("SELECT * FROM lang")
-
     # load the bot class
     bot = Bot(db=db)
 
@@ -50,6 +45,7 @@ async def run():
         if filename.endswith(".py") and not filename.startswith("_"):
             bot.load_extension(f"cogs.{filename[:-3]}")
 
+    bot.load_extension("jishaku")
     # and finally, start the bot!
     await bot.start(os.getenv("TOKEN"))
 
@@ -70,13 +66,15 @@ class Bot(commands.AutoShardedBot):
             case_insensitive=True,
             strip_after_prefix=True,
             activity=disnake.Activity(
-                type=disnake.ActivityType.listening, name="@Giga Chad help"
+                type=disnake.ActivityType.listening, name="slash commands"
             ),
+            help_command=None,
             intents=intents,
         )
 
         self.db = db
-        self.invite_link = "https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=379904&scope=bot%20applications.commands"
+        self.invite_link = "https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=379904" \
+                           "&scope=bot%20applications.commands "
         self.command_list = {
             "meme": ["meme"],
             "gigachadify": ["gigachadify", "Gigachadify"],
