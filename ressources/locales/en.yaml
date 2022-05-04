@@ -46,7 +46,7 @@ info:
       desc: " [@berlin.1969](https://www.instagram.com/berlin.1969/) \n%{emote} [S/ash FR](https://discord.gg/fr)"
     docs:
       title: "%{emote} Docs"
-      desc: " Click [`here`](https://docs.gigachad-bot.xyz/) to see the docs"
+      desc: " Click [`here`](https://github.com/O4h/gigachad-bot/wiki) to see the docs"
     source:
       title: "%{emote} Source Code"
       desc: " Click [`here`](https://github.com/o4h/gigachad-bot) to see the bot's source code"
