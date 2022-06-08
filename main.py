@@ -17,7 +17,7 @@ sql_query = (
 )
 
 # Init sentry
-if not bool(os.getenv("BETA") == "TRUE"):
+if os.getenv("BETA") != "TRUE":
     sentry_sdk.init(os.getenv("SENTRY_ENDPOINT"), traces_sample_rate=1.0)
 
 
@@ -25,16 +25,13 @@ async def run():
     """
     Main function, runs the bot.
     """
-    credentials = {
-        "user": os.getenv("DB_USER"),
-        "password": os.getenv("DB_PASSWORD"),
-        "database": os.getenv("DB_DATABASE"),
-        "host": os.getenv("DB_HOST"),
-        "port": os.getenv("DB_PORT"),
-    }
-
     # make the connection to the db
-    db = await asyncpg.create_pool(**credentials)
+    url = f"postgres://" \
+          f"{os.getenv('DB_USER')}:" \
+          f"{os.getenv('DB_PASSWORD')}" \
+          f"@{os.getenv('DB_HOST')}:" \
+          f"{os.getenv('DB_PORT')}/{os.getenv('DB_DATABASE')}"
+    db = await asyncpg.create_pool(dsn=url)
 
     # load the bot class
     bot = Bot(db=db)
