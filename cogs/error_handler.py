@@ -11,9 +11,7 @@ from util.misc import translate as _
 
 class ErrorHandler(commands.Cog):
     def __init__(self, gigachad):
-        """
-        Errors are handled here, unknow ones are sent to LOG_CHANNEL 
-        """
+        """ Errors are handled here, unknow ones are sent to LOG_CHANNEL  """
         self.gigachad = gigachad
 
     @commands.Cog.listener()
@@ -23,7 +21,7 @@ class ErrorHandler(commands.Cog):
                 title=_("errors.forbidden_cmd.title", ctx),
                 color="red",
                 desc=_("errors.forbidden_cmd.desc", ctx),
-                thumbnail=get_emote('forbidden', type='image')
+                thumbnail=get_emote('forbidden', return_type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
@@ -32,7 +30,7 @@ class ErrorHandler(commands.Cog):
                 color="red",
                 title=_("errors.not_in_dms.title", ctx),
                 desc=_("errors.not_in_dms.desc", ctx),
-                thumbnail=get_emote('no', type='image')
+                thumbnail=get_emote('no', return_type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
@@ -46,8 +44,8 @@ class ErrorHandler(commands.Cog):
             embed = create_embed(
                 color="red",
                 title=_("errors.missing_perms.title", ctx),
-                desc=_("errors.missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
-                thumbnail=get_emote('no', type='image')
+                desc=get_emote("role") + _("errors.missing_perms.desc", ctx, missingperms=missingperms),
+                thumbnail=get_emote('no', return_type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
@@ -63,11 +61,11 @@ class ErrorHandler(commands.Cog):
                     color="red",
                     title=_("errors.bot_missing_perms.title", ctx),
                     desc=_("errors.bot_missing_perms.desc", ctx, emote=get_emote("role"), missingperms=missingperms),
-                    thumbnail=get_emote('no', type='image')
+                    thumbnail=get_emote('no', return_return_type='image')
                 )
                 await ctx.reply(embed=embed, mention_author=False)
 
-            except:  # Bot can't send messages, not much we can do about it :/
+            except disnake.Forbidden or disnake.HTTPException:  # Bot can't send messages, not much we can do about it :/
                 pass
 
         elif isinstance(error, commands.BadArgument):
@@ -75,7 +73,7 @@ class ErrorHandler(commands.Cog):
                 color="red",
                 title=_("errors.bad_argument.title", ctx),
                 desc=_("errors.bad_argument.desc", ctx, cmd_name=ctx.command.name, cmd_usage=ctx.command.usage),
-                thumnail=get_emote('no', type='image')
+                thumnail=get_emote('no', return_return_type='image')
             )
             await ctx.reply(embed=embed, mention_author=False)
 
