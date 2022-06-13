@@ -1,10 +1,10 @@
 errors:
   forbidden_cmd:
-    title: Forbidden Command
-    desc: Only the bot owner can execute this command
+    title: Verbotener Command
+    desc: Nur der Bot-Besitzer kann diesen command ausführen
   bot_missing_perms:
     title: Bot missing Permissions
-    desc: 'I am missing the following permission(s): %{missingperms}'
+    desc: '%{emote} I am missing the following permission(s): %{missingperms}'
   cooldown: "%{emote} Please wait %{time_left} seconds before using this command again!"
   api:
     title: "%{emote} Something went wrong"
@@ -37,7 +37,7 @@ info:
       desc: " [@berlin.1969](https://www.instagram.com/berlin.1969/) \n%{emote} [S/ash FR](https://discord.gg/fr)"
     docs:
       title: "%{emote} Docs"
-      desc: " Click [`here`](https://github.com/O4h/gigachad-bot/wiki) to see the docs"
+      desc: " Click [`here`](https://docs.gigachad-bot.xyz/) to see the docs"
     source:
       title: "%{emote} Source Code"
       desc: " Click [`here`](https://github.com/o4h/gigachad-bot) to see the bot's source code"
@@ -50,62 +50,19 @@ info:
 
 fun:
   caption:
-    name: caption
     click: Click to access the post
     footer: Made with the imgflip.com API
   chadmeter:
-
     title: "📏 Chadmeter"
     desc:
       own: Your Chad level is __**`%{chadlevel}%`**__!
       other: "%{user}'s Chad level is __**`%{chadlevel}%`**__!"
     footer:
       voted: Chadmeter never lies, Copyrighted © method
-      notvoted: "Voting for Giga Chad (/vote) might increase that... 😉"
+      notvoted: "Voting for Giga Chad (%{prefix}vote) might increase that... 😉"
   gigachadify:
     title:
       own: You look gorgeous, surely not as good as I do, but still...
       other: "%{user} looks gorgeous, surely not as good as I do, but still..."
       giga_chad: "I am Giga Chad. I gigachadify, I can't be gigachadified!"
     footer: Feel free to use this picture in your resume, or on any dating site
-commands:
-  meme:
-    name: meme
-    desc: 🎲 Get a random meme!
-    options:
-      subreddit:
-        name: subreddit
-        desc: Get a meme from a particular subreddit
-  gigachadify:
-    name: gigachadify
-    desc: ✨ Turn you or someone else into a Giga Chad!
-    options:
-      user:
-        name: user
-        desc: The user to gigachadify
-  chadmeter:
-    name: chadmeter
-    desc: 📏 Scientifically measure your Chad level
-    options:
-      user:
-        name: user
-        desc: The user to measure
-  caption:
-    name: caption
-    desc: 🎭 Create a meme, many  meme templates available!
-    options:
-      top_caption:
-        name: top_caption
-        desc: The top caption
-      bottom_caption:
-        name: bottom_caption
-        desc: The bottom caption
-      template:
-        name: template
-        desc: Choose a meme template
-  vote:
-    name: vote
-    desc: Get the link to vote for GigaChad
-  info:
-    name: info
-    desc: Get useful information about Giga Chad

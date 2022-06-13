@@ -1,6 +1,5 @@
-import asyncio
 import os
-import asyncpg
+import asyncio
 import disnake
 import jishaku
 import sentry_sdk
@@ -8,13 +7,6 @@ import sentry_sdk
 from disnake.ext import commands
 
 intents = disnake.Intents(messages=True, guilds=True)
-
-# the initial sql query, to add tables
-sql_query = (
-    "CREATE TABLE IF NOT EXISTS commands_logs(time INT NOT NULL, guild BIGINT, cmd VARCHAR(25), usr BIGINT, type INT);"
-    "CREATE TABLE IF NOT EXISTS guilds_logs(time INT NOT NULL, guild BIGINT, joined BOOLEAN, guild_count INT);"
-    "CREATE TABLE IF NOT EXISTS commands_stats_total(time INT NOT NULL, gigachadify INT, meme INT, chadmeter INT, caption INT)"
-)
 
 # Init sentry
 if os.getenv("BETA") != "TRUE":
@@ -25,16 +17,9 @@ async def run():
     """
     Main function, runs the bot.
     """
-    # make the connection to the db
-    url = f"postgres://" \
-          f"{os.getenv('DB_USER')}:" \
-          f"{os.getenv('DB_PASSWORD')}" \
-          f"@{os.getenv('DB_HOST')}:" \
-          f"{os.getenv('DB_PORT')}/{os.getenv('DB_DATABASE')}"
-    db = await asyncpg.create_pool(dsn=url)
 
     # load the bot class
-    bot = Bot(db=db)
+    bot = Bot()
 
     # load cogs
     for filename in os.listdir('./cogs'):
@@ -48,14 +33,9 @@ async def run():
 
 
 class Bot(commands.AutoShardedBot):
-    def __init__(self, db: asyncpg.pool.Pool) -> None:
-        """ "
+    def __init__(self) -> None:
+        """
         The Bot object
-
-        Parameters
-        ----------
-        db: asyncpg.pool.Pool
-            The database connection
         """
         super().__init__(
             command_prefix="gc!",
@@ -68,8 +48,6 @@ class Bot(commands.AutoShardedBot):
             help_command=None,
             intents=intents,
         )
-
-        self.db = db
         self.invite_link = "https://discord.com/api/oauth2/authorize?client_id=843550872293867570&permissions=379904" \
                            "&scope=bot%20applications.commands "
         self.command_list = {

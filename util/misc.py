@@ -13,7 +13,7 @@ i18n.set("filename_format", "{locale}.{format}")
 i18n.set("fallback", "en")
 i18n.load_path.append("./ressources/locales/")
 
-beta = bool(os.getenv("BETA") == "TRUE")
+beta = os.getenv("BETA") == "TRUE"
 
 path = "ressources/beta-emotes.json" if beta else "ressources/emotes.json"
 with open(path, "r") as f:
