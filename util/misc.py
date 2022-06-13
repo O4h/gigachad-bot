@@ -19,7 +19,8 @@ path = "ressources/beta-emotes.json" if beta else "ressources/emotes.json"
 with open(path, "r") as f:
     emotes = json.load(f)
 
-with open("ressources/locales/supported-locales.json", "r") as f:
+path = "ressources/locales/supported-locales.json"
+with open(path, "r") as f:
     supported_locales = json.load(f)
 
 
@@ -39,10 +40,15 @@ def get_lang(bot: commands.AutoShardedBot, ctx: disnake.ApplicationCommandIntera
     str
         The language for the given context
     """
-    if ctx.guild_locale is not None and "COMMUNITY" in ctx.guild.features:
-        locale = ctx.guild_locale
+    if ctx.guild is not None:
+        if ctx.guild_locale is not None and "COMMUNITY" in ctx.guild.features:
+
+            locale = ctx.guild_locale.name
+
+        else:
+            locale = ctx.locale.name
     else:
-        locale = ctx.locale
+        locale = ctx.locale.name
 
     return next(
         (supported_locales[lang] for lang in supported_locales.keys() if locale.startswith(lang)), "en"
