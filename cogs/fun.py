@@ -11,6 +11,8 @@ import aiohttp
 import disnake
 from disnake.ext import commands
 
+import asyncpraw
+
 from util.misc import get_emote, create_embed, has_voted
 from util.misc import translate as _
 
@@ -23,11 +25,16 @@ caption_templates = json.loads(open("ressources/caption_templates.json").read())
 class Fun(commands.Cog):
     """
     Fun stuff goes here!
-    Commands that are both slash and context menu are executed outside of the class.
+    Commands that are both slash and context menu are executed outside the class.
     """
 
     def __init__(self, bot: commands.AutoShardedBot) -> None:
         self.bot = bot
+        self.reddit_instance = asyncpraw.Reddit(
+            client_id=os.getenv("REDDIT_CLIENT_ID"),
+            client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+            user_agent="discord:gigachad-bot: by O4h_",
+        )
 
     @commands.slash_command(name="meme")
     async def meme(
@@ -45,31 +52,35 @@ class Fun(commands.Cog):
         subreddit : str, optional
             Get a meme from a particular subreddit
         """
-        url = (
-            f"https://meme-api.herokuapp.com/gimme/{subreddit}"
-            if subreddit
-            else "https://meme-api.herokuapp.com/gimme"
-        )
+        if subreddit is None:
+            subreddit = "memes"
 
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as r:
-                data = await r.read()
+        post_index = random.randint(0, 10)
+        loop_index = 0
+        chosen_post = None
+        subreddit = await self.reddit_instance.subreddit(subreddit)
 
-        if r.status != 200:
-            await error_api(ctx)
-            return
+        async for post in subreddit.hot(limit=10):
+            loop_index += 1
+            if post.is_self:
+                post_index += 1
 
-        json_data = json.loads(data)
+            if loop_index == post_index:
+                chosen_post = post
 
-        if json_data["nsfw"]:
+        await ctx.response.defer()
+
+        await chosen_post.load()
+
+        if chosen_post.over_18 and not ctx.channel.is_nsfw():
             await ctx.send(content=_("errors.nsfw", ctx), ephemeral=True)
             return
 
         embed = create_embed(
-            title_url=json_data["postLink"],
-            title=json_data["title"],
-            image=json_data["url"],
-            author_text=f"r/{json_data['subreddit']} | u/{json_data['author']}",
+            title_url=f"https://reddit.com{chosen_post.permalink}",
+            title=chosen_post.title,
+            image=chosen_post.url,
+            author_text=f"r/{subreddit} | u/{chosen_post.author.name}",
             author_image=get_emote("reddit", return_type="image"),
         )
         await ctx.send(embed=embed)
