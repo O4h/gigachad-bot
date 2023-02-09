@@ -29,5 +29,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/O4h/gigachad-bot:latest
+            ghcr.io/o4h/gigachad-bot:latest
             
