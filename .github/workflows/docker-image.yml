@@ -5,14 +5,29 @@ on:
     branches:
       - main
 jobs:
-  push_to_registry:
+  build_and_push_to_registry:
     name: Push Docker image to Github Container Registry
     runs-on: ubuntu-latest
     steps:
-      - name: build-push-github-action
-      # You may pin to the exact commit or the version.
-      # uses: flamestro/build-push-github-action@cf5866818a72656c201faa4ecf262325a881e25a
-        uses: flamestro/build-push-github-action@v1.1.0
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v1
         with:
-          # Authentication Token
-          token: ${{ secrets.PERSONNAL_ACCESS_TOKEN }}
+          platform: ghcr.io
+          username: ${{ secrets.github.repository_owner }}
+          password: ${{ secrets.PERSONNAL_ACCESS_TOKEN }}
+          
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/O4h/gigachad-bot:latest
+            
