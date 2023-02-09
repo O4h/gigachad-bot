@@ -6,18 +6,13 @@ on:
       - main
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: Push Docker image to Github Container Registry
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+      - name: build-push-github-action
+      # You may pin to the exact commit or the version.
+      # uses: flamestro/build-push-github-action@cf5866818a72656c201faa4ecf262325a881e25a
+        uses: flamestro/build-push-github-action@v1.1.0
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: theorh/gigachad-bot:latest
+          # Authentication Token
+          token: ${{ secrets.PERSONNAL_ACCESS_TOKEN }}
