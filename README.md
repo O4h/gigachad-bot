@@ -33,19 +33,16 @@ You can of course run the bot for testing if you want to contribue
 * Some basic docker knowledge
   
 ### Step-by-step guide  
-1. Pull the image `theorh/gigachad-bot:latest` from [dockerhub](https://hub.docker.com/repository/docker/theorh/gigachad-bot)
+1. Pull the image: `docker pull ghcr.io/o4h/gigachad-bot:latest` (You can find it here: [package](https://github.com/O4h/gigachad-bot/pkgs/container/gigachad-bot))
 
 
 2. Include all the environnement variable from [sample.env](https://github.com/O4h/gigachad-bot/blob/main/sample.env)
-  
-
-3. Setup a Postgresql database
 
 
-4. Rename `sample.env` to `.env` and fill it correctly  
+3. Rename `sample.env` to `.env` and fill it correctly  
 
 
-5. Run.
+4. Run.
 
 ## License
 This project is licensed under the **MIT License**. See more info about it [here](https://github.com/O4h/gigachad-bot/blob/main/LICENSE)
